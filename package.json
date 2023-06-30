@@ -1,0 +1,28 @@
+{
+  "name": "job-app-tracker",
+  "version": "1.0.0",
+  "description": "tracking the status of sent job applications",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/server.js",
+    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm start\"",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "seed": "cd server && npm run seed",
+    "build": "cd client && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/escowin/job-app-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/escowin/job-app-tracker/issues"
+  },
+  "homepage": "https://github.com/escowin/job-app-tracker#readme",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  }
+}
