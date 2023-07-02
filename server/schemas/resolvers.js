@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, JobApplication } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 
@@ -7,6 +7,7 @@ const resolvers = {
     users: async () => {
       return User.find().select("-__v -password");
     },
+    jobApplications: async () => JobApplication.find(),
   },
   Mutation: {
     addUser: async (parent, args) => {
@@ -28,6 +29,23 @@ const resolvers = {
 
       const token = signToken(user);
       return { token, user };
+    },
+    addApplication: async (parent, args, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("you must be logged in");
+      }
+
+      const jobApplication = await JobApplication.create({
+        ...args,
+        username: context.user.username,
+      });
+
+      await User.findByIdAndUpdate(
+        { _id: context.user._id },
+        { $push: { jobApplications: jobApplication._id } },
+        { new: true }
+      );
+      return jobApplication;
     },
   },
 };

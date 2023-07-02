@@ -14,6 +14,12 @@ const userSchema = new Schema(
       required: true,
       minLength: 5,
     },
+    jobApplications: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Application"
+      }
+    ]
   },
   {
     toJSON: {

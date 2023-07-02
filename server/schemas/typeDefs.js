@@ -7,14 +7,24 @@ const typeDefs = gql`
     password: String
   }
 
+  type JobApplication {
+    _id: ID
+    company: String
+    role: String
+    dateSubmitted: String
+    status: String
+  }
+
   type Query {
     users: [User]
     user(username: String!): User
+    jobApplications: [JobApplication]
   }
 
   type Mutation {
     login(username: String!, password: String!): Auth
     addUser(username: String!, password: String!): Auth
+    addApplication(company: String!, role: String!): Auth
   }
 
   type Auth {
