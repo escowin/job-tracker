@@ -42,6 +42,22 @@ userSchema.virtual("totalSubmitted").get(function () {
   return this.jobApplications.length;
 });
 
+// uses .filter() to return the total number of rejected submissions
+userSchema.virtual("rejectedCount").get(function () {
+  const result = this.jobApplications.filter(
+    (application) => application.status === "rejected"
+  );
+  return result.length;
+});
+
+// hired count
+userSchema.virtual("hiredCount").get(function () {
+  const result = this.jobApplications.filter(
+    (application) => application.status === "hired"
+  );
+  return result.length;
+});
+
 userSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };

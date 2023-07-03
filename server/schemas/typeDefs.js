@@ -6,6 +6,8 @@ const typeDefs = gql`
     username: String
     password: String
     totalSubmitted: Int
+    rejectedCount: Int
+    hiredCount: Int
     jobApplications: [JobApplication]
   }
 

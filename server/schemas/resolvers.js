@@ -76,12 +76,7 @@ const resolvers = {
       if (!jobApplication) {
         throw new Error("job application not found");
       }
-
-      await User.findByIdAndUpdate(
-        { _id: context.user._id },
-        { $pull: { jobApplications: jobApplication._id } },
-        { new: true }
-      );
+      
       return jobApplication;
     },
     deleteApplication: async (parents, args, context) => {
