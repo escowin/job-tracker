@@ -17,9 +17,9 @@ const userSchema = new Schema(
     jobApplications: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Application"
-      }
-    ]
+        ref: "Application",
+      },
+    ],
   },
   {
     toJSON: {
@@ -35,6 +35,11 @@ userSchema.pre("save", async function (next) {
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
   next();
+});
+
+// virtual | used to get the total numer of job application submissions
+userSchema.virtual("totalSubmitted").get(function () {
+  return this.jobApplications.length;
 });
 
 userSchema.methods.isCorrectPassword = async function (password) {
