@@ -1,4 +1,5 @@
 const { Schema, model } = require("mongoose");
+const dateFormat = require("../utils/dateFormat");
 
 const jobApplicationSchema = new Schema(
   {
@@ -20,8 +21,9 @@ const jobApplicationSchema = new Schema(
     },
     dateSubmitted: {
       type: Date,
-      required: true,
+      // required: true,
       default: Date.now,
+      get: (timestamp) => dateFormat(timestamp)
     },
   },
   {

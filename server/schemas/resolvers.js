@@ -37,15 +37,30 @@ const resolvers = {
 
       const jobApplication = await JobApplication.create({
         ...args,
-        username: context.user.username,
       });
 
+      console.log(jobApplication)
       await User.findByIdAndUpdate(
         { _id: context.user._id },
         { $push: { jobApplications: jobApplication._id } },
         { new: true }
       );
       return jobApplication;
+    },
+    // editApplication: async (parents, args, context) => {},
+    deleteApplication: async (parents, args, context) => {
+      const token = signToken(user);
+      if (!context.user) {
+        throw new AuthenticationError("you must be logged");
+      }
+      const jobApplication = await JobApplication.findByIdAndDelete(args._id);
+
+      await User.findByIdAndUpdate(
+        { _id: context.user._id },
+        { $pull: { jobApplications: jobApplication._id } },
+        { new: true }
+      );
+      return { token, jobApplication };
     },
   },
 };
