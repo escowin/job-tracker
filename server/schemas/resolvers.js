@@ -4,8 +4,23 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
+    me: async (parent, args, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("you must be logged in");
+      }
+      const user = await User.findOne({ _id: context.user._id })
+        .select("-__v -password")
+        .populate("jobApplications");
+
+      return user;
+    },
     users: async () => {
-      return User.find().select("-__v -password");
+      return User.find().select("-__v -password").populate("jobApplications");
+    },
+    user: async (parent, { username }) => {
+      return User.findOne({ username })
+        .select("-__v -password")
+        .populate("jobApplications");
     },
     jobApplications: async () => JobApplication.find(),
   },
@@ -37,6 +52,7 @@ const resolvers = {
 
       const jobApplication = await JobApplication.create({
         ...args,
+        username: context.user.username,
       });
 
       await User.findByIdAndUpdate(
