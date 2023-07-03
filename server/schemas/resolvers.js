@@ -39,7 +39,6 @@ const resolvers = {
         ...args,
       });
 
-      console.log(jobApplication)
       await User.findByIdAndUpdate(
         { _id: context.user._id },
         { $push: { jobApplications: jobApplication._id } },
@@ -47,11 +46,31 @@ const resolvers = {
       );
       return jobApplication;
     },
-    // editApplication: async (parents, args, context) => {},
-    deleteApplication: async (parents, args, context) => {
-      const token = signToken(user);
+    editApplication: async (parents, args, context) => {
       if (!context.user) {
-        throw new AuthenticationError("you must be logged");
+        throw new AuthenticationError("you must be logged in");
+      }
+      const { _id, ...updatedFields } = args;
+
+      const jobApplication = await JobApplication.findByIdAndUpdate(
+        _id,
+        { $set: updatedFields },
+        { new: true }
+      );
+      if (!jobApplication) {
+        throw new Error("job application not found");
+      }
+
+      await User.findByIdAndUpdate(
+        { _id: context.user._id },
+        { $pull: { jobApplications: jobApplication._id } },
+        { new: true }
+      );
+      return jobApplication;
+    },
+    deleteApplication: async (parents, args, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("you must be logged in");
       }
       const jobApplication = await JobApplication.findByIdAndDelete(args._id);
 
@@ -60,7 +79,7 @@ const resolvers = {
         { $pull: { jobApplications: jobApplication._id } },
         { new: true }
       );
-      return { token, jobApplication };
+      return jobApplication;
     },
   },
 };

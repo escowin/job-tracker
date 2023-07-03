@@ -25,6 +25,7 @@ const typeDefs = gql`
     login(username: String!, password: String!): Auth
     addUser(username: String!, password: String!): Auth
     addApplication(company: String!, role: String!): JobApplication
+    editApplication(_id: String!, company: String, role: String, dateSubmitted: String, status: String): JobApplication
     deleteApplication(_id: String!): JobApplication
   }
 
