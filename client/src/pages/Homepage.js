@@ -12,19 +12,32 @@ function Homepage() {
     return <section>Loading...</section>;
   }
 
+  // change sections into components with user data props
   return (
     <>
       <h2>home page</h2>
+      {!loggedIn ? <section>log in to view contents</section> : null}
       {loggedIn && user ? (
-        <section>
-          <p>username : {user.username}</p>
-          <p>hired count: {user.hiredCount}</p>
-          <p>rejected count: {user.rejectedCount}</p>
-          <p>total submitted: {user.totalSubmitted}</p>
-        </section>
-      ) : (
-        <section>logged out homepage</section>
-      )}
+        <>
+          <section>
+            <p>username : {user.username}</p>
+            <p>hired count: {user.hiredCount}</p>
+            <p>rejected count: {user.rejectedCount}</p>
+            <p>total submitted: {user.totalSubmitted}</p>
+          </section>
+
+          <section>
+            {user.jobApplications.map((job, i) => (
+              <article key={i}>
+                <p>{job.company}</p>
+                <p>{job.role}</p>
+                <p>{job.status}</p>
+                <p>{job.dateSubmitted}</p>
+              </article>
+            ))}
+          </section>
+        </>
+      ) : null}
     </>
   );
 }
