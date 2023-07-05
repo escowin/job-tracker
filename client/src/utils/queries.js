@@ -10,6 +10,9 @@ export const QUERY_ME = gql`
         status
         dateSubmitted
       }
+      hiredCount
+      rejectedCount
+      totalSubmitted
     }
   }
 `;
