@@ -11,6 +11,8 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
+import AddJob from "./pages/AddJob";
+
 import "./assets/css/index.css";
 
 // apollo server | graphql
@@ -44,6 +46,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Homepage />} />
               <Route path="/login" element={<Login/>} />
+              <Route path="/add-page" element={<AddJob/>} />
             </Routes>
           </main>
           <Footer />
