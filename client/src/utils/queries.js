@@ -16,3 +16,14 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+export const QUERY_JOB_APPLICATIONS = gql`
+  {
+    jobApplications {
+      company
+      dateSubmitted
+      role
+      status
+    }
+  }
+`;

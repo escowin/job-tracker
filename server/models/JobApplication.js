@@ -20,9 +20,10 @@ const jobApplicationSchema = new Schema(
       trim: true,
     },
     dateSubmitted: {
-      type: Date,
-      // required: true,
-      default: Date.now,
+      // type: Date,
+      type: String,
+      required: true,
+      // default: Date.now,
       get: (timestamp) => dateFormat(timestamp)
     },
   },
