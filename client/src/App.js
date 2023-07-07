@@ -13,6 +13,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import AddJob from "./pages/AddJob";
 import EditJob from "./pages/EditJob";
+import Job from "./pages/Job";
 
 import "./assets/css/index.css";
 
@@ -49,6 +50,7 @@ function App() {
               <Route path="/login" element={<Login/>} />
               <Route path="/add-job" element={<AddJob/>} />
               <Route path="/edit-job" element={<EditJob/>}/>
+              <Route path="/job/:id" element={<Job/>}/>
             </Routes>
           </main>
           <Footer />

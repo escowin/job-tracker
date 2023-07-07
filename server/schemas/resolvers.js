@@ -23,6 +23,9 @@ const resolvers = {
         .populate("jobApplications");
     },
     jobApplications: async () => JobApplication.find(),
+    jobApplication: async (parent, { _id }) => {
+      return JobApplication.findOne({ _id });
+    },
   },
   Mutation: {
     addUser: async (parent, args) => {
@@ -76,7 +79,7 @@ const resolvers = {
       if (!jobApplication) {
         throw new Error("job application not found");
       }
-      
+
       return jobApplication;
     },
     deleteApplication: async (parents, args, context) => {

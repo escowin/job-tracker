@@ -29,3 +29,15 @@ export const QUERY_JOB_APPLICATIONS = gql`
     }
   }
 `;
+
+export const QUERY_JOB = gql`
+  query JobApplication($id: ID!) {
+    jobApplication(_id: $id) {
+      _id
+      company
+      role
+      status
+      dateSubmitted
+    }
+  }
+`;

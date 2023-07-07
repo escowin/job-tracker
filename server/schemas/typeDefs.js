@@ -16,8 +16,8 @@ const typeDefs = gql`
     _id: ID
     company: String
     role: String
-    dateSubmitted: String
     status: String
+    dateSubmitted: String
   }
 
   type Query {
@@ -25,6 +25,7 @@ const typeDefs = gql`
     users: [User]
     user(username: String!): User
     jobApplications: [JobApplication]
+    jobApplication(_id: ID!): JobApplication
   }
 
   type Mutation {
