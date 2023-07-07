@@ -1,5 +1,4 @@
-function Profile({user}) {
-    console.log(user)
+function Profile({ user }) {
   return (
     <section>
       <h2>user info</h2>

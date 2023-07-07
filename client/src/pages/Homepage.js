@@ -3,27 +3,33 @@ import { QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 import Profile from "../components/Profile";
 import JobApplication from "../components/JobApplication";
+import "../assets/css/home.css"
 
 function Homepage() {
   // user info is dependent in being logged in
   const loggedIn = Auth.loggedIn();
   const { loading, data } = useQuery(QUERY_ME);
   const user = data?.me || {};
+  const jobApplications = user?.jobApplications || [];
 
-  
   if (loading) {
     return <section>Loading...</section>;
   }
 
+  // if (!loggedIn) {
+  //   return <section>log in to view contents</section>;
+  // }
+
   return (
-    <>      
-      {!loggedIn && !user ? <section>log in to view contents</section> : null}
+    <>
       {loggedIn && user ? (
         <>
-          <Profile user={user}/>
-          <JobApplication jobApplications={user.jobApplications} />
+          <Profile user={user} />
+          <JobApplication jobApplications={jobApplications} />
         </>
-      ) : null}
+      ) : (
+        <section>log in to view contents</section>
+      )}
     </>
   );
 }

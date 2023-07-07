@@ -60,7 +60,7 @@ function JobForm() {
 
   return (
     <>
-      <h2>add job app</h2>
+      <h2>job application</h2>
       <form onSubmit={handleFormSubmit}>
         <label htmlFor="company">Company</label>
         <input name="company" onChange={handleChange} />

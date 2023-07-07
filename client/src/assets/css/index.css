@@ -1,3 +1,9 @@
+:root {
+  --primary: rgb(17, 29, 53);
+  --secondary: rgb(120, 169, 192);
+  --tertiary: rgb(160, 174, 157);
+}
+
 * {
   outline: 1px dotted gray;
   box-sizing: border-box;
@@ -5,16 +11,53 @@
   padding: 0;
 }
 
+/* typography */
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: 1s;
+}
+
+/* form */
+form {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: .5rem;
+}
+
+form button {
+  grid-column: span 2;
+}
+
+/* divs */
 .App {
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 100%;
+  align-items: center;
+  background-color: var(--secondary);
+  color: var(--tertiary);
+  gap: 1rem;
+  font-variant: small-caps;
+}
+
+header, main, footer {
+  display: flex;
+  flex-direction: column;
+  width: inherit;
+  background-color: var(--primary);
+  padding: .25rem .5rem;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
 }
 
 main {
   flex-grow: 1;
-  display: flex;
-  flex-direction: column;
+  gap: 1rem;
 }
 
 /* homepage */

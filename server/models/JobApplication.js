@@ -24,7 +24,7 @@ const jobApplicationSchema = new Schema(
       type: String,
       required: true,
       // default: Date.now,
-      get: (timestamp) => dateFormat(timestamp)
+      // get: (timestamp) => dateFormat(timestamp)
     },
   },
   {

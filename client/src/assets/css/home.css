@@ -1,0 +1,10 @@
+.job-apps {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.job-apps article {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
