@@ -41,10 +41,10 @@ function JobForm() {
       setRole(e.target.value);
     } else if (e.target.name === "date-submitted") {
       setDateSubmitted(e.target.value);
-    } 
+    }
     // bug | reconfigure radio
     else if (e.target.name === "pending") {
-      console.log(e.target.value)
+      console.log(e.target.value);
       setSelectedStatus(e.target.value);
     }
   };
@@ -60,10 +60,8 @@ function JobForm() {
           dateSubmitted,
         },
       });
-
-      setCompany("");
-      setRole("");
-      setDateSubmitted("");
+      // redirects user back to home
+      window.location.assign("/");
     } catch (err) {
       console.error(err);
     }
@@ -72,11 +70,15 @@ function JobForm() {
   return (
     <>
       <h2>job application</h2>
-      <form onSubmit={handleFormSubmit}>
-        <label htmlFor="company">Company</label>
-        <input name="company" onChange={handleChange} />
-        <label htmlFor="role">Role</label>
-        <input name="role" onChange={handleChange} />
+      <form onSubmit={handleFormSubmit} className="job-form">
+        <article className="wrapper">
+          <label htmlFor="company">Company</label>
+          <input name="company" onChange={handleChange} />
+        </article>
+        <article className="wrapper">
+          <label htmlFor="role">Role</label>
+          <input name="role" onChange={handleChange} />
+        </article>
         {editPath ? (
           <>
             <fieldset>
@@ -96,9 +98,13 @@ function JobForm() {
             </fieldset>
           </>
         ) : null}
-        <label htmlFor="date-submitted">Date submitted</label>
-        <input name="date-submitted" type="date" onChange={handleChange} />
-        <button type="submit">submit</button>
+        <article>
+          <label htmlFor="date-submitted">Date submitted</label>
+          <input name="date-submitted" type="date" onChange={handleChange} />
+        </article>
+        <article className="wrapper">
+          <button type="submit">submit</button>
+        </article>
       </form>
     </>
   );

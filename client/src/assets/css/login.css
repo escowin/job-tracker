@@ -1,0 +1,10 @@
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.login-form .wrapper {
+    display: inherit;
+    flex-direction: inherit;
+}

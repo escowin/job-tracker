@@ -2,7 +2,7 @@ import JobForm from "../components/JobForm";
 
 function AddJob() {
   return (
-    <section>
+    <section className="job-form-section">
       <JobForm />
     </section>
   );
