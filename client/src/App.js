@@ -12,6 +12,7 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import AddJob from "./pages/AddJob";
+import EditJob from "./pages/EditJob";
 
 import "./assets/css/index.css";
 
@@ -47,6 +48,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login/>} />
               <Route path="/add-job" element={<AddJob/>} />
+              <Route path="/edit-job" element={<EditJob/>}/>
             </Routes>
           </main>
           <Footer />

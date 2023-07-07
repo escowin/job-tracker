@@ -5,6 +5,7 @@ export const QUERY_ME = gql`
     me {
       username
       jobApplications {
+        _id
         company
         role
         status

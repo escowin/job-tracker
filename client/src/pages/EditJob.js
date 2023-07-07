@@ -1,5 +1,11 @@
+import JobForm from "../components/JobForm";
+
 function EditJob() {
-  return <>add job</>;
+  return (
+    <>
+      <JobForm />
+    </>
+  );
 }
 
 export default EditJob;
