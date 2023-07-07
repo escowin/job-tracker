@@ -1,12 +1,22 @@
 function Profile({ user }) {
   return (
-    <section>
-      <h2>user info</h2>
+    <section className="user-profile">
+      <h2>{user.username}</h2>
       <article>
-        <p>username : {user.username}</p>
-        <p>hired count: {user.hiredCount}</p>
-        <p>rejected count: {user.rejectedCount}</p>
-        <p>total submitted: {user.totalSubmitted}</p>
+        <p>pending</p>
+        <p className="pending">{user.pendingCount}</p>
+      </article>
+      <article>
+        <p>rejected</p>
+        <p className="rejected">{user.rejectedCount}</p>
+      </article>
+      <article>
+        <p>hired</p>
+        <p className="hired">{user.hiredCount}</p>
+      </article>
+      <article>
+        <p>submitted</p>
+        <p>{user.totalSubmitted}</p>
       </article>
     </section>
   );

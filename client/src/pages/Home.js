@@ -5,7 +5,7 @@ import Profile from "../components/Profile";
 import JobApplication from "../components/JobApplication";
 import "../assets/css/home.css"
 
-function Homepage() {
+function Home() {
   // user info is dependent in being logged in
   const loggedIn = Auth.loggedIn();
   const { loading, data } = useQuery(QUERY_ME);
@@ -15,10 +15,6 @@ function Homepage() {
   if (loading) {
     return <section>Loading...</section>;
   }
-
-  // if (!loggedIn) {
-  //   return <section>log in to view contents</section>;
-  // }
 
   return (
     <>
@@ -34,4 +30,4 @@ function Homepage() {
   );
 }
 
-export default Homepage;
+export default Home;

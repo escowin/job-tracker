@@ -4,7 +4,7 @@ import Auth from "../utils/auth";
 function Header() {
   const navLinks = [
     { name: "home", path: "" },
-    { name: "add-job", path: "add-page" },
+    { name: "add-job", path: "add-job" },
   ];
 
   const logout = (e) => {
@@ -26,12 +26,13 @@ function Header() {
               </Link>
             ))}
             <a href="/" onClick={logout}>
-              Logout
+              log out
             </a>
           </>
         ) : (
           <>
-            <Link to={"/login"}>Login</Link>
+            <Link to={"/login"}>log in</Link>
+            <Link to={"/signup"}>sign up</Link>
           </>
         )}
       </nav>

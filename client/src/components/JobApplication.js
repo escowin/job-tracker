@@ -9,7 +9,7 @@ function JobApplication({ jobApplications }) {
         <p>date submitted</p>
       </article>
       {jobApplications.map((job, i) => (
-        <article key={i} className="job">
+        <article key={i} className={`${job.status} job`}>
           <p>{job.company}</p>
           <p>{job.role}</p>
           <p>{job.status}</p>

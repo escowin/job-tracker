@@ -42,7 +42,16 @@ userSchema.virtual("totalSubmitted").get(function () {
   return this.jobApplications.length;
 });
 
-// uses .filter() to return the total number of rejected submissions
+// uses .filter() to return the specified totals
+// pending count
+userSchema.virtual("pendingCount").get(function () {
+  const result = this.jobApplications.filter(
+    (application) => application.status === "pending"
+  );
+  return result.length;
+});
+
+// rejected count
 userSchema.virtual("rejectedCount").get(function () {
   const result = this.jobApplications.filter(
     (application) => application.status === "rejected"

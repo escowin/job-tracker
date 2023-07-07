@@ -1,11 +1,14 @@
 :root {
-  --primary: rgb(17, 29, 53);
+  --primary: rgb(33, 42, 60);
   --secondary: rgb(120, 169, 192);
-  --tertiary: rgb(160, 174, 157);
+  --tertiary: rgb(179, 190, 176);
+  --pending: rgb(69, 176, 134);
+  --rejected: rgb(178, 89, 89);
+  --hired: rgb(109, 169, 219);
 }
 
 * {
-  outline: 1px dotted gray;
+  /* outline: 1px dotted gray; */
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -16,6 +19,18 @@ a {
   text-decoration: none;
   color: inherit;
   transition: 1s;
+}
+
+.pending {
+  color: var(--pending);
+}
+
+.rejected {
+  color: var(--rejected);
+}
+
+.hired {
+  color: var(--hired);
 }
 
 /* form */
@@ -42,7 +57,9 @@ form button {
   font-variant: small-caps;
 }
 
-header, main, footer {
+header,
+main,
+footer {
   display: flex;
   flex-direction: column;
   width: inherit;

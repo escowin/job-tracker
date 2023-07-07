@@ -9,7 +9,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import Homepage from "./pages/Homepage";
+import Home from "./pages/Home";
 import Login from "./pages/Login";
 import AddJob from "./pages/AddJob";
 
@@ -44,9 +44,9 @@ function App() {
           <Header />
           <main>
             <Routes>
-              <Route path="/" element={<Homepage />} />
+              <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login/>} />
-              <Route path="/add-page" element={<AddJob/>} />
+              <Route path="/add-job" element={<AddJob/>} />
             </Routes>
           </main>
           <Footer />

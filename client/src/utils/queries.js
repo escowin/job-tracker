@@ -12,6 +12,7 @@ export const QUERY_ME = gql`
       }
       hiredCount
       rejectedCount
+      pendingCount
       totalSubmitted
     }
   }

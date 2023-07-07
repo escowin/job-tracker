@@ -8,6 +8,7 @@ const typeDefs = gql`
     totalSubmitted: Int
     rejectedCount: Int
     hiredCount: Int
+    pendingCount: Int
     jobApplications: [JobApplication]
   }
 
