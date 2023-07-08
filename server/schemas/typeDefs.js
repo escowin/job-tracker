@@ -18,6 +18,15 @@ const typeDefs = gql`
     role: String
     status: String
     dateSubmitted: String
+    createdAt: String
+    noteCount: Int
+    notes: [Note]
+  }
+
+  type Note {
+    _id: ID
+    note: String
+    createdAt: String
   }
 
   type Query {
@@ -40,6 +49,7 @@ const typeDefs = gql`
       status: String
     ): Job
     deleteJob(_id: String!): Job
+    addNote(jobId: ID!, note: String!): Job
   }
 
   type Auth {

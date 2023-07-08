@@ -39,7 +39,7 @@ const JobSchema = new Schema(
 );
 
 JobSchema.virtual('noteCount').get(function() {
-  return this.reactions.length;
+  return this.notes.length;
 })
 
 const Job = model("Job", JobSchema);
