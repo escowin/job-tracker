@@ -1,20 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_JOB_APPLICATION } from "../utils/mutations";
+import { ADD_JOB, EDIT_JOB } from "../utils/mutations";
 import { QUERY_ME } from "../utils/queries";
 
-function JobForm() {
+function JobForm({ initialValues }) {
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
   const [dateSubmitted, setDateSubmitted] = useState("");
-
-  // bug | can't select status
   const [selectedStatus, setSelectedStatus] = useState("");
+  const statusValues = ["pending", "rejected", "hired"];
   const editPath = window.location.pathname.includes("/edit-job");
 
-  const statusValues = ["pending", "rejected", "hired"];
-
-  const [addJobApplication, { error }] = useMutation(ADD_JOB_APPLICATION, {
+  const [addJobApplication, { error }] = useMutation(ADD_JOB, {
     update(cache, { data: { addJobApplication } }) {
       try {
         const { me } = cache.readQuery({ query: QUERY_ME });
@@ -33,6 +30,19 @@ function JobForm() {
     },
   });
 
+  const [editJobApplication] = useMutation(EDIT_JOB);
+
+  useEffect(() => {
+    if (initialValues) {
+      setCompany(initialValues.company || "");
+      setRole(initialValues.role || "");
+      setDateSubmitted(initialValues.dateSubmitted || "");
+      setSelectedStatus(initialValues.status || "");
+    } else {
+      setSelectedStatus("pending");
+    }
+  }, [initialValues]);
+
   //  captures & sets form state
   const handleChange = (e) => {
     if (e.target.name === "company") {
@@ -41,25 +51,34 @@ function JobForm() {
       setRole(e.target.value);
     } else if (e.target.name === "date-submitted") {
       setDateSubmitted(e.target.value);
-    }
-    // bug | reconfigure radio
-    else if (e.target.name === "pending") {
-      console.log(e.target.value);
+    } else if (e.target.name === "status") {
       setSelectedStatus(e.target.value);
     }
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    let variables = {
+      company,
+      role,
+      dateSubmitted,
+    };
+
+    if (editPath) {
+      variables = {
+        ...variables,
+        status: selectedStatus,
+      };
+    }
 
     try {
-      await addJobApplication({
-        variables: {
-          company,
-          role,
-          dateSubmitted,
-        },
-      });
+      if (editPath) {
+        await editJobApplication({
+          variables: { id: initialValues._id, ...variables },
+        });
+      } else {
+        await addJobApplication({ variables });
+      }
       // redirects user back to home
       window.location.assign("/");
     } catch (err) {
@@ -73,11 +92,11 @@ function JobForm() {
       <form onSubmit={handleFormSubmit} className="job-form">
         <article className="wrapper">
           <label htmlFor="company">Company</label>
-          <input name="company" onChange={handleChange} />
+          <input name="company" value={company} onChange={handleChange} />
         </article>
         <article className="wrapper">
           <label htmlFor="role">Role</label>
-          <input name="role" onChange={handleChange} />
+          <input name="role" value={role} onChange={handleChange} />
         </article>
         {editPath ? (
           <>
@@ -88,7 +107,7 @@ function JobForm() {
                   <input
                     type="radio"
                     name="status"
-                    value="status"
+                    value={status}
                     checked={status === selectedStatus}
                     onChange={handleChange}
                   />
@@ -100,11 +119,17 @@ function JobForm() {
         ) : null}
         <article>
           <label htmlFor="date-submitted">Date submitted</label>
-          <input name="date-submitted" type="date" onChange={handleChange} />
+          <input
+            name="date-submitted"
+            type="date"
+            value={dateSubmitted}
+            onChange={handleChange}
+          />
         </article>
         <article className="wrapper">
           <button type="submit">submit</button>
         </article>
+        {error && <span>error</span>}
       </form>
     </>
   );

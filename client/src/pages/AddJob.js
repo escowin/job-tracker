@@ -3,7 +3,7 @@ import JobForm from "../components/JobForm";
 function AddJob() {
   return (
     <section className="job-form-section">
-      <JobForm />
+      <JobForm initialValues={{}} />
     </section>
   );
 }

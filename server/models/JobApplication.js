@@ -46,12 +46,12 @@ const jobApplicationSchema = new Schema(
       type: String,
       required: true,
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-      get: (timestamp) => dateFormat(timestamp),
-    },
-    notes: [NoteSchema],
+    // createdAt: {
+    //   type: Date,
+    //   default: Date.now,
+    //   get: (timestamp) => dateFormat(timestamp),
+    // },
+    // notes: [NoteSchema],
   },
   {
     toJSON: {

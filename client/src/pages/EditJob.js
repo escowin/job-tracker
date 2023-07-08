@@ -1,19 +1,23 @@
-import JobForm from "../components/JobForm";
-import { useQuery } from "@apollo/client"
+import { useParams } from "react-router-dom";
+import { useQuery } from "@apollo/client";
 import { QUERY_JOB } from "../utils/queries";
+import JobForm from "../components/JobForm";
 
 function EditJob() {
-  const { loading, data } = useQuery(QUERY_JOB);
-  console.log(data)
+  const { id: _id } = useParams();
+  const { loading, data } = useQuery(QUERY_JOB, {
+    variables: { id: _id },
+  });
+  const job = data?.jobApplication || {};
 
   if (loading) {
-    return <secton>Loading...</secton>
+    return <secton>Loading...</secton>;
   }
-  
+
   return (
-    <>
-      <JobForm />
-    </>
+    <section className="job-form-section">
+      <JobForm initialValues={job} />
+    </section>
   );
 }
 

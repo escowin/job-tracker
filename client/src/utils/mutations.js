@@ -12,7 +12,7 @@ export const LOGIN_USER = gql`
   }
 `;
 
-export const ADD_JOB_APPLICATION = gql`
+export const ADD_JOB = gql`
   mutation addApplication(
     $company: String!
     $role: String!
@@ -21,6 +21,30 @@ export const ADD_JOB_APPLICATION = gql`
     addApplication(
       company: $company
       role: $role
+      dateSubmitted: $dateSubmitted
+    ) {
+      _id
+      company
+      role
+      status
+      dateSubmitted
+    }
+  }
+`;
+
+export const EDIT_JOB = gql`
+  mutation editApplication(
+    $id: String!
+    $company: String
+    $role: String
+    $status: String
+    $dateSubmitted: String
+  ) {
+    editApplication(
+      _id: $id
+      company: $company
+      role: $role
+      status: $status
       dateSubmitted: $dateSubmitted
     ) {
       _id
