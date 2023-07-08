@@ -49,7 +49,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login/>} />
               <Route path="/add-job" element={<AddJob/>} />
-              <Route path="/edit-job" element={<EditJob/>}/>
+              <Route path="/edit-job/:id" element={<EditJob/>}/>
               <Route path="/job/:id" element={<Job/>}/>
             </Routes>
           </main>
