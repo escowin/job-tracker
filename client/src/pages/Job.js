@@ -39,6 +39,7 @@ function Job() {
       const { data } = await removeJob({
         variables: { id: _id },
       });
+      console.log(data)
       navigate("/");
     } catch (err) {
       console.error(err);

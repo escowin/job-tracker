@@ -12,6 +12,18 @@ export const LOGIN_USER = gql`
   }
 `;
 
+export const ADD_USER = gql`
+  mutation addUser($username: String!, $password: String!) {
+    addUser(username: $username, password: $password) {
+      token
+      user {
+        _id
+        username
+      }
+    }
+  }
+`;
+
 export const ADD_JOB = gql`
   mutation addJob($company: String!, $role: String!, $dateSubmitted: String!) {
     addJob(company: $company, role: $role, dateSubmitted: $dateSubmitted) {
