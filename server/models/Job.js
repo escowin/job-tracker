@@ -1,28 +1,6 @@
 const { Schema, model } = require("mongoose");
+const NoteSchema = require('./Note')
 const dateFormat = require("../utils/dateFormat");
-
-const NoteSchema = new Schema(
-  {
-    noteId: {
-      type: Schema.Types.ObjectId,
-      default: () => new Types.ObjectId(),
-    },
-    noteBody: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-      get: (timestamp) => dateFormat(timestamp),
-    },
-  },
-  {
-    toJson: { getters: true },
-    id: false,
-  }
-);
 
 const JobSchema = new Schema(
   {
@@ -46,12 +24,12 @@ const JobSchema = new Schema(
       type: String,
       required: true,
     },
-    // createdAt: {
-    //   type: Date,
-    //   default: Date.now,
-    //   get: (timestamp) => dateFormat(timestamp),
-    // },
-    // notes: [NoteSchema],
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: (timestamp) => dateFormat(timestamp),
+    },
+    notes: [NoteSchema],
   },
   {
     toJSON: {
@@ -59,6 +37,10 @@ const JobSchema = new Schema(
     },
   }
 );
+
+JobSchema.virtual('noteCount').get(function() {
+  return this.reactions.length;
+})
 
 const Job = model("Job", JobSchema);
 
