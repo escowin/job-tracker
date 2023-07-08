@@ -55,3 +55,11 @@ export const EDIT_JOB = gql`
     }
   }
 `;
+
+export const DELETE_JOB = gql`
+  mutation deleteApplication($id: String!) {
+    deleteApplication(_id: $id) {
+      _id
+    }
+  }
+`;

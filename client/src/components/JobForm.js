@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ADD_JOB, EDIT_JOB } from "../utils/mutations";
 import { QUERY_ME } from "../utils/queries";
@@ -10,6 +11,7 @@ function JobForm({ initialValues }) {
   const [selectedStatus, setSelectedStatus] = useState("");
   const statusValues = ["pending", "rejected", "hired"];
   const editPath = window.location.pathname.includes("/edit-job");
+  const navigate = useNavigate();
 
   const [addJobApplication, { error }] = useMutation(ADD_JOB, {
     update(cache, { data: { addJobApplication } }) {
@@ -80,7 +82,7 @@ function JobForm({ initialValues }) {
         await addJobApplication({ variables });
       }
       // redirects user back to home
-      window.location.assign("/");
+      navigate("/");
     } catch (err) {
       console.error(err);
     }
