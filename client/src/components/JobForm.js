@@ -16,17 +16,21 @@ function JobForm({ initialValues }) {
   const [addJobApplication, { error }] = useMutation(ADD_JOB, {
     update(cache, { data: { addJobApplication } }) {
       try {
-        const { me } = cache.readQuery({ query: QUERY_ME });
-        cache.writeQuery({
-          query: QUERY_ME,
-          data: {
-            me: {
-              ...me,
-              jobApplications: [...me.jobApplications, addJobApplication],
+        const queryData = cache.readQuery({ query: QUERY_ME });
+        const me = queryData?.me;
+        if (me) {
+          cache.writeQuery({
+            query: QUERY_ME,
+            data: {
+              me: {
+                ...me,
+                jobApplications: [...me.jobApplications, addJobApplication],
+              },
             },
-          },
-        });
+          });
+        }
       } catch (err) {
+        console.error(err);
         console.warn("first job app submitted by user");
       }
     },

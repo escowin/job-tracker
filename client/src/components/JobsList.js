@@ -1,6 +1,10 @@
 import { Link } from "react-router-dom";
 
 function JobLists({ jobApplications }) {
+  if (!jobApplications.length) {
+    return <section>submit a job</section>;
+  }
+
   return (
     <section className="job-apps">
       <h2>job applications</h2>
@@ -13,7 +17,9 @@ function JobLists({ jobApplications }) {
       {jobApplications.map((job, i) => (
         <article key={i} className={`${job.status} job`}>
           <p>{job.company}</p>
-          <p><Link to={`/job/${job._id}`}>{job.role}</Link></p>
+          <p>
+            <Link to={`/job/${job._id}`}>{job.role}</Link>
+          </p>
           <p>{job.status}</p>
           <p>{job.dateSubmitted}</p>
         </article>
