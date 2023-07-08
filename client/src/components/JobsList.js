@@ -7,12 +7,12 @@ function JobLists({ jobs }) {
 
   return (
     <section className="job-apps">
-      <h2>job s</h2>
+      <h2>job applications</h2>
       <article>
         <p>company</p>
         <p>role</p>
         <p>status</p>
-        <p>date submitted</p>
+        <p>notes</p>
       </article>
       {jobs.map((job, i) => (
         <article key={i} className={`${job.status} job`}>
@@ -21,7 +21,7 @@ function JobLists({ jobs }) {
             <Link to={`/job/${job._id}`}>{job.role}</Link>
           </p>
           <p>{job.status}</p>
-          <p>{job.dateSubmitted}</p>
+          <p>{job.noteCount}</p>
         </article>
       ))}
     </section>
