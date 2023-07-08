@@ -2,10 +2,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_JOB, QUERY_ME } from "../utils/queries";
 import { DELETE_JOB } from "../utils/mutations";
-// import Auth from "../utils/auth";
+import Auth from "../utils/auth";
 
 function Job() {
-  // const loggedIn = Auth.loggedIn();
+  const loggedIn = Auth.loggedIn();
   const { id: _id } = useParams();
   const [removeJob, { error }] = useMutation(DELETE_JOB, {
     update(cache, { data }) {
@@ -39,12 +39,16 @@ function Job() {
       const { data } = await removeJob({
         variables: { id: _id },
       });
-      console.log(data)
+      console.log(data);
       navigate("/");
     } catch (err) {
       console.error(err);
     }
   };
+
+  if (!loggedIn) {
+    return <section>log in to view contents</section>;
+  }
 
   if (loading) {
     return <section>loading...</section>;

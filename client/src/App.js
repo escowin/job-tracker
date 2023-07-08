@@ -15,6 +15,7 @@ import Signup from "./pages/Signup";
 import AddJob from "./pages/AddJob";
 import EditJob from "./pages/EditJob";
 import Job from "./pages/Job";
+import Page404 from "./pages/Page404";
 
 import "./assets/css/index.css";
 
@@ -53,6 +54,7 @@ function App() {
               <Route path="/add-job" element={<AddJob />} />
               <Route path="/edit-job/:id" element={<EditJob />} />
               <Route path="/job/:id" element={<Job />} />
+              <Route path="*" element={<Page404 />} />
             </Routes>
           </main>
           <Footer />
