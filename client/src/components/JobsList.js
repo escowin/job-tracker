@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function JobApplication({ jobApplications }) {
+function JobLists({ jobApplications }) {
   return (
     <section className="job-apps">
       <h2>job applications</h2>
@@ -15,10 +15,11 @@ function JobApplication({ jobApplications }) {
           <p>{job.company}</p>
           <p><Link to={`/job/${job._id}`}>{job.role}</Link></p>
           <p>{job.status}</p>
+          <p>{job.dateSubmitted}</p>
         </article>
       ))}
     </section>
   );
 }
 
-export default JobApplication;
+export default JobLists;

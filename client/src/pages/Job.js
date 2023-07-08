@@ -1,12 +1,13 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_JOB } from "../utils/queries";
 import Auth from "../utils/auth";
 
 function Job() {
+  const [goBack, setGoBack] = useState(false);
   const loggedIn = Auth.loggedIn();
   const { id: _id } = useParams();
-
   const { loading, data } = useQuery(QUERY_JOB, {
     variables: { id: _id },
   });
@@ -14,6 +15,11 @@ function Job() {
 
   if (loading) {
     return <section>loading...</section>;
+  }
+
+  if (goBack) {
+    window.history.back();
+    return null;
   }
 
   return (
@@ -28,7 +34,7 @@ function Job() {
         </article>
       </section>
       <section>
-        <button>go back</button>
+        <button onClick={()=> setGoBack(true)}>go back</button>
         <button>edit</button>
         <button>delete</button>
       </section>

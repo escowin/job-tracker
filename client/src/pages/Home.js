@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 import Profile from "../components/Profile";
-import JobApplication from "../components/JobApplication";
+import JobLists from "../components/JobsList";
 import "../assets/css/home.css"
 
 function Home() {
@@ -21,7 +21,7 @@ function Home() {
       {loggedIn && user ? (
         <>
           <Profile user={user} />
-          <JobApplication jobApplications={jobApplications} />
+          <JobLists jobApplications={jobApplications} />
         </>
       ) : (
         <section>log in to view contents</section>
