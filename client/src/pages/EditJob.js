@@ -8,7 +8,7 @@ function EditJob() {
   const { loading, data } = useQuery(QUERY_JOB, {
     variables: { id: _id },
   });
-  const job = data?.jobApplication || {};
+  const job = data?.job || {};
 
   if (loading) {
     return <secton>Loading...</secton>;

@@ -24,7 +24,7 @@ const NoteSchema = new Schema(
   }
 );
 
-const jobApplicationSchema = new Schema(
+const JobSchema = new Schema(
   {
     company: {
       type: String,
@@ -60,6 +60,6 @@ const jobApplicationSchema = new Schema(
   }
 );
 
-const JobApplication = model("Application", jobApplicationSchema);
+const Job = model("Job", JobSchema);
 
-module.exports = JobApplication;
+module.exports = Job;

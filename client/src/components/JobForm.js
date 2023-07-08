@@ -13,8 +13,8 @@ function JobForm({ initialValues }) {
   const editPath = window.location.pathname.includes("/edit-job");
   const navigate = useNavigate();
 
-  const [addJobApplication, { error }] = useMutation(ADD_JOB, {
-    update(cache, { data: { addJobApplication } }) {
+  const [addJob, { error }] = useMutation(ADD_JOB, {
+    update(cache, { data: { addJob } }) {
       try {
         const queryData = cache.readQuery({ query: QUERY_ME });
         const me = queryData?.me;
@@ -24,7 +24,7 @@ function JobForm({ initialValues }) {
             data: {
               me: {
                 ...me,
-                jobApplications: [...me.jobApplications, addJobApplication],
+                jobs: [...me.jobs, addJob],
               },
             },
           });
@@ -36,7 +36,7 @@ function JobForm({ initialValues }) {
     },
   });
 
-  const [editJobApplication] = useMutation(EDIT_JOB);
+  const [editJob] = useMutation(EDIT_JOB);
 
   useEffect(() => {
     if (initialValues) {
@@ -79,11 +79,11 @@ function JobForm({ initialValues }) {
 
     try {
       if (editPath) {
-        await editJobApplication({
+        await editJob({
           variables: { id: initialValues._id, ...variables },
         });
       } else {
-        await addJobApplication({ variables });
+        await addJob({ variables });
       }
       // redirects user back to home
       navigate("/");
@@ -94,7 +94,7 @@ function JobForm({ initialValues }) {
 
   return (
     <>
-      <h2>job application</h2>
+      <h2>job </h2>
       <form onSubmit={handleFormSubmit} className="job-form">
         <article className="wrapper">
           <label htmlFor="company">Company</label>

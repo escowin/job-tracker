@@ -12,16 +12,14 @@ function Job() {
       // reads query_me data from cache
       const { me } = cache.readQuery({ query: QUERY_ME });
       // removes deleted job from job app array
-      const updatedJobApplications = me.jobApplications.filter(
-        (job) => job._id !== _id
-      );
+      const updatedJobs = me.jobs.filter((job) => job._id !== _id);
       // writes updated query_me data to cache
       cache.writeQuery({
         query: QUERY_ME,
         data: {
           me: {
             ...me,
-            jobApplications: updatedJobApplications,
+            jobs: updatedJobs,
           },
         },
       });
@@ -30,7 +28,7 @@ function Job() {
   const { loading, data } = useQuery(QUERY_JOB, {
     variables: { id: _id },
   });
-  const job = data?.jobApplication || {};
+  const job = data?.job || {};
 
   // button navigation
   const navigate = useNavigate();
@@ -54,7 +52,7 @@ function Job() {
   return (
     <>
       <section>
-        <h2>job application</h2>
+        <h2>job </h2>
         <article>
           <p>{job.company}</p>
           <p>{job.role}</p>

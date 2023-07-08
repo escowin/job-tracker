@@ -4,7 +4,7 @@ export const QUERY_ME = gql`
   {
     me {
       username
-      jobApplications {
+      jobs {
         _id
         company
         role
@@ -20,8 +20,8 @@ export const QUERY_ME = gql`
 `;
 
 export const QUERY_JOB = gql`
-  query JobApplication($id: ID!) {
-    jobApplication(_id: $id) {
+  query Job($id: ID!) {
+    job(_id: $id) {
       _id
       company
       role

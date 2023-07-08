@@ -9,10 +9,10 @@ const typeDefs = gql`
     rejectedCount: Int
     hiredCount: Int
     pendingCount: Int
-    jobApplications: [JobApplication]
+    jobs: [Job]
   }
 
-  type JobApplication {
+  type Job {
     _id: ID
     company: String
     role: String
@@ -24,22 +24,22 @@ const typeDefs = gql`
     me: User
     users: [User]
     user(username: String!): User
-    jobApplications: [JobApplication]
-    jobApplication(_id: ID!): JobApplication
+    jobs: [Job]
+    job(_id: ID!): Job
   }
 
   type Mutation {
     login(username: String!, password: String!): Auth
     addUser(username: String!, password: String!): Auth
-    addApplication(company: String!, role: String!, dateSubmitted: String!): JobApplication
-    editApplication(
+    addJob(company: String!, role: String!, dateSubmitted: String!): Job
+    editJob(
       _id: String!
       company: String
       role: String
       dateSubmitted: String
       status: String
-    ): JobApplication
-    deleteApplication(_id: String!): JobApplication
+    ): Job
+    deleteJob(_id: String!): Job
   }
 
   type Auth {

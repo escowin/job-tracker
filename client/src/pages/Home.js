@@ -3,14 +3,14 @@ import { QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 import Profile from "../components/Profile";
 import JobLists from "../components/JobsList";
-import "../assets/css/home.css"
+import "../assets/css/home.css";
 
 function Home() {
   // user info is dependent in being logged in
   const loggedIn = Auth.loggedIn();
   const { loading, data } = useQuery(QUERY_ME);
   const user = data?.me || {};
-  const jobApplications = user?.jobApplications || [];
+  const jobs = user?.jobs || [];
 
   if (loading) {
     return <section>Loading...</section>;
@@ -21,7 +21,7 @@ function Home() {
       {loggedIn && user ? (
         <>
           <Profile user={user} />
-          <JobLists jobApplications={jobApplications} />
+          <JobLists jobs={jobs} />
         </>
       ) : (
         <section>log in to view contents</section>

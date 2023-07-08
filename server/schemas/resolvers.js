@@ -1,4 +1,4 @@
-const { User, JobApplication } = require("../models");
+const { User, Job } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 
@@ -10,21 +10,21 @@ const resolvers = {
       }
       const user = await User.findOne({ _id: context.user._id })
         .select("-__v -password")
-        .populate("jobApplications");
+        .populate("jobs");
 
       return user;
     },
     users: async () => {
-      return User.find().select("-__v -password").populate("jobApplications");
+      return User.find().select("-__v -password").populate("job");
     },
     user: async (parent, { username }) => {
       return User.findOne({ username })
         .select("-__v -password")
-        .populate("jobApplications");
+        .populate("jobs");
     },
-    jobApplications: async () => JobApplication.find(),
-    jobApplication: async (parent, { _id }) => {
-      return JobApplication.findOne({ _id });
+    jobs: async () => Job.find(),
+    job: async (parent, { _id }) => {
+      return Job.findOne({ _id });
     },
   },
   Mutation: {
@@ -48,52 +48,52 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
-    addApplication: async (parent, args, context) => {
+    addJob: async (parent, args, context) => {
       if (!context.user) {
         throw new AuthenticationError("you must be logged in");
       }
 
-      const jobApplication = await JobApplication.create({
+      const job = await Job.create({
         ...args,
         username: context.user.username,
       });
 
       await User.findByIdAndUpdate(
         { _id: context.user._id },
-        { $push: { jobApplications: jobApplication._id } },
+        { $push: { jobs: job._id } },
         { new: true }
       );
-      return jobApplication;
+      return job;
     },
-    editApplication: async (parents, args, context) => {
+    editJob: async (parents, args, context) => {
       if (!context.user) {
         throw new AuthenticationError("you must be logged in");
       }
       const { _id, ...updatedFields } = args;
 
-      const jobApplication = await JobApplication.findByIdAndUpdate(
+      const job = await Job.findByIdAndUpdate(
         _id,
         { $set: updatedFields },
         { new: true }
       );
-      if (!jobApplication) {
-        throw new Error("job application not found");
+      if (!job) {
+        throw new Error("job not found");
       }
 
-      return jobApplication;
+      return job;
     },
-    deleteApplication: async (parents, args, context) => {
+    deleteJob: async (parents, args, context) => {
       if (!context.user) {
         throw new AuthenticationError("you must be logged in");
       }
-      const jobApplication = await JobApplication.findByIdAndDelete(args._id);
+      const job = await Job.findByIdAndDelete(args._id);
 
       await User.findByIdAndUpdate(
         { _id: context.user._id },
-        { $pull: { jobApplications: jobApplication._id } },
+        { $pull: { jobs: job._id } },
         { new: true }
       );
-      return jobApplication;
+      return job;
     },
   },
 };
