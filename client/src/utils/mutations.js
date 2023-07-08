@@ -67,3 +67,16 @@ export const DELETE_JOB = gql`
     }
   }
 `;
+
+export const ADD_NOTE = gql`
+  mutation addNote($jobId: ID!, $note: String!) {
+    addNote(jobId: $jobId, note: $note) {
+      _id
+      noteCount
+      notes {
+        _id
+        note
+      }
+    }
+  }
+`;

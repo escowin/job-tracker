@@ -10,6 +10,11 @@ export const QUERY_ME = gql`
         role
         status
         dateSubmitted
+        noteCount
+        notes {
+          _id
+          note
+        }
       }
       hiredCount
       rejectedCount
@@ -27,6 +32,11 @@ export const QUERY_JOB = gql`
       role
       status
       dateSubmitted
+      noteCount
+      notes {
+        _id
+        note
+      }
     }
   }
 `;
