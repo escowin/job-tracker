@@ -23,7 +23,6 @@ export const QUERY_JOB_APPLICATIONS = gql`
   {
     jobApplications {
       company
-      dateSubmitted
       role
       status
     }

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 function JobApplication({ jobApplications }) {
   return (
     <section className="job-apps">
@@ -9,11 +11,10 @@ function JobApplication({ jobApplications }) {
         <p>date submitted</p>
       </article>
       {jobApplications.map((job, i) => (
-        <article key={i} data-id={job._id} className={`${job.status} job`}>
+        <article key={i} className={`${job.status} job`}>
           <p>{job.company}</p>
-          <p>{job.role}</p>
+          <p><Link to={`/job/${job._id}`}>{job.role}</Link></p>
           <p>{job.status}</p>
-          <p>{job.dateSubmitted}</p>
         </article>
       ))}
     </section>

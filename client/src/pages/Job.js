@@ -4,20 +4,36 @@ import { QUERY_JOB } from "../utils/queries";
 import Auth from "../utils/auth";
 
 function Job() {
-    const loggedIn = Auth.loggedIn()
-    const { id: _id } = useParams()
+  const loggedIn = Auth.loggedIn();
+  const { id: _id } = useParams();
 
-    const { loading, data } = useQuery(QUERY_JOB, {
-        variables: { id: _id }
-    })
-    const job = data?.jobApplication || {}
-    console.log(job)
+  const { loading, data } = useQuery(QUERY_JOB, {
+    variables: { id: _id },
+  });
+  const job = data?.jobApplication || {};
 
-    if (loading) {
-        return <section>loading...</section>
-    }
+  if (loading) {
+    return <section>loading...</section>;
+  }
 
-    return <>test</>
+  return (
+    <>
+      <section>
+        <h2>job application</h2>
+        <article>
+          <p>{job.company}</p>
+          <p>{job.role}</p>
+          <p>{job.status}</p>
+          <p>{job.dateSubmitted}</p>
+        </article>
+      </section>
+      <section>
+        <button>go back</button>
+        <button>edit</button>
+        <button>delete</button>
+      </section>
+    </>
+  );
 }
 
-export default Job
+export default Job;
