@@ -1,6 +1,29 @@
 const { Schema, model } = require("mongoose");
 const dateFormat = require("../utils/dateFormat");
 
+const NoteSchema = new Schema(
+  {
+    noteId: {
+      type: Schema.Types.ObjectId,
+      default: () => new Types.ObjectId(),
+    },
+    noteBody: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: (timestamp) => dateFormat(timestamp),
+    },
+  },
+  {
+    toJson: { getters: true },
+    id: false,
+  }
+);
+
 const jobApplicationSchema = new Schema(
   {
     company: {
@@ -20,12 +43,15 @@ const jobApplicationSchema = new Schema(
       trim: true,
     },
     dateSubmitted: {
-      // type: Date,
       type: String,
       required: true,
-      // default: Date.now,
-      // get: (timestamp) => dateFormat(timestamp)
     },
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: (timestamp) => dateFormat(timestamp),
+    },
+    notes: [NoteSchema],
   },
   {
     toJSON: {
