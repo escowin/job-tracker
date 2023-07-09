@@ -76,7 +76,7 @@ function Job() {
       <section className="notes-section">
         <h2>Notes</h2>
         <NoteForm jobId={job._id}/>
-        {job.noteCount > 0 && <NoteList notes={job.notes} />}
+        {job.noteCount > 0 && <NoteList notes={job.notes} jobId={job._id} />}
       </section>
     </>
   );
