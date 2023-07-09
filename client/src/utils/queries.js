@@ -11,10 +11,6 @@ export const QUERY_ME = gql`
         status
         dateSubmitted
         noteCount
-        notes {
-          _id
-          note
-        }
       }
       hiredCount
       rejectedCount
@@ -36,6 +32,7 @@ export const QUERY_JOB = gql`
       notes {
         _id
         note
+        createdAt
       }
     }
   }

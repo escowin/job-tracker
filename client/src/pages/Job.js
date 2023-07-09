@@ -3,6 +3,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_JOB, QUERY_ME } from "../utils/queries";
 import { DELETE_JOB } from "../utils/mutations";
 import Auth from "../utils/auth";
+import NoteList from "../components/NoteList";
 
 function Job() {
   const loggedIn = Auth.loggedIn();
@@ -71,6 +72,7 @@ function Job() {
         <button onClick={() => handleDelete(job._id)}>delete</button>
         {error && <span>error</span>}
       </section>
+      {job.noteCount > 0 && <NoteList notes={job.notes} />}
     </>
   );
 }
