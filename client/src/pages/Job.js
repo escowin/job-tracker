@@ -4,6 +4,7 @@ import { QUERY_JOB, QUERY_ME } from "../utils/queries";
 import { DELETE_JOB } from "../utils/mutations";
 import Auth from "../utils/auth";
 import NoteList from "../components/NoteList";
+import NoteForm from "../components/NoteForm";
 
 function Job() {
   const loggedIn = Auth.loggedIn();
@@ -57,22 +58,26 @@ function Job() {
 
   return (
     <>
-      <section>
-        <h2>job </h2>
+      <section className="job-section">
+        <h2>Job </h2>
         <article>
           <p>{job.company}</p>
           <p>{job.role}</p>
           <p>{job.status}</p>
           <p>{job.dateSubmitted}</p>
         </article>
+        <article>
+          <button onClick={handleGoBack}>go back</button>
+          <button onClick={handleEdit}>edit</button>
+          <button onClick={() => handleDelete(job._id)}>delete</button>
+          {error && <span>error</span>}
+        </article>
       </section>
-      <section>
-        <button onClick={handleGoBack}>go back</button>
-        <button onClick={handleEdit}>edit</button>
-        <button onClick={() => handleDelete(job._id)}>delete</button>
-        {error && <span>error</span>}
+      <section className="notes-section">
+        <h2>Notes</h2>
+        <NoteForm />
+        {job.noteCount > 0 && <NoteList notes={job.notes} />}
       </section>
-      {job.noteCount > 0 && <NoteList notes={job.notes} />}
     </>
   );
 }
