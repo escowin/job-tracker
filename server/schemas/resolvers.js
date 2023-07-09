@@ -105,8 +105,26 @@ const resolvers = {
         { $push: { notes: { note } } },
         { new: true, runValidators: true }
       );
-      
+
       return updatedJob;
+    },
+    deleteNote: async (parents, { _id, jobId }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("you must be logged in");
+      }
+      try {
+        const updatedJob = await Job.findOneAndUpdate(
+          { _id: jobId },
+          { $pull: { notes: { _id: _id } } },
+          { new: true, runValidators: true }
+        );
+        if (!updatedJob) {
+          throw new Error("job not found");
+        }
+        return updatedJob;
+      } catch (err) {
+        throw new Error("failed to delete note");
+      }
     },
   },
 };
