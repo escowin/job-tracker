@@ -1,9 +1,5 @@
-import {
-  ApolloProvider,
-  ApolloClient,
-  InMemoryCache,
-  createHttpLink,
-} from "@apollo/client";
+import { ApolloProvider, ApolloClient, createHttpLink } from "@apollo/client";
+import { InMemoryCache } from "@apollo/client/cache";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
@@ -34,10 +30,25 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+// addressing warning: cache data may be lost when replacing the notes field of a Job object.
+const customMergeFunction = {
+  Job: {
+    fields: {
+      notes: {
+        merge(existing = [], incoming) {
+          return incoming;
+        },
+      },
+    },
+  },
+};
+
 // instantiated apollo client & creates api endpoint connections
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    typePolicies: customMergeFunction,
+  }),
 });
 
 function App() {
