@@ -5,6 +5,7 @@
   --pending: rgb(69, 176, 134);
   --rejected: rgb(178, 89, 89);
   --hired: rgb(109, 169, 219);
+  --button: rgb(182, 199, 215);
 }
 
 * {
@@ -43,6 +44,7 @@ a {
   background-color: var(--secondary);
   color: var(--tertiary);
   font-variant: small-caps;
+  overflow-y: none;
 }
 
 header,
@@ -51,11 +53,20 @@ footer {
   display: flex;
   flex-direction: column;
   width: inherit;
+}
+
+header,
+footer {
+  padding: .25rem .5rem;
+}
+
+header,
+main {
   background-color: var(--primary);
 }
 
-header, footer {
-  padding: .25rem .5rem;
+footer {
+  color: var(--primary);
 }
 
 nav {
@@ -68,7 +79,7 @@ main {
   flex-grow: 1;
   gap: 1rem;
   align-items: center;
-  padding: 2rem .5rem;
+  padding: 1rem .5rem;
 }
 
 section {
@@ -81,14 +92,17 @@ section {
   border: 1px solid var(--primary);
 }
 
-/* homepage */
+.log-in section {
+  width: 100%;
+}
+
 
 /* job */
 .job-form-section {
   width: 75vw;
 }
 
-/* form */
+/* universal form styles */
 .job-form {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -115,22 +129,45 @@ fieldset {
   padding: .25rem .5rem
 }
 
-input, button {
+input, textarea, button {
+    transition: 1s;
+}
+
+input,
+button {
   border-radius: 4rem;
   padding: .5rem;
 }
 
-input {
+input, textarea {
   background-color: var(--secondary);
   border: none;
 }
 
-input:focus {
+input:focus, textarea:focus {
   outline: none;
+  background-color: var(--tertiary);
+}
+
+textarea {
+  border-radius: 1rem;
+  padding: .5rem;
+}
+
+button {
+  font-variant: small-caps;
+  background-color: var(--button);
+  border: none;
+  transition: 1s;
+  font-weight: bolder;
 }
 
 @media screen and (min-width: 768px) {
-  body, input, button {
+
+  body,
+  input,
+  textarea,
+  button {
     font-size: 1.5rem;
   }
 
@@ -150,7 +187,14 @@ input:focus {
 }
 
 @media screen and (min-width: 1024px) {
-  /* nav {
-    align-items: flex-end;
-  } */
+
+  .App {
+    overflow-y: none;
+    height: 100vh;
+  }
+
+  main {
+    flex-grow: 0;
+    height: 85%;
+  }
 }

@@ -23,7 +23,7 @@ function NoteForm({ jobId }) {
     <article>
       <form onSubmit={handleFormSubmit} className="note-form">
         <label>add note</label>
-        <input name="note" value={note} onChange={handleChange}></input>
+        <textarea name="note" value={note} onChange={handleChange}/>
         <button type="submit">submit</button>
       </form>
       {error && <span>error</span>}

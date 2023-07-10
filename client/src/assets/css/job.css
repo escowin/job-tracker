@@ -1,0 +1,49 @@
+.job-details {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: .25rem 1rem;
+    padding: .25rem .5rem;
+}
+
+.job-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.note-form {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.note-form textarea {
+    resize: none;
+    height: 4rem;
+}
+
+/* note list component */
+.notes {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.note {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas: 
+    "a c"
+    "b c";
+}
+
+.note h3 {
+    grid-area: a;
+}
+
+.note p {
+    grid-area: b;
+}
+
+.note button {
+    grid-area: c;
+}

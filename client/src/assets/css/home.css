@@ -1,6 +1,3 @@
-.log-in section {
-    width: 100%;
-}
 
 .user-profile,
 .jobs article {
@@ -16,14 +13,14 @@
     grid-column: span 5;
 }
 
-.jobs article {
-    grid-template-columns: repeat(4, 1fr);
-}
-
 .jobs {
     display: flex;
     flex-direction: column;
     gap: .5rem;
+}
+
+.jobs article {
+    grid-template-columns: repeat(4, 1fr);
 }
 
 .job {
@@ -56,8 +53,11 @@
 }
 
 @media screen and (min-width: 1024px) {
+    ::-webkit-scrollbar {
+        display: none;
+    }
     .jobs {
-        height: 60vh;
+        max-height: fit-content;
         overflow-y: scroll;
     }
 }

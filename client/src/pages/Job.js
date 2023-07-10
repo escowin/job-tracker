@@ -5,6 +5,7 @@ import { DELETE_JOB } from "../utils/mutations";
 import Auth from "../utils/auth";
 import NoteList from "../components/NoteList";
 import NoteForm from "../components/NoteForm";
+import "../assets/css/job.css"
 
 function Job() {
   const loggedIn = Auth.loggedIn();
@@ -58,15 +59,17 @@ function Job() {
 
   return (
     <>
-      <section className="job-section">
-        <h2>Job </h2>
-        <article>
+      <section className={`job-section ${job.status}}`}>
+        <h2>{job.role}</h2>
+        <article className="job-details">
+          <p>Company</p>
           <p>{job.company}</p>
-          <p>{job.role}</p>
+          <p>Status</p>
           <p>{job.status}</p>
+          <p>Date applied</p>
           <p>{job.dateSubmitted}</p>
         </article>
-        <article>
+        <article className="job-buttons">
           <button onClick={handleGoBack}>go back</button>
           <button onClick={handleEdit}>edit</button>
           <button onClick={() => handleDelete(job._id)}>delete</button>
