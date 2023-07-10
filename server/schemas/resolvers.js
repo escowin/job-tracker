@@ -10,7 +10,10 @@ const resolvers = {
       }
       const user = await User.findOne({ _id: context.user._id })
         .select("-__v -password")
-        .populate("jobs");
+        .populate({
+          path: "jobs",
+          options: { sort: { dateSubmitted: -1 } },
+        });
 
       return user;
     },
@@ -22,7 +25,7 @@ const resolvers = {
         .select("-__v -password")
         .populate("jobs");
     },
-    jobs: async () => Job.find(),
+    jobs: async () => Job.find().sort({ dateSubmitted: -1 }),
     job: async (parent, { _id }) => {
       return Job.findOne({ _id });
     },
