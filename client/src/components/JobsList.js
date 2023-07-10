@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { formatDate } from "../utils/helpers";
 
 function JobLists({ jobs }) {
   if (!jobs.length) {
@@ -23,7 +24,7 @@ function JobLists({ jobs }) {
           </p>
           <p>{job.status}</p>
           <p className="count">{job.noteCount}</p>
-          <p className="display-md">{job.dateSubmitted}</p>
+          <p className="display-md">{formatDate(job.dateSubmitted)}</p>
         </article>
       ))}
     </section>

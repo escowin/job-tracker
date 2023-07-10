@@ -1,7 +1,9 @@
+import { capitalizeFirstLetter } from "../utils/helpers";
+
 function Profile({ user }) {
   return (
     <section className="user-profile">
-      <h2>{user.username} overview</h2>
+      <h2>{capitalizeFirstLetter(user.username)} overview</h2>
       <article>
         <p>pending</p>
         <p className="pending count">{user.pendingCount}</p>
