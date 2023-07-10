@@ -42,7 +42,6 @@ a {
   align-items: center;
   background-color: var(--secondary);
   color: var(--tertiary);
-  /* gap: 1rem; */
   font-variant: small-caps;
 }
 

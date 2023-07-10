@@ -67,6 +67,14 @@ UserSchema.virtual("hiredCount").get(function () {
   return result.length;
 });
 
+UserSchema.virtual("rate").get(function() {
+  const hiredCount = this.hiredCount;
+  const totalCount = this.totalSubmitted;
+  const result = (hiredCount / totalCount) * 100;
+  const rounded = Math.round(result * 100) / 100;
+  return `${rounded}%`
+})
+
 UserSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };

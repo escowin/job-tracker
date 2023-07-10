@@ -16,6 +16,7 @@ export const QUERY_ME = gql`
       rejectedCount
       pendingCount
       totalSubmitted
+      rate
     }
   }
 `;

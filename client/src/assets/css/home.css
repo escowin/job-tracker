@@ -1,14 +1,26 @@
-.user-profile, .job-apps article {
+.log-in section {
+    width: 100%;
+}
+
+.user-profile,
+.jobs article {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
     gap: .25rem .5rem;
 }
 
-.user-profile h2 {
-    grid-column: span 4;
+.user-profile {
+    grid-template-columns: repeat(5, auto);
 }
 
-.job-apps {
+.user-profile h2 {
+    grid-column: span 5;
+}
+
+.jobs article {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.jobs {
     display: flex;
     flex-direction: column;
     gap: .5rem;
@@ -19,4 +31,33 @@
     border-radius: 2rem;
     padding: .25rem .5rem;
     align-items: center;
+}
+
+.display-md {
+    display: none;
+}
+
+@media screen and (min-width: 768px) {
+    .display-md {
+        display: contents;
+    }
+    .count {
+        padding-left: .75rem;
+    }
+
+    .jobs article,
+    .user-profile {
+        grid-template-columns: repeat(5, 1fr);
+    }
+   
+    .job p:nth-child(1) {
+        padding-left: .25rem;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .jobs {
+        height: 60vh;
+        overflow-y: scroll;
+    }
 }
