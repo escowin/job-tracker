@@ -35,16 +35,24 @@ a {
 }
 
 /* divs */
+#root {
+  display: flex;
+  height: 100vh;
+    overflow-y: hidden;
+
+}
+
 .App {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  /* height: 100vh; */
   width: 100%;
   align-items: center;
   background-color: var(--secondary);
   color: var(--tertiary);
   font-variant: small-caps;
-  overflow-y: none;
+  flex-grow: 1;
+
 }
 
 header,
@@ -76,7 +84,7 @@ nav {
 
 main {
   background-color: transparent;
-  flex-grow: 1;
+  height: 100%;
   gap: 1rem;
   align-items: center;
   padding: 1rem .5rem;
@@ -91,11 +99,6 @@ section {
   border-radius: 1rem;
   border: 1px solid var(--primary);
 }
-
-.log-in section {
-  width: 100%;
-}
-
 
 /* job */
 .job-form-section {
@@ -196,5 +199,9 @@ button {
   main {
     flex-grow: 0;
     height: 85%;
+  }
+
+  .job-form-section {
+    width: 50vw;
   }
 }

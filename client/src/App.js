@@ -2,7 +2,6 @@ import { ApolloProvider, ApolloClient, createHttpLink } from "@apollo/client";
 import { InMemoryCache } from "@apollo/client/cache";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Auth from "./utils/auth";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -53,12 +52,11 @@ const client = new ApolloClient({
 });
 
 function App() {
-  const loggedIn = Auth.loggedIn();
 
   return (
     <ApolloProvider client={client}>
       <Router>
-        <div className={`App${loggedIn ? " log-in" : ""}`}>
+        <div className="App">
           <Header />
           <main>
             <Routes>

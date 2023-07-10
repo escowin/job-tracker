@@ -5,6 +5,9 @@
     gap: .25rem .5rem;
 }
 
+.user-profile, .jobs {
+    width: 100%;
+}
 .user-profile {
     grid-template-columns: repeat(5, auto);
 }
