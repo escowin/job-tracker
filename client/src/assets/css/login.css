@@ -8,3 +8,19 @@
     display: inherit;
     flex-direction: inherit;
 }
+
+@media screen and (min-width: 768px) {
+    .login-form {
+        gap: 1.25rem;
+    }
+
+    .login-form .wrapper {
+        gap: .25rem;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .login-form .wrapper {
+        gap: .5rem;
+    }
+  }
