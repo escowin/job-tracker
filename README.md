@@ -20,12 +20,6 @@ Run the following command to install necessary dependencies:
 $ npm i
 ```
 
-## Test
-Run the following command to run tests:
-```
-$ npm run test
-```
-
 ## Usage
 Run the following command to run app:
 ```
