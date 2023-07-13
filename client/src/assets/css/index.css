@@ -38,7 +38,7 @@ a {
 #root {
   display: flex;
   height: 100vh;
-    overflow-y: hidden;
+  overflow-y: hidden;
 
 }
 
@@ -132,8 +132,10 @@ fieldset {
   padding: .25rem .5rem
 }
 
-input, textarea, button {
-    transition: 1s;
+input,
+textarea,
+button {
+  transition: 1s;
 }
 
 input,
@@ -142,12 +144,14 @@ button {
   padding: .5rem;
 }
 
-input, textarea {
+input,
+textarea {
   background-color: var(--secondary);
   border: none;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   outline: none;
   background-color: var(--tertiary);
 }
@@ -190,15 +194,18 @@ button {
 }
 
 @media screen and (min-width: 1024px) {
-
+  
   .App {
     overflow-y: none;
     height: 100vh;
   }
 
   main {
-    flex-grow: 0;
-    height: 85%;
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: baseline;
+    overflow: hidden;
+    font-size: 1.25rem;
   }
 
   .job-form-section {

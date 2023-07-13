@@ -59,8 +59,46 @@
     ::-webkit-scrollbar {
         display: none;
     }
+
+    main {
+        align-items: baseline;
+    }
+
     .jobs {
-        max-height: fit-content;
+        height: 100%;
         overflow-y: scroll;
+    }
+
+    .user-profile {
+        display: flex;
+        width: fit-content;
+    }
+
+    .user-profile article {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .jobs article {
+        grid-template-columns: 1fr 2fr 8% 5% 10%;
+        width: 100%;
+        gap: 1rem;
+    }
+
+    .user-profile .count {
+        padding: 0;
+    }
+
+    .jobs h2 {
+        position: sticky;
+        top: 0;
+        background-color: var(--primary);
+        box-shadow: 0 0 1rem 1.75rem var(--primary);
+    }
+
+    .jobs article:nth-child(2) {
+        position: sticky;
+        top: 2.75rem;
+        background-color: var(--primary);
     }
 }
