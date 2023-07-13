@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import { QUERY_JOB } from "../utils/queries";
 import { DELETE_NOTE } from "../utils/mutations";
 
-function NoteList({ notes, jobId }) {
+function NoteList({ notes, jobId, status }) {
   let deletedNoteId;
   const [deleteNote, { error }] = useMutation(DELETE_NOTE, {
     update(cache, { data }) {
@@ -45,7 +45,7 @@ function NoteList({ notes, jobId }) {
   return (
     <ul className="notes">
       {notes.map((note, i) => (
-        <li key={i} className="note">
+        <li key={i} className={`note ${status}`}>
           <h3>{note.createdAt}</h3>
           <p>{note.note}</p>
           <button onClick={() => handleDeleteNote(note._id)}>delete</button>

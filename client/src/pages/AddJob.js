@@ -1,5 +1,6 @@
 import JobForm from "../components/JobForm";
 import Auth from "../utils/auth";
+import "../assets/css/job-form.css"
 
 function AddJob() {
   const loggedIn = Auth.loggedIn();
@@ -10,7 +11,7 @@ function AddJob() {
 
   return (
     <section className="job-form-section">
-      <JobForm initialValues={{}} />
+      <JobForm initialValues={{}} title={"add job"} />
     </section>
   );
 }

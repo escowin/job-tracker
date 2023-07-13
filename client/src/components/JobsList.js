@@ -7,7 +7,7 @@ function JobLists({ jobs }) {
   }
 
   return (
-    <section className="jobs">
+    <section className="jobs list-section">
       <h2>job applications</h2>
       <article>
         <p>company</p>

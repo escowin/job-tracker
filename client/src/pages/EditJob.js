@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client";
 import { QUERY_JOB } from "../utils/queries";
 import JobForm from "../components/JobForm";
 import Auth from "../utils/auth";
+import "../assets/css/job-form.css"
 
 function EditJob() {
   const loggedIn = Auth.loggedIn();
@@ -21,7 +22,7 @@ function EditJob() {
 
   return (
     <section className="job-form-section">
-      <JobForm initialValues={job} />
+      <JobForm initialValues={job} title={"edit job"}/>
     </section>
   );
 }

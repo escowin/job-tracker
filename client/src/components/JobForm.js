@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ADD_JOB, EDIT_JOB } from "../utils/mutations";
 import { QUERY_ME } from "../utils/queries";
+import { capitalizeFirstLetter } from "../utils/helpers"
 
-function JobForm({ initialValues }) {
+function JobForm({ initialValues, title }) {
+  console.log(title)
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
   const [dateSubmitted, setDateSubmitted] = useState("");
@@ -94,7 +96,8 @@ function JobForm({ initialValues }) {
 
   return (
     <>
-      <h2>job </h2>
+      <h2>{capitalizeFirstLetter(title)}</h2>
+
       <form onSubmit={handleFormSubmit} className="job-form">
         <article className="wrapper">
           <label htmlFor="company">Company</label>

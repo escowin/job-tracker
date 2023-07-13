@@ -2,7 +2,7 @@ import { capitalizeFirstLetter } from "../utils/helpers";
 
 function Profile({ user }) {
   return (
-    <section className="user-profile">
+    <section className="user-profile details-section">
       <h2>{capitalizeFirstLetter(user.username)} overview</h2>
       <article>
         <p>pending</p>

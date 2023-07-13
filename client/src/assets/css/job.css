@@ -43,9 +43,9 @@
 .note {
     display: grid;
     grid-template-columns: 1fr auto;
-    grid-template-areas: 
-    "a c"
-    "b c";
+    grid-template-areas:
+        "a c"
+        "b c";
 }
 
 .note h3 {
@@ -62,8 +62,25 @@
 }
 
 @media screen and (min-width: 1024px) {
-    main {
-        display: grid;
-        grid-template-columns: 1fr auto;
+
+    .job-details {
+        display: flex;
+        flex-direction: column;
     }
+
+    .job-details p:nth-child(even) {
+        padding-left: 1rem;
+    }
+
+    .notes-section {
+        width: 60vw;
+        max-height: inherit;
+        height: 100%;
+    }
+
+    .notes-section button {
+        padding: .15rem 1rem;
+    }
+
+
 }

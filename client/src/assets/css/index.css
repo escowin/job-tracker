@@ -6,6 +6,7 @@
   --rejected: rgb(178, 89, 89);
   --hired: rgb(109, 169, 219);
   --button: rgb(182, 199, 215);
+  --highlight: rgb(110, 225, 165);
 }
 
 * {
@@ -100,27 +101,6 @@ section {
   border: 1px solid var(--primary);
 }
 
-/* job */
-.job-form-section {
-  width: 75vw;
-}
-
-/* universal form styles */
-.job-form {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: .5rem;
-}
-
-.job-form article {
-  display: flex;
-  flex-direction: column;
-}
-
-.job-form .wrapper {
-  grid-column: span 2;
-}
-
 .wrapper {
   gap: .25rem;
 }
@@ -163,10 +143,15 @@ textarea {
 
 button {
   font-variant: small-caps;
-  background-color: var(--button);
-  border: none;
+  background-color: transparent;
+  border: 1px solid var(--secondary);
   transition: 1s;
-  font-weight: bolder;
+  color: var(--secondary);
+}
+
+button:active, button:hover {
+  border-color: var(--highlight);
+  color: var(--highlight);
 }
 
 @media screen and (min-width: 768px) {
@@ -194,7 +179,10 @@ button {
 }
 
 @media screen and (min-width: 1024px) {
-  
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
   .App {
     overflow-y: none;
     height: 100vh;
@@ -202,13 +190,14 @@ button {
 
   main {
     display: grid;
+    align-items: flex-start;
     grid-template-columns: auto auto;
-    align-items: baseline;
     overflow: hidden;
-    font-size: 1.25rem;
+    font-size: 1.15rem;
+  }
+  
+  button {
+    padding: .15rem;
   }
 
-  .job-form-section {
-    width: 50vw;
-  }
 }

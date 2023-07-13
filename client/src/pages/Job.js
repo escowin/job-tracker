@@ -59,9 +59,9 @@ function Job() {
 
   return (
     <>
-      <section className={`job-section ${job.status}}`}>
+      <section className={`job-section details-section`}>
         <h2>{job.role}</h2>
-        <article className="job-details">
+        <article className={`job-details  ${job.status}`}>
           <p>Company</p>
           <p>{job.company}</p>
           <p>Status</p>
@@ -76,10 +76,10 @@ function Job() {
           {error && <span>error</span>}
         </article>
       </section>
-      <section className="notes-section">
+      <section className="notes-section list-section">
         <NoteForm jobId={job._id}/>
         <h2>Notes</h2>
-        {job.noteCount > 0 && <NoteList notes={job.notes} jobId={job._id} />}
+        {job.noteCount > 0 && <NoteList notes={job.notes} jobId={job._id} status={job.status}/>}
       </section>
     </>
   );

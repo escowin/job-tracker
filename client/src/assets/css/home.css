@@ -1,13 +1,14 @@
-
 .user-profile,
 .jobs article {
     display: grid;
     gap: .25rem .5rem;
 }
 
-.user-profile, .jobs {
+.user-profile,
+.jobs {
     width: 100%;
 }
+
 .user-profile {
     grid-template-columns: repeat(5, auto);
 }
@@ -41,6 +42,7 @@
     .display-md {
         display: contents;
     }
+
     .count {
         padding-left: .75rem;
     }
@@ -49,20 +51,13 @@
     .user-profile {
         grid-template-columns: repeat(5, 1fr);
     }
-   
+
     .job p:nth-child(1) {
         padding-left: .25rem;
     }
 }
 
 @media screen and (min-width: 1024px) {
-    ::-webkit-scrollbar {
-        display: none;
-    }
-
-    main {
-        align-items: baseline;
-    }
 
     .jobs {
         height: 100%;
@@ -78,7 +73,7 @@
         display: grid;
         grid-template-columns: 1fr 1fr;
     }
-    
+
     .jobs article {
         grid-template-columns: 1fr 2fr 8% 5% 10%;
         width: 100%;
