@@ -149,7 +149,8 @@ button {
   color: var(--secondary);
 }
 
-button:active, button:hover {
+button:active,
+button:hover {
   border-color: var(--highlight);
   color: var(--highlight);
 }
@@ -193,11 +194,36 @@ button:active, button:hover {
     align-items: flex-start;
     grid-template-columns: auto auto;
     overflow: hidden;
-    font-size: 1.15rem;
+    font-size: 1.125rem;
   }
-  
+
   button {
     padding: .15rem;
   }
 
+  input {
+    border-radius: .25rem;
+    font-size: 1rem;
+  }
+
+  input[type=date] {
+    width: fit-content;
+  }
+
+  fieldset {
+    grid-column: span 1;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .message  {
+    grid-column: span 2;
+    text-align: center;
+  }
+
+  .solo-section {
+    grid-column: span 2;
+  }
 }

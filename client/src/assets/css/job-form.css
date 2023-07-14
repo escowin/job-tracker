@@ -7,7 +7,7 @@
 .job-form {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: .5rem;
+    gap: .5rem 3rem;
 }
 
 .job-form article {
@@ -23,6 +23,6 @@
     .job-form-section {
         grid-column: span 2;
         justify-self: center;
-        width: 55vw;
+        width: 50vw;
     }
 }

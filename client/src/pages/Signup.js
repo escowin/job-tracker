@@ -26,7 +26,7 @@ function Signup() {
   };
 
   return (
-    <section>
+    <section className="solo-section" id="login-section">
       <h2>Sign up</h2>
       <form className="login-form" onSubmit={handleFormSubmit}>
         <article className="wrapper">
@@ -51,7 +51,7 @@ function Signup() {
           <button type="submit">submit</button>
         </article>
       </form>
-      {error && <p>Login failed</p>}
+      {error && <p>Sign up failed</p>}
     </section>
   );
 }

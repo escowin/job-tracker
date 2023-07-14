@@ -13,7 +13,7 @@ function Home() {
   const jobs = user?.jobs || [];
 
   if (loading) {
-    return <section>Loading...</section>;
+    return <section className="message">Loading...</section>;
   }
 
   return (
@@ -24,7 +24,7 @@ function Home() {
           <JobLists jobs={jobs} />
         </>
       ) : (
-        <section>log in to view contents</section>
+        <section className="message">log in to view contents</section>
       )}
     </>
   );

@@ -23,4 +23,9 @@
     .login-form .wrapper {
         gap: .5rem;
     }
+
+    #login-section {
+        width: fit-content;
+        justify-self: center;
+    }
   }

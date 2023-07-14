@@ -63,6 +63,9 @@
 
 @media screen and (min-width: 1024px) {
 
+    /* h2 {
+        font-size: 1.5rem;
+    } */
     .job-details {
         display: flex;
         flex-direction: column;
@@ -82,5 +85,8 @@
         padding: .15rem 1rem;
     }
 
-
+    .job-details {
+        display: grid;
+        grid-template-columns: auto 1fr;
+    }
 }

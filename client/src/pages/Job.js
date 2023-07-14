@@ -59,9 +59,9 @@ function Job() {
 
   return (
     <>
-      <section className={`job-section details-section`}>
+      <section className={`job-section details-section ${job.status}`}>
         <h2>{job.role}</h2>
-        <article className={`job-details  ${job.status}`}>
+        <article className="job-details">
           <p>Company</p>
           <p>{job.company}</p>
           <p>Status</p>

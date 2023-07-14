@@ -1,6 +1,6 @@
 function Page404() {
     return (
-        <section>404 Page not found</section>
+        <section class="message">404 Page not found</section>
     )
 }
 
