@@ -1,7 +1,7 @@
 {
-  "name": "job-app-tracker",
-  "version": "1.0.0",
-  "description": "tracking the status of sent job applications",
+  "name": "job-tracker",
+  "version": "1.3.0",
+  "description": "tracks job hunting stats",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,15 +13,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/escowin/job-app-tracker.git"
+    "url": "git+https://github.com/escowin/job-tracker.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/escowin/job-app-tracker/issues"
+    "url": "https://github.com/escowin/job-tracker/issues"
   },
-  "homepage": "https://github.com/escowin/job-app-tracker#readme",
+  "homepage": "https://github.com/escowin/job-tracker#readme",
   "devDependencies": {
     "concurrently": "^8.2.0"
   }
