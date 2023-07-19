@@ -1,5 +1,5 @@
 .job-section,
-.notes-section {
+#notes-section {
     width: 100%;
 }
 
@@ -16,7 +16,7 @@
     gap: 1rem;
 }
 
-.notes-section {
+#notes-section {
     max-height: 60vh;
     overflow-y: hidden;
 }
@@ -63,9 +63,6 @@
 
 @media screen and (min-width: 1024px) {
 
-    /* h2 {
-        font-size: 1.5rem;
-    } */
     .job-details {
         display: flex;
         flex-direction: column;
@@ -75,13 +72,17 @@
         padding-left: 1rem;
     }
 
-    .notes-section {
-        width: 60vw;
+    .list-section {
+        width: 100%;
+    }
+
+    /* section | notes */
+    #notes-section {
         max-height: inherit;
         height: 100%;
     }
 
-    .notes-section button {
+    #notes-section button {
         padding: .15rem 1rem;
     }
 

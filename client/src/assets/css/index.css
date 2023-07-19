@@ -189,12 +189,19 @@ button:hover {
     height: 100vh;
   }
 
+  footer {
+    align-items: center;
+    font-size: .75rem;
+  }
+
   main {
     display: grid;
     align-items: flex-start;
     grid-template-columns: auto auto;
     overflow: hidden;
     font-size: 1.125rem;
+    padding: 1rem .5rem 0 .5rem;
+    gap: .5rem;
   }
 
   button {

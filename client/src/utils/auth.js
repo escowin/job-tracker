@@ -8,7 +8,7 @@ class AuthService {
   }
 
   // checks if the user is still logged in
-  loggedIn() {
+  async loggedIn() {
     // checks if there is a saved jwt that's still valid
     const token = this.getToken();
     // uses type coersion to check if jwt is NOT undefined && NOT expired

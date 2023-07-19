@@ -95,7 +95,7 @@ function JobForm({ initialValues, title }) {
   };
 
   return (
-    <>
+    <section className="form-section">
       <h2>{capitalizeFirstLetter(title)}</h2>
 
       <form onSubmit={handleFormSubmit} className="job-form">
@@ -140,7 +140,7 @@ function JobForm({ initialValues, title }) {
         </article>
         {error && <span>error</span>}
       </form>
-    </>
+    </section>
   );
 }
 

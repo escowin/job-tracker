@@ -5,13 +5,7 @@ const secret = "testSecret";
 const expiration = "14d";
 
 module.exports = {
-  // expects user object & adds user's properties to the token
-  signToken: function ({ username, email, _id }) {
-    const payload = { username, email, _id };
-    return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
-  },
-
-  // middleware | verifies jwt
+ // middleware | verifies jwt
   authMiddleware: function ({ req }) {
     // allows jwt to be sent via body, query or headers
     let token = req.body.token || req.query.token || req.headers.authorization;
@@ -30,6 +24,7 @@ module.exports = {
     try {
       // decodes and attaches user data to req obj
       const { data } = jwt.verify(token, secret, { maxAge: expiration });
+      console.log(data)
       req.user = data;
     } catch {
       console.log("invalid token");
@@ -37,5 +32,10 @@ module.exports = {
 
     // returns the updated req obj
     return req;
+  },
+  // expects user object & adds user's properties to the token
+  signToken: function ({ username, _id }) {
+    const payload = { username, _id };
+    return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
   },
 };

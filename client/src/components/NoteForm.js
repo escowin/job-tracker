@@ -20,14 +20,14 @@ function NoteForm({ jobId }) {
   };
 
   return (
-    <article>
+    <section className="form-section">
       <form onSubmit={handleFormSubmit} className="note-form">
         <label>add note</label>
         <textarea name="note" value={note} onChange={handleChange}/>
         <button type="submit">submit</button>
       </form>
       {error && <span>error</span>}
-    </article>
+    </section>
   );
 }
 

@@ -76,8 +76,8 @@ function Job() {
           {error && <span>error</span>}
         </article>
       </section>
-      <section className="notes-section list-section">
-        <NoteForm jobId={job._id}/>
+      <NoteForm jobId={job._id}/>
+      <section className="list-section" id="notes-section">
         <h2>Notes</h2>
         {job.noteCount > 0 && <NoteList notes={job.notes} jobId={job._id} status={job.status}/>}
       </section>

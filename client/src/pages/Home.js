@@ -3,6 +3,8 @@ import { QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
 import Profile from "../components/Profile";
 import JobLists from "../components/JobsList";
+import JobForm from "../components/JobForm";
+
 import "../assets/css/home.css";
 
 function Home() {
@@ -11,6 +13,7 @@ function Home() {
   const { loading, data } = useQuery(QUERY_ME);
   const user = data?.me || {};
   const jobs = user?.jobs || [];
+  const minWidth = window.innerWidth >= 1024;
 
   if (loading) {
     return <section className="message">Loading...</section>;
@@ -18,9 +21,10 @@ function Home() {
 
   return (
     <>
-      {loggedIn && user ? (
+      {loggedIn && user.username ? (
         <>
           <Profile user={user} />
+          {minWidth && <JobForm initialValues={{}} title={"add job"} />}
           <JobLists jobs={jobs} />
         </>
       ) : (

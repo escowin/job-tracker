@@ -20,9 +20,20 @@
 }
 
 @media screen and (min-width: 1024px) {
+    main {
+        grid-template-areas:
+            "c a"
+            "c b";
+        grid-template-rows: max-content auto;
+    }
+
     .job-form-section {
         grid-column: span 2;
         justify-self: center;
         width: 50vw;
+    }
+
+    .job-form {
+        gap: 1rem 0;
     }
 }

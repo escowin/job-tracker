@@ -25,12 +25,12 @@
 
 .jobs article {
     grid-template-columns: repeat(4, 1fr);
+    padding: .25rem .5rem;
 }
 
 .job {
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: 2rem;
-    padding: .25rem .5rem;
     align-items: center;
 }
 
@@ -52,36 +52,53 @@
         grid-template-columns: repeat(5, 1fr);
     }
 
-    .job p:nth-child(1) {
+    .jobs article p:nth-child(1) {
         padding-left: .25rem;
     }
 }
 
 @media screen and (min-width: 1024px) {
 
+    main {
+        grid-template-areas: 
+        "c a"
+        "c b";
+    }
+
     .jobs {
         height: 100%;
         overflow-y: scroll;
     }
 
+    /* section | displays users stats */
     .user-profile {
         display: flex;
-        width: fit-content;
+        flex-direction: row;
+        justify-content: space-between;
+        grid-area: a;
     }
 
     .user-profile article {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-    }
-
-    .jobs article {
-        grid-template-columns: 1fr 2fr 8% 5% 10%;
-        width: 100%;
-        gap: 1rem;
+        text-align: center;
     }
 
     .user-profile .count {
         padding: 0;
+    }
+
+    /* section | form */
+    .form-section {
+        grid-area: c;
+    }
+
+    .list-section {
+        grid-area: b;
+    }
+
+    .jobs article {
+        grid-template-columns: 1fr 2fr 8% 5% 10%;
+        gap: 1rem;
     }
 
     .jobs h2 {
