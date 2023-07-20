@@ -35,8 +35,8 @@ function Job() {
 
   // button navigation
   const navigate = useNavigate();
-  const handleEdit = () => navigate(`/edit-job/${_id}`);
-  const handleGoBack = () => navigate(-1);
+  // const handleEdit = () => navigate(`/edit-job/${_id}`);
+  // const handleGoBack = () => navigate(-1);
   const handleDelete = async () => {
     try {
       const { data } = await removeJob({
@@ -70,8 +70,8 @@ function Job() {
           <p>{job.dateSubmitted}</p>
         </article>
         <article className="job-buttons">
-          <button onClick={handleGoBack}>go back</button>
-          <button onClick={handleEdit}>edit</button>
+          {/* <button onClick={handleGoBack}>go back</button> */}
+          {/* <button onClick={handleEdit}>edit</button> */}
           <button onClick={() => handleDelete(job._id)}>delete</button>
           {error && <span>error</span>}
         </article>
