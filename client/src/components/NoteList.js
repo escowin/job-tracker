@@ -1,5 +1,5 @@
 import { useMutation } from "@apollo/client";
-import { QUERY_JOB } from "../utils/queries";
+import { QUERY_JOB, QUERY_ME } from "../utils/queries";
 import { DELETE_NOTE } from "../utils/mutations";
 
 function NoteList({ notes, jobId, status }) {
@@ -26,6 +26,19 @@ function NoteList({ notes, jobId, status }) {
           },
         },
       });
+
+      const { me } = cache.readQuery({ query: QUERY_ME });
+      cache.writeQuery({
+        query: QUERY_ME,
+        data: {
+          me: {
+            ...me,
+            jobs: me.jobs.map((job) =>
+              job._id === jobId ? { ...job, noteCount: updatedNotes.length } : job
+            ),
+          },
+        }
+      })
     },
   });
 

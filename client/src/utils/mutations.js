@@ -32,6 +32,7 @@ export const ADD_JOB = gql`
       role
       status
       dateSubmitted
+      noteCount
     }
   }
 `;

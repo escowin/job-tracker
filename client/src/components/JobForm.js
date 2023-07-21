@@ -6,7 +6,6 @@ import { QUERY_ME } from "../utils/queries";
 import { capitalizeFirstLetter } from "../utils/helpers"
 
 function JobForm({ initialValues, title }) {
-  console.log(title)
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
   const [dateSubmitted, setDateSubmitted] = useState("");

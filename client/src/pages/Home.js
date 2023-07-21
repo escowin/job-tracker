@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
 import Auth from "../utils/auth";
@@ -21,14 +22,14 @@ function Home() {
 
   return (
     <>
-      {loggedIn && user.username ? (
+      {loggedIn && user?.username ? (
         <>
           <Profile user={user} />
           {minWidth && <JobForm initialValues={{}} title={"add job"} />}
           <JobLists jobs={jobs} />
         </>
       ) : (
-        <section className="message">log in to view contents</section>
+        <section className="message"><Link to="/login">log in</Link> to view contents</section>
       )}
     </>
   );
