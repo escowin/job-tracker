@@ -4,7 +4,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import { ADD_NOTE, DELETE_JOB } from "../utils/mutations";
 import { QUERY_JOB, QUERY_ME } from "../utils/queries";
 
-function NoteForm({ jobId }) {
+function JobOptions({ jobId }) {
   const { id: _id } = useParams();
   const [removeJob] = useMutation(DELETE_JOB, {
     update(cache, { data }) {
@@ -62,6 +62,7 @@ function NoteForm({ jobId }) {
 
   return (
     <section className="form-section">
+      <h2>Job options</h2>
       <article className="job-buttons">
         <button onClick={handleGoBack}>back</button>
         <button onClick={handleEdit}>edit</button>
@@ -78,4 +79,4 @@ function NoteForm({ jobId }) {
   );
 }
 
-export default NoteForm;
+export default JobOptions;

@@ -197,11 +197,15 @@ button:hover {
   main {
     display: grid;
     align-items: flex-start;
-    grid-template-columns: auto auto;
+    grid-template-columns: 25rem auto;
     overflow: hidden;
     font-size: 1.125rem;
     padding: 1rem .5rem 0 .5rem;
     gap: .5rem;
+  }
+
+  .form-section, .details-section {
+    height: 100%;
   }
 
   button {
