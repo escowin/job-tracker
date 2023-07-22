@@ -19,6 +19,15 @@ function JobOptions({ jobId }) {
           me: {
             ...me,
             jobs: updatedJobs,
+            pendingCount: updatedJobs.filter((job) => job.status === "pending")
+              .length,
+            rejectedCount: updatedJobs.filter(
+              (job) => job.status === "rejected"
+            ).length,
+            hiredCount: updatedJobs.filter((job) => job.status === "hired")
+              .length,
+            totalSubmitted: updatedJobs.length,
+            rate: me.hiredCount / (updatedJobs.length + 1),
           },
         },
       });
@@ -30,7 +39,7 @@ function JobOptions({ jobId }) {
   const job = data?.job || {};
 
   const navigate = useNavigate();
-    const handleDelete = async () => {
+  const handleDelete = async () => {
     try {
       const { data } = await removeJob({
         variables: { id: _id },

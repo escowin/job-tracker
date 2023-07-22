@@ -21,12 +21,16 @@ function JobForm({ initialValues, title }) {
         const me = queryData?.me;
 
         if (me) {
+          const updatedJobs = [addJob, ...me.jobs];
           cache.writeQuery({
             query: QUERY_ME,
             data: {
               me: {
                 ...me,
-                jobs: [addJob, ...me.jobs, ],
+                jobs: updatedJobs,
+                pendingCount: updatedJobs.filter((job) => job.status === 'pending').length,
+                totalSubmitted: updatedJobs.length,
+                rate: me.hiredCount / (updatedJobs.length + 1)
               },
             },
           });
