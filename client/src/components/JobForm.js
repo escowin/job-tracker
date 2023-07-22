@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ADD_JOB, EDIT_JOB } from "../utils/mutations";
 import { QUERY_ME } from "../utils/queries";
-import { capitalizeFirstLetter } from "../utils/helpers"
+import { capitalizeFirstLetter } from "../utils/helpers";
 
 function JobForm({ initialValues, title }) {
   const [company, setCompany] = useState("");
@@ -19,13 +19,14 @@ function JobForm({ initialValues, title }) {
       try {
         const queryData = cache.readQuery({ query: QUERY_ME });
         const me = queryData?.me;
+
         if (me) {
           cache.writeQuery({
             query: QUERY_ME,
             data: {
               me: {
                 ...me,
-                jobs: [...me.jobs, addJob],
+                jobs: [addJob, ...me.jobs, ],
               },
             },
           });
