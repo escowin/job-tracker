@@ -16,6 +16,14 @@ function Home() {
   const user = data?.me || {};
   const jobs = user?.jobs || [];
 
+  const userStats = [
+    user?.totalSubmitted,
+    user?.pendingCount,
+    user?.rejectedCount,
+    user?.hiredCount,
+    user?.rate,
+  ];
+
   // form component renders by tracking the state of the display width
   const [minWidth, setMinWidth] = useState(window.innerWidth >= 1024);
   useEffect(() => {
@@ -42,7 +50,12 @@ function Home() {
       {loggedIn && user?.username ? (
         <>
           {minWidth && <JobForm initialValues={{}} title={"add job"} />}
-          <Profile user={user} />
+          <Profile
+            user={{
+              username: user.username,
+              stats: userStats,
+            }}
+          />
           <JobLists jobs={jobs} />
         </>
       ) : (
