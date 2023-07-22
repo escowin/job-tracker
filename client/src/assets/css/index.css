@@ -35,6 +35,11 @@ a {
   color: var(--hired);
 }
 
+.message {
+  display: inline-block;
+  text-align: center;
+}
+
 /* hidden */
 .display-md {
   display: none;
@@ -202,8 +207,9 @@ button:hover {
   body,
   input,
   textarea,
-  button {
-    font-size: 1.5rem;
+  button,
+  footer {
+    font-size: 1rem;
   }
 
   header {
@@ -226,27 +232,21 @@ button:hover {
     display: none;
   }
 
-  .App {
-    overflow-y: none;
-    height: 100vh;
-  }
-
   footer {
-    font-size: .75rem;
+    font-size: .85rem;
   }
 
   main {
     display: grid;
     align-items: flex-start;
     grid-template-columns: 25rem auto;
-    overflow: hidden;
-    font-size: 1.125rem;
     padding: 1rem .5rem 0 .5rem;
     gap: .5rem;
   }
 
   .form-section,
-  .details-section {
+  .details-section,
+  .list-section {
     height: 100%;
   }
 
@@ -267,16 +267,7 @@ button:hover {
     grid-column: span 1;
   }
 
-  h2 {
-    font-size: 1.5rem;
-  }
-
   .message {
-    grid-column: span 2;
-    text-align: center;
-  }
-
-  .solo-section {
     grid-column: span 2;
   }
 }

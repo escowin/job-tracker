@@ -5,7 +5,7 @@ import Auth from "../utils/auth";
 import { formatDate } from "../utils/helpers";
 import NoteList from "../components/NoteList";
 import JobOptions from "../components/JobOptions";
-import "../assets/css/job.css"
+import "../assets/css/job.css";
 
 function Job() {
   const loggedIn = Auth.loggedIn();
@@ -14,6 +14,11 @@ function Job() {
     variables: { id: _id },
   });
   const job = data?.job || {};
+  const jobStats = [
+    { value: job?.company, label: "Company" },
+    { value: job?.status, label: "Status" },
+    { value: job?.dateSubmitted, label: "Applied" },
+  ];
 
   if (!loggedIn) {
     return <section>log in to view contents</section>;
@@ -25,21 +30,25 @@ function Job() {
 
   return (
     <>
-      <section className={`details-section ${job.status}`} id="job-section">
-        <h2>{job.role}</h2>
-        <article className="job-details">
-          <h3>Company</h3>
-          <h3>Status</h3>
-          <h3>Applied</h3>
-          <p>{job.company}</p>
-          <p>{job.status}</p>
-          <p>{formatDate(job.dateSubmitted)}</p>
-        </article>
+      <JobOptions jobId={job._id} />
+      <section className="details-section" id="job-profile">
+        <h2 className={job.status}>{job.role}</h2>
+        {jobStats.map((stat, i) => (
+          <article key={i} className="job-detail">
+            <h3>{stat.label}</h3>
+            <p className={job.status}>
+              {stat.value !== job?.dateSubmitted
+                ? stat.value
+                : formatDate(stat.value)}
+            </p>
+          </article>
+        ))}
       </section>
-      <JobOptions jobId={job._id}/>
       <section className="list-section" id="notes-section">
         <h2>Notes</h2>
-        {job.noteCount > 0 && <NoteList notes={job.notes} jobId={job._id} status={job.status}/>}
+        {job.noteCount > 0 && (
+          <NoteList notes={job.notes} jobId={job._id} status={job.status} />
+        )}
       </section>
     </>
   );

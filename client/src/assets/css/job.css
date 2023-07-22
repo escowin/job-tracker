@@ -1,11 +1,16 @@
-#job-section {
+#job-profile {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
     gap: .5rem;
 }
 
-.job-details {
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    gap: .25rem 1rem;
+#job-profile h2 {
+    grid-column: span 3;
+}
+
+.job-detail {
+    display: flex;
+    flex-direction: column;
 }
 
 .job-buttons {
@@ -57,6 +62,7 @@
 
 .note p {
     grid-area: b;
+    font-variant: normal;
 }
 
 .note button {
@@ -64,19 +70,34 @@
     height: fit-content;
 }
 
+@media screen and (min-width: 768px) {
+
+    #job-options {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        grid-template-areas:
+            "a b"
+            "c c";
+        gap: .5rem 1rem;
+    }
+
+    #job-options h2 {
+        grid-area: a;
+    }
+
+    #job-options .job-buttons {
+        grid-area: b;
+    }
+
+    #job-options .note-form {
+        grid-area: c;
+    }
+}
+
 @media screen and (min-width: 1024px) {
 
-    .job-details {
+    #job-options {
         display: flex;
-        flex-direction: column;
-    }
-
-    .job-details p:nth-child(even) {
-        padding-left: 1rem;
-    }
-
-    .list-section {
-        width: 100%;
     }
 
     /* section | notes */
@@ -87,10 +108,5 @@
 
     #notes-section button {
         padding: .15rem 1rem;
-    }
-
-    .job-details {
-        display: grid;
-        grid-template-columns: auto 1fr;
     }
 }

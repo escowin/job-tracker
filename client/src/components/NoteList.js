@@ -58,9 +58,9 @@ function NoteList({ notes, jobId, status }) {
   return (
     <ul id="notes">
       {notes.map((note, i) => (
-        <li key={i} className={`note ${status}`}>
+        <li key={i} className="note">
           <h3>{note.createdAt}</h3>
-          <p>{note.note}</p>
+          <p className={status}>{note.note}</p>
           <button onClick={() => handleDeleteNote(note._id)}>delete</button>
         </li>
       ))}

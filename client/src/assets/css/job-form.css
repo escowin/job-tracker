@@ -24,10 +24,9 @@
     .job-form-section {
         grid-column: span 2;
         justify-self: center;
-        width: 50vw;
     }
 
     .job-form {
-        gap: 1rem 0;
+        gap: 1rem;
     }
 }

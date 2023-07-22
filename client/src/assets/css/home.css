@@ -1,5 +1,5 @@
 #user-profile,
-.jobs article {
+#jobs article {
     display: grid;
     gap: .25rem .5rem;
 }
@@ -13,7 +13,7 @@
 }
 
 /* job list */
-.jobs article {
+#jobs article {
     grid-template-columns: 1fr 1fr 4rem 2.5rem;
     padding: .25rem .5rem;
 }
@@ -35,13 +35,12 @@
 }
 
 @media screen and (min-width: 768px) {
-    .jobs article,
     #user-profile {
         grid-template-columns: repeat(5, 1fr);
     }
 
-    .jobs article p:nth-child(1) {
-        padding-left: .25rem;
+    #jobs article {
+        grid-template-columns: 1fr 1fr 6rem 3rem 7rem;
     }
 }
 
@@ -79,19 +78,19 @@
         grid-area: b;
     }
 
-    .jobs article {
+    #jobs article {
         grid-template-columns: 1fr 2fr 8% 5% 10%;
         gap: 1rem;
     }
 
-    .jobs h2 {
+    #jobs h2 {
         position: sticky;
         top: 0;
         background-color: var(--primary);
         box-shadow: 0 0 1rem 1.75rem var(--primary);
     }
 
-    .jobs article:nth-child(2) {
+    #jobs article:nth-child(2) {
         position: sticky;
         top: 2.75rem;
         background-color: var(--primary);

@@ -26,7 +26,7 @@ function Signup() {
   };
 
   return (
-    <section className="solo-section" id="login-section">
+    <section className="login-section">
       <h2>Sign up</h2>
       <form className="login-form" onSubmit={handleFormSubmit}>
         <article className="wrapper">
