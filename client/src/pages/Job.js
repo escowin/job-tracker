@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_JOB } from "../utils/queries";
 import Auth from "../utils/auth";
+import { formatDate } from "../utils/helpers";
 import NoteList from "../components/NoteList";
 import JobOptions from "../components/JobOptions";
 import "../assets/css/job.css"
@@ -24,15 +25,15 @@ function Job() {
 
   return (
     <>
-      <section className={`job-section details-section ${job.status}`}>
+      <section className={`details-section ${job.status}`} id="job-section">
         <h2>{job.role}</h2>
         <article className="job-details">
-          <p>Company</p>
+          <h3>Company</h3>
+          <h3>Status</h3>
+          <h3>Applied</h3>
           <p>{job.company}</p>
-          <p>Status</p>
           <p>{job.status}</p>
-          <p>Date applied</p>
-          <p>{job.dateSubmitted}</p>
+          <p>{formatDate(job.dateSubmitted)}</p>
         </article>
       </section>
       <JobOptions jobId={job._id}/>

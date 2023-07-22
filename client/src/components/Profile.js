@@ -4,7 +4,7 @@ function Profile({ user }) {
   const stats = user.stats;
 
   return (
-    <section className="user-profile details-section">
+    <section className="details-section" id="user-profile">
       <h2>{capitalizeFirstLetter(user.username)} overview</h2>
       {stats.map((stat, i) => (
         <article key={i} className="stat">

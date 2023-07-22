@@ -56,7 +56,7 @@ function NoteList({ notes, jobId, status }) {
   };
 
   return (
-    <ul className="notes">
+    <ul id="notes">
       {notes.map((note, i) => (
         <li key={i} className={`note ${status}`}>
           <h3>{note.createdAt}</h3>

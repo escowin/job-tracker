@@ -70,8 +70,8 @@ function JobOptions({ jobId }) {
   };
 
   return (
-    <section className="form-section">
-      <h2>Job options</h2>
+    <section className="form-section" id="job-options">
+      <h2>Options</h2>
       <article className="job-buttons">
         <button onClick={handleGoBack}>back</button>
         <button onClick={handleEdit}>edit</button>
@@ -79,7 +79,7 @@ function JobOptions({ jobId }) {
       </article>
 
       <form onSubmit={handleFormSubmit} className="note-form">
-        <label>add note</label>
+        <label>note</label>
         <textarea name="note" value={note} onChange={handleChange} />
         <button type="submit">submit</button>
       </form>

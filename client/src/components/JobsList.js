@@ -10,18 +10,16 @@ function JobLists({ jobs }) {
     <section className="jobs list-section">
       <h2>job applications</h2>
       <article>
-        <p>company</p>
-        <p>role</p>
-        <p>status</p>
-        <p>notes</p>
-        <p className="display-md">submitted</p>
+        <h3>company</h3>
+        <h3>role</h3>
+        <h3>status</h3>
+        <h3>notes</h3>
+        <h3 className="display-md">submitted</h3>
       </article>
       {jobs.map((job, i) => (
         <article key={i} className={`${job.status} job`}>
-          <p>{job.company}</p>
-          <p>
-            <Link to={`/job/${job._id}`}>{job.role}</Link>
-          </p>
+          <Link to={`/job/${job._id}`}>{job.company}</Link>
+          <Link to={`/job/${job._id}`}>{job.role}</Link>
           <p>{job.status}</p>
           <p className="count">{job.noteCount}</p>
           <p className="display-md">{formatDate(job.dateSubmitted)}</p>

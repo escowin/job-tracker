@@ -1,9 +1,3 @@
-/* job */
-.job-form-section {
-    width: 75vw;
-}
-
-/* universal form styles */
 .job-form {
     display: grid;
     grid-template-columns: 1fr 1fr;
