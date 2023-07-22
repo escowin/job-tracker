@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
@@ -14,7 +15,23 @@ function Home() {
   const { loading, data } = useQuery(QUERY_ME);
   const user = data?.me || {};
   const jobs = user?.jobs || [];
-  const minWidth = window.innerWidth >= 1024;
+
+  // form component renders by tracking the state of the display width
+  const [minWidth, setMinWidth] = useState(window.innerWidth >= 1024);
+  useEffect(() => {
+    // Define a function to update the `minWidth` state based on the window width
+    const handleResize = () => {
+      setMinWidth(window.innerWidth >= 1024);
+    };
+
+    // Add event listener to track window width changes
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   if (loading) {
     return <section className="message">Loading...</section>;
@@ -24,12 +41,14 @@ function Home() {
     <>
       {loggedIn && user?.username ? (
         <>
-          <Profile user={user} />
           {minWidth && <JobForm initialValues={{}} title={"add job"} />}
+          <Profile user={user} />
           <JobLists jobs={jobs} />
         </>
       ) : (
-        <section className="message"><Link to="/login">log in</Link> to view contents</section>
+        <section className="message">
+          <Link to="/login">log in</Link> to view contents
+        </section>
       )}
     </>
   );

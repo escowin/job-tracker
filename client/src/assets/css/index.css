@@ -10,7 +10,7 @@
 }
 
 * {
-  /* outline: 1px dotted gray; */
+  outline: 1px dotted gray;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -56,17 +56,24 @@ a {
 
 }
 
+/* desktop flex */
+footer,
 header,
-main,
-footer {
+main
+ {
   display: flex;
-  flex-direction: column;
   width: inherit;
 }
 
-header,
 footer {
+  color: var(--primary);
+}
+
+footer,
+header {
   padding: .25rem .5rem;
+  align-items: baseline;
+  justify-content: space-between;
 }
 
 header,
@@ -74,21 +81,20 @@ main {
   background-color: var(--primary);
 }
 
-footer {
-  color: var(--primary);
-}
-
-nav {
-  display: flex;
-  justify-content: space-around;
-}
 
 main {
+  flex-direction: column;
   background-color: transparent;
   height: 100%;
   gap: 1rem;
   align-items: center;
   padding: 1rem .5rem;
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  flex-grow: 1;
 }
 
 section {
