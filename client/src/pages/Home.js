@@ -17,11 +17,11 @@ function Home() {
   const jobs = user?.jobs || [];
 
   const userStats = [
-    user?.totalSubmitted,
-    user?.pendingCount,
-    user?.rejectedCount,
-    user?.hiredCount,
-    user?.rate,
+    { value: user?.pendingCount, label: "pending" },
+    { value: user?.rejectedCount, label: "rejected" },
+    { value: user?.hiredCount, label: "hired" },
+    { value: user?.totalSubmitted, label: "total" },
+    { value: user?.rate, label: "rate" },
   ];
 
   // form component renders by tracking the state of the display width
