@@ -28,8 +28,8 @@ function Header() {
           </>
         ) : (
           <>
-            <Link to={"/login"}>log in</Link>
-            <Link to={"/signup"}>sign up</Link>
+            <Link to="/login">log in</Link>
+            <Link to="/signup">sign up</Link>
           </>
         )}
       </nav>

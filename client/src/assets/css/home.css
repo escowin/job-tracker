@@ -92,7 +92,6 @@
 
     #jobs article:nth-child(2) {
         position: sticky;
-        top: 2.75rem;
         background-color: var(--primary);
     }
 }
