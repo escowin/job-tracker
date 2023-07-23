@@ -65,10 +65,6 @@
         text-align: center;
     }
 
-    #user-profile .count {
-        padding: 0;
-    }
-
     /* section | form */
     .form-section {
         grid-area: c;
@@ -79,7 +75,7 @@
     }
 
     #jobs article {
-        grid-template-columns: 1fr 2fr 8% 5% 10%;
+        grid-template-columns: 1fr 2fr 3.5rem 3rem 5rem;
         gap: 1rem;
     }
 

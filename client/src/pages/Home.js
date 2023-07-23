@@ -60,7 +60,7 @@ function Home() {
         </>
       ) : (
         <section className="message">
-          <Link to="/login">log in</Link> to view contents
+          <Link to="/login" className="link">log in</Link> to view contents
         </section>
       )}
     </>

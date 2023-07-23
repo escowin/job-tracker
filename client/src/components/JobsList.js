@@ -18,8 +18,8 @@ function JobLists({ jobs }) {
       </article>
       {jobs.map((job, i) => (
         <article key={i} className={`${job.status} job`}>
-          <Link to={`/job/${job._id}`}>{job.company}</Link>
-          <Link to={`/job/${job._id}`}>{job.role}</Link>
+          <Link to={`/job/${job._id}`} className="link">{job.company}</Link>
+          <Link to={`/job/${job._id}`} className="link">{job.role}</Link>
           <p>{job.status}</p>
           <p className="count">{job.noteCount}</p>
           <p className="display-md">{formatDate(job.dateSubmitted)}</p>

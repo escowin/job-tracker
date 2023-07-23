@@ -19,17 +19,6 @@
     gap: 1rem;
 }
 
-#notes-section {
-    max-height: 60vh;
-}
-
-#notes-section h2 {
-    position: sticky;
-    top: 0;
-    background-color: var(--primary);
-    box-shadow: 0 -.5rem 0 1rem var(--primary);
-}
-
 .note-form {
     display: flex;
     flex-direction: column;
@@ -41,7 +30,7 @@
     height: 4rem;
 }
 
-/* note list component */
+/* section | note form */
 #notes {
     display: flex;
     flex-direction: column;
@@ -50,6 +39,7 @@
 
 .note {
     display: grid;
+    gap: .25rem .5rem;
     grid-template-columns: 1fr auto;
     grid-template-areas:
         "a c"
@@ -98,12 +88,6 @@
 
     #job-options {
         display: flex;
-    }
-
-    /* section | notes */
-    #notes-section {
-        max-height: inherit;
-        height: 100%;
     }
 
     #notes-section button {

@@ -1,38 +1,36 @@
 :root {
   --primary: rgb(33, 42, 60);
-  --secondary: rgb(120, 169, 192);
-  --tertiary: rgb(179, 190, 176);
-  --pending: rgb(69, 176, 134);
-  --rejected: rgb(178, 89, 89);
-  --hired: rgb(109, 169, 219);
-  --button: rgb(182, 199, 215);
-  --highlight: rgb(110, 225, 165);
+  --text: rgb(182, 199, 215);
+  --light-red: rgb(205, 138, 138);
+  --red: rgb(172, 57, 57);
+  --green: rgb(116, 220, 167);
+  --blue: rgb(116, 174, 220);
 }
 
 * {
-  /* outline: 1px dotted gray; */
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
 /* typography */
-a {
+.link {
   text-decoration: none;
   color: inherit;
   transition: 1s;
 }
 
-.pending {
-  color: var(--pending);
+.link:hover,
+.rejected {
+  color: var(--red);
 }
 
-.rejected {
-  color: var(--rejected);
+.pending {
+  color: var(--green);
 }
 
 .hired {
-  color: var(--hired);
+  color: var(--blue);
 }
 
 .message {
@@ -58,8 +56,8 @@ a {
   flex-direction: column;
   width: 100%;
   align-items: center;
-  background-color: var(--secondary);
-  color: var(--tertiary);
+  background-color: var(--blue);
+  color: var(--text);
   font-variant: small-caps;
   flex-grow: 1;
 
@@ -88,8 +86,7 @@ header {
   justify-content: space-between;
 }
 
-header,
-main {
+header {
   background-color: var(--primary);
 }
 
@@ -134,7 +131,7 @@ section {
   position: sticky;
   top: 0;
   background-color: var(--primary);
-  box-shadow: 0 -.5rem 0 1rem var(--primary);
+  box-shadow: 0 -.5rem 0 .5rem var(--primary);
 }
 
 .list-section article:nth-child(2) {
@@ -170,14 +167,14 @@ button {
 
 input,
 textarea {
-  background-color: var(--secondary);
+  background-color: var(--blue);
   border: none;
 }
 
 input:focus,
 textarea:focus {
   outline: none;
-  background-color: var(--tertiary);
+  background-color: var(--text);
 }
 
 textarea {
@@ -188,18 +185,29 @@ textarea {
 button {
   font-variant: small-caps;
   background-color: transparent;
-  border: 1px solid var(--secondary);
-  transition: 1s;
-  color: var(--secondary);
+  border: 1px solid var(--blue);
+  color: var(--blue);
 }
 
 button:active,
 button:hover {
-  border-color: var(--highlight);
-  color: var(--highlight);
+  border-color: var(--green);
+  color: var(--green);
+}
+
+
+.warning {
+  border-color: var(--light-red);
+  color: var(--light-red);
+}
+
+.warning:hover {
+  border-color: var(--red);
+  color: var(--red);
 }
 
 @media screen and (min-width: 768px) {
+
   .display-md {
     display: contents;
   }
@@ -207,8 +215,7 @@ button:hover {
   body,
   input,
   textarea,
-  button,
-  footer {
+  button {
     font-size: 1rem;
   }
 
@@ -217,18 +224,19 @@ button:hover {
     gap: 1rem;
   }
 
-  nav {
-    flex-grow: 1;
-    align-items: center;
-  }
-
   section {
     gap: 1.25rem;
+  }
+  
+  .list-section {
+    height: 100%;
   }
 }
 
 @media screen and (min-width: 1024px) {
-  ::-webkit-scrollbar {
+
+  ::-webkit-scrollbar,
+  .hide-lg {
     display: none;
   }
 
@@ -238,15 +246,16 @@ button:hover {
 
   main {
     display: grid;
-    align-items: flex-start;
     grid-template-columns: 25rem auto;
-    padding: 1rem .5rem 0 .5rem;
     gap: .5rem;
   }
 
+  nav {
+    flex-grow: 0;
+  }
+
   .form-section,
-  .details-section,
-  .list-section {
+  .details-section {
     height: 100%;
   }
 
@@ -256,7 +265,6 @@ button:hover {
 
   input {
     border-radius: .25rem;
-    font-size: 1rem;
   }
 
   input[type=date] {
@@ -270,4 +278,5 @@ button:hover {
   .message {
     grid-column: span 2;
   }
+
 }

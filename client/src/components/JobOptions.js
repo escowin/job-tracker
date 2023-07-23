@@ -75,7 +75,7 @@ function JobOptions({ jobId }) {
       <article className="job-buttons">
         <button onClick={handleGoBack}>back</button>
         <button onClick={handleEdit}>edit</button>
-        <button onClick={() => handleDelete(job._id)}>delete</button>
+        <button onClick={() => handleDelete(job._id)} className="warning">delete</button>
       </article>
 
       <form onSubmit={handleFormSubmit} className="note-form">

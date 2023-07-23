@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
 
 function Header() {
-  const navLinks = [{ name: "add job", path: "add-job", class: "display-sm" }];
+  const navLinks = [{ name: "add job", path: "add-job", class: "hide-lg" }];
 
   const logout = (e) => {
     e.preventDefault();
@@ -12,24 +12,24 @@ function Header() {
   return (
     <header>
       <h1>
-        <Link to="/">job tracker</Link>
+        <Link to="/" className="link">job tracker</Link>
       </h1>
       <nav>
         {Auth.loggedIn() ? (
           <>
             {navLinks.map((link, i) => (
-              <Link key={i} to={`/${link.path}`}>
+              <Link key={i} to={`/${link.path}`} className={`link ${link.class}`}>
                 {link.name}
               </Link>
             ))}
-            <a href="/" onClick={logout}>
+            <a href="/" onClick={logout} className="link">
               log out
             </a>
           </>
         ) : (
           <>
-            <Link to="/login">log in</Link>
-            <Link to="/signup">sign up</Link>
+            <Link to="/login" className="link">log in</Link>
+            <Link to="/signup" className="link">sign up</Link>
           </>
         )}
       </nav>

@@ -61,7 +61,7 @@ function NoteList({ notes, jobId, status }) {
         <li key={i} className="note">
           <h3>{note.createdAt}</h3>
           <p className={status}>{note.note}</p>
-          <button onClick={() => handleDeleteNote(note._id)}>delete</button>
+          <button className="warning" onClick={() => handleDeleteNote(note._id)}>delete</button>
         </li>
       ))}
       {error && <span>error</span>}
