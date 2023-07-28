@@ -1,11 +1,21 @@
+#note-checkbox{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
 #job-profile {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: .5rem;
+    grid-template-columns: 2fr repeat(3, auto);
+    gap: .5rem .75rem;
 }
 
 #job-profile h2 {
-    grid-column: span 3;
+    grid-column: span 4;
+}
+
+#job-profile article:nth-child(4) p {
+    text-align: center;
 }
 
 .job-detail {
@@ -61,6 +71,13 @@
 }
 
 @media screen and (min-width: 768px) {
+    #job-profile {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    #job-profile article:nth-child(4) p {
+        text-align: inherit;
+    }
 
     #job-options {
         display: grid;

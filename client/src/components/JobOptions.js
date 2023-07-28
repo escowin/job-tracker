@@ -91,14 +91,16 @@ function JobOptions({ jobId }) {
       <form onSubmit={handleFormSubmit} className="note-form">
         <label>note</label>
         <textarea name="note" value={note} onChange={handleChange} />
-        <label htmlFor="interview">interview</label>
-        <input
-          type="checkbox"
-          name="interview"
-          id="interview"
-          onClick={handleChecked}
-          value={interview}
-        />
+        <article id="note-checkbox">
+          <label htmlFor="interview">interview</label>
+          <input
+            type="checkbox"
+            name="interview"
+            id="interview"
+            onClick={handleChecked}
+            value={interview}
+          />
+        </article>
         <button type="submit">submit</button>
       </form>
       {error && <span>error</span>}

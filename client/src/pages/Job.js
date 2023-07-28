@@ -17,8 +17,8 @@ function Job() {
   const jobStats = [
     { value: job?.company, label: "Company" },
     { value: job?.status, label: "Status" },
+    { value: job?.interviewCount, label: "Interviews" },
     { value: job?.dateSubmitted, label: "Applied" },
-    { value: job?.interviewCount, label: "Interviews" }
   ];
 
   if (!loggedIn) {
