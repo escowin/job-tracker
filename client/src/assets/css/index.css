@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@300&display=swap');
+
 :root {
   --primary: rgb(33, 42, 60);
   --text: rgb(182, 199, 215);
-  --light-red: rgb(205, 138, 138);
-  --red: rgb(172, 57, 57);
+  --light-red: hsl(0, 40%, 67%);
+  --red: hsl(0, 50%, 55%);
   --green: rgb(116, 220, 167);
   --blue: rgb(116, 174, 220);
 }
@@ -48,7 +50,7 @@
   display: flex;
   height: 100vh;
   overflow-y: hidden;
-
+  font-family: 'Assistant', sans-serif;
 }
 
 .App {
@@ -60,7 +62,6 @@
   color: var(--text);
   font-variant: small-caps;
   flex-grow: 1;
-
 }
 
 /* desktop flex */
@@ -227,7 +228,7 @@ button:hover {
   section {
     gap: 1.25rem;
   }
-  
+
   .list-section {
     height: 100%;
   }

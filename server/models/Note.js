@@ -9,6 +9,9 @@ const NoteSchema = new Schema(
       trim: true,
       maxlength: 180
     },
+    interview: {
+      type: Boolean,
+    },
     createdAt: {
       type: Date,
       default: Date.now,
