@@ -21,12 +21,14 @@ const typeDefs = gql`
     dateSubmitted: String
     createdAt: String
     noteCount: Int
+    interviewCount: Int
     notes: [Note]
   }
 
   type Note {
     _id: ID
     note: String
+    interview: Boolean
     createdAt: String
   }
 
@@ -50,7 +52,7 @@ const typeDefs = gql`
       status: String
     ): Job
     deleteJob(_id: String!): Job
-    addNote(jobId: ID!, note: String!): Job
+    addNote(jobId: ID!, note: String!, interview: Boolean): Job
     deleteNote(_id: String!, jobId: String!): Note
   }
 

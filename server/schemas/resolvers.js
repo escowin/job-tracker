@@ -98,14 +98,14 @@ const resolvers = {
       );
       return job;
     },
-    addNote: async (parents, { jobId, note }, context) => {
+    addNote: async (parents, { jobId, note, interview }, context) => {
       if (!context.user) {
         throw new AuthenticationError("you must be logged in");
       }
 
       const updatedJob = await Job.findOneAndUpdate(
         { _id: jobId },
-        { $push: { notes: { note } } },
+        { $push: { notes: { note, interview } } },
         { new: true, runValidators: true }
       );
 

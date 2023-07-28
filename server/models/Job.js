@@ -42,6 +42,11 @@ JobSchema.virtual('noteCount').get(function() {
   return this.notes.length;
 })
 
+JobSchema.virtual('interviewCount').get(function() {
+  const result = this.notes.filter((note) => note.interview === true)
+  return result.length;
+})
+
 const Job = model("Job", JobSchema);
 
 module.exports = Job;
