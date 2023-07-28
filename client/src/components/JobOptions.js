@@ -56,6 +56,11 @@ function JobOptions({ jobId }) {
   const [addNote, { error }] = useMutation(ADD_NOTE);
   const [note, setNote] = useState("");
   const handleChange = (e) => setNote(e.target.value);
+
+  const [interview, setInterview] = useState("")
+  const handleChecked = (e) => console.log(e.target.checked);
+
+
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
@@ -75,12 +80,16 @@ function JobOptions({ jobId }) {
       <article className="job-buttons">
         <button onClick={handleGoBack}>back</button>
         <button onClick={handleEdit}>edit</button>
-        <button onClick={() => handleDelete(job._id)} className="warning">delete</button>
+        <button onClick={() => handleDelete(job._id)} className="warning">
+          delete
+        </button>
       </article>
 
       <form onSubmit={handleFormSubmit} className="note-form">
         <label>note</label>
         <textarea name="note" value={note} onChange={handleChange} />
+        <label htmlFor="interview">interview</label>
+        <input type="checkbox" name="interview" id="interview" onClick={handleChecked} value={interview}/>
         <button type="submit">submit</button>
       </form>
       {error && <span>error</span>}

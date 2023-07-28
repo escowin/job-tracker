@@ -30,6 +30,7 @@ export const QUERY_JOB = gql`
       status
       dateSubmitted
       noteCount
+      interviewCount
       notes {
         _id
         note

@@ -70,13 +70,15 @@ export const DELETE_JOB = gql`
 `;
 
 export const ADD_NOTE = gql`
-  mutation addNote($jobId: ID!, $note: String!) {
-    addNote(jobId: $jobId, note: $note) {
+  mutation addNote($jobId: ID!, $note: String!, $interview: Boolean) {
+    addNote(jobId: $jobId, note: $note, interview: $interview) {
       _id
       noteCount
+      interviewCount
       notes {
         _id
         note
+        interview
       }
     }
   }
