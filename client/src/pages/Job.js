@@ -18,6 +18,7 @@ function Job() {
     { value: job?.company, label: "Company" },
     { value: job?.status, label: "Status" },
     { value: job?.dateSubmitted, label: "Applied" },
+    { value: job?.interviewCount, label: "Interviews" }
   ];
 
   if (!loggedIn) {
