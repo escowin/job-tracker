@@ -15,8 +15,8 @@ function Job() {
   });
   const job = data?.job || {};
   const jobStats = [
-    { value: job?.source, label: "Source" },
     { value: job?.company, label: "Company" },
+    { value: job?.source, label: "Source" },
     { value: job?.status, label: "Status" },
     { value: job?.interviewCount, label: "Interviews" },
     { value: job?.dateSubmitted, label: "Applied" },

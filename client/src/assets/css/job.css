@@ -6,15 +6,23 @@
 
 #job-profile {
     display: grid;
-    grid-template-columns: 2fr repeat(3, auto);
+    grid-template-columns: repeat(4, 1fr);
     gap: .5rem .75rem;
 }
 
-#job-profile h2 {
+
+#job-profile h2,
+#job-profile article:nth-child(2) {
     grid-column: 1 / -1;
 }
 
-#job-profile article:nth-child(4) p {
+#job-profile article:nth-child(2) {
+    flex-direction: row;
+    gap: .5rem;
+    align-items: baseline;
+}
+
+#job-profile article:nth-child(5) p {
     text-align: center;
 }
 
@@ -72,10 +80,16 @@
 
 @media screen and (min-width: 768px) {
     #job-profile {
-        grid-template-columns: repeat(5, 1fr);
+        grid-template-columns: 2fr repeat(4, 1fr);
     }
 
-    #job-profile article:nth-child(4) p {
+    #job-profile article:nth-child(2) {
+        flex-direction: column;
+        grid-column: 1;
+        gap: 0;
+    }
+
+    #job-profile article:nth-child(5) p {
         text-align: inherit;
     }
 
