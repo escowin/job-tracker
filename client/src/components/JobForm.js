@@ -6,12 +6,23 @@ import { QUERY_ME } from "../utils/queries";
 import { capitalizeFirstLetter } from "../utils/helpers";
 
 function JobForm({ initialValues, title }) {
+
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
   const [dateSubmitted, setDateSubmitted] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
+  const [selectedSource, setSelectedSource] = useState("")
   const statusValues = ["pending", "waitlisted", "rejected", "hired"];
   const sourceValues = ["job-board", "job-fair", "referral", "company-site"];
+
+  const formStates = [
+    { name: "company", value: company, setState: setCompany },
+    { name: "role", value: role, setState: setRole },
+    { name: "date-submitted", value: dateSubmitted, setState: setDateSubmitted },
+    { name: "status", value: selectedStatus, setState: setSelectedStatus },
+    { name: "source", value: selectedSource, setState: setSelectedSource },
+  ]
+  
   const editPath = window.location.pathname.includes("/edit-job");
   const navigate = useNavigate();
 
@@ -53,23 +64,19 @@ function JobForm({ initialValues, title }) {
       setRole(initialValues.role || "");
       setDateSubmitted(initialValues.dateSubmitted || "");
       setSelectedStatus(initialValues.status || "");
+      setSelectedSource(initialValues.source || "");
     } else {
       setSelectedStatus("pending");
+      setSelectedSource("job-board")
     }
   }, [initialValues]);
 
   //  captures & sets form state
   const handleChange = (e) => {
     console.log(e.target)
-    if (e.target.name === "company") {
-      setCompany(e.target.value);
-    } else if (e.target.name === "role") {
-      setRole(e.target.value);
-    } else if (e.target.name === "date-submitted") {
-      setDateSubmitted(e.target.value);
-    } else if (e.target.name === "status") {
-      setSelectedStatus(e.target.value);
-    }
+    const newState = formStates.find(state => state.name === e.target.name)
+    console.log(newState)
+    newState ? newState.setState(e.target.value) : console.error("error")
   };
 
   const handleFormSubmit = async (e) => {
@@ -78,7 +85,9 @@ function JobForm({ initialValues, title }) {
       company,
       role,
       dateSubmitted,
+      source: selectedSource
     };
+    console.log(variables)
 
     if (editPath) {
       variables = {
@@ -119,7 +128,12 @@ function JobForm({ initialValues, title }) {
           <legend>source</legend>
           {sourceValues.map((source, i) => (
             <label htmlFor={source} key={i}>
-              <input type="radio" name="source" value={source} onChange={handleChange} />
+              <input 
+                type="radio" 
+                name="source" 
+                value={source}
+                checked={source === selectedSource}
+                onChange={handleChange} />
               {source}
             </label>
           ))}
