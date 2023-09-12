@@ -6,10 +6,12 @@ function JobLists({ jobs }) {
     return <section>submit a job</section>;
   }
 
+  console.log(jobs)
   return (
     <section className="jobs list-section" id="jobs">
       <h2>job applications</h2>
       <article>
+        <h3>source</h3>
         <h3>company</h3>
         <h3>role</h3>
         <h3>status</h3>
@@ -18,6 +20,7 @@ function JobLists({ jobs }) {
       </article>
       {jobs.map((job, i) => (
         <article key={i} className={`${job.status} job`}>
+          <p>{job.source}</p>
           <Link to={`/job/${job._id}`} className="link">{job.company}</Link>
           <Link to={`/job/${job._id}`} className="link">{job.role}</Link>
           <p>{job.status}</p>

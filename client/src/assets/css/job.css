@@ -11,7 +11,7 @@
 }
 
 #job-profile h2 {
-    grid-column: span 4;
+    grid-column: 1 / -1;
 }
 
 #job-profile article:nth-child(4) p {
@@ -72,7 +72,7 @@
 
 @media screen and (min-width: 768px) {
     #job-profile {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
     }
 
     #job-profile article:nth-child(4) p {

@@ -9,6 +9,7 @@ export const QUERY_ME = gql`
         company
         role
         status
+        source
         dateSubmitted
         noteCount
       }
@@ -29,6 +30,7 @@ export const QUERY_JOB = gql`
       company
       role
       status
+      source
       dateSubmitted
       noteCount
       interviewCount

@@ -13,7 +13,7 @@ function JobForm({ initialValues, title }) {
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedSource, setSelectedSource] = useState("")
   const statusValues = ["pending", "waitlisted", "rejected", "hired"];
-  const sourceValues = ["job-board", "job-fair", "referral", "company-site"];
+  const sourceValues = ["job-board", "job-fair", "referral", "company"];
 
   const formStates = [
     { name: "company", value: company, setState: setCompany },
@@ -73,9 +73,7 @@ function JobForm({ initialValues, title }) {
 
   //  captures & sets form state
   const handleChange = (e) => {
-    console.log(e.target)
     const newState = formStates.find(state => state.name === e.target.name)
-    console.log(newState)
     newState ? newState.setState(e.target.value) : console.error("error")
   };
 
