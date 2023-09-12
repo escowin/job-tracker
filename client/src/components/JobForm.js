@@ -10,7 +10,7 @@ function JobForm({ initialValues, title }) {
   const [role, setRole] = useState("");
   const [dateSubmitted, setDateSubmitted] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
-  const statusValues = ["pending", "rejected", "hired"];
+  const statusValues = ["pending", "waitlisted", "rejected", "hired"];
   const editPath = window.location.pathname.includes("/edit-job");
   const navigate = useNavigate();
 

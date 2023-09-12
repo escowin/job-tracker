@@ -7,6 +7,7 @@
   --red: hsl(0, 50%, 55%);
   --green: rgb(116, 220, 167);
   --blue: rgb(116, 174, 220);
+  --yellow: rgb(231, 189, 64);
 }
 
 * {
@@ -33,6 +34,10 @@
 
 .hired {
   color: var(--blue);
+}
+
+.waitlisted {
+  color: var(--yellow);
 }
 
 .message {

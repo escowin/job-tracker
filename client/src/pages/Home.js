@@ -18,6 +18,7 @@ function Home() {
 
   const userStats = [
     { value: user?.pendingCount, label: "pending" },
+    { value: user?.waitlistedCount, label: "waitlisted" },
     { value: user?.rejectedCount, label: "rejected" },
     { value: user?.hiredCount, label: "hired" },
     { value: user?.totalSubmitted, label: "total" },

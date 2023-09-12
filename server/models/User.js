@@ -67,6 +67,14 @@ UserSchema.virtual("hiredCount").get(function () {
   return result.length;
 });
 
+// waitlisted count
+UserSchema.virtual("waitlistedCount").get(function () {
+  const result = this.jobs.filter(
+    (job) => job.status === "waitlisted"
+  );
+  return result.length;
+});
+
 UserSchema.virtual("rate").get(function() {
   const hiredCount = this.hiredCount;
   const totalCount = this.totalSubmitted;

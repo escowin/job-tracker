@@ -9,6 +9,7 @@ const typeDefs = gql`
     rejectedCount: Int
     hiredCount: Int
     pendingCount: Int
+    waitlistedCount: Int
     rate: String
     jobs: [Job]
   }
