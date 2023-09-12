@@ -29,4 +29,8 @@
     .job-form {
         gap: 1rem;
     }
+
+    fieldset input {
+        margin-right: .25rem;
+    }
 }

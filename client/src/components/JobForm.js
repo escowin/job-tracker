@@ -11,6 +11,7 @@ function JobForm({ initialValues, title }) {
   const [dateSubmitted, setDateSubmitted] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
   const statusValues = ["pending", "waitlisted", "rejected", "hired"];
+  const sourceValues = ["job-board", "job-fair", "referral", "company-site"];
   const editPath = window.location.pathname.includes("/edit-job");
   const navigate = useNavigate();
 
@@ -28,9 +29,11 @@ function JobForm({ initialValues, title }) {
               me: {
                 ...me,
                 jobs: updatedJobs,
-                pendingCount: updatedJobs.filter((job) => job.status === 'pending').length,
+                pendingCount: updatedJobs.filter(
+                  (job) => job.status === "pending"
+                ).length,
                 totalSubmitted: updatedJobs.length,
-                rate: me.hiredCount / (updatedJobs.length + 1)
+                rate: me.hiredCount / (updatedJobs.length + 1),
               },
             },
           });
@@ -57,6 +60,7 @@ function JobForm({ initialValues, title }) {
 
   //  captures & sets form state
   const handleChange = (e) => {
+    console.log(e.target)
     if (e.target.name === "company") {
       setCompany(e.target.value);
     } else if (e.target.name === "role") {
@@ -111,24 +115,31 @@ function JobForm({ initialValues, title }) {
           <label htmlFor="role">Role</label>
           <input name="role" value={role} onChange={handleChange} />
         </article>
+        <fieldset className="wrapper" id="source">
+          <legend>source</legend>
+          {sourceValues.map((source, i) => (
+            <label htmlFor={source} key={i}>
+              <input type="radio" name="source" value={source} onChange={handleChange} />
+              {source}
+            </label>
+          ))}
+        </fieldset>
         {editPath ? (
-          <>
-            <fieldset>
-              <legend>status</legend>
-              {statusValues.map((status, i) => (
-                <div key={i}>
-                  <input
-                    type="radio"
-                    name="status"
-                    value={status}
-                    checked={status === selectedStatus}
-                    onChange={handleChange}
-                  />
-                  <label htmlFor={status}>{status}</label>
-                </div>
-              ))}
-            </fieldset>
-          </>
+          <fieldset>
+            <legend>status</legend>
+            {statusValues.map((status, i) => (
+              <label htmlFor={status} key={i}>
+                <input
+                  type="radio"
+                  name="status"
+                  value={status}
+                  checked={status === selectedStatus}
+                  onChange={handleChange}
+                />
+                {status}
+              </label>
+            ))}
+          </fieldset>
         ) : null}
         <article>
           <label htmlFor="date-submitted">Date submitted</label>

@@ -20,6 +20,10 @@ const JobSchema = new Schema(
       default: "pending",
       trim: true,
     },
+    source: {
+      type: String,
+      trim: true
+    },
     dateSubmitted: {
       type: String,
       required: true,

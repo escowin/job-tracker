@@ -155,14 +155,14 @@ section {
 fieldset {
   grid-column: span 2;
   display: flex;
+  justify-content: space-between;
   gap: 2rem;
-  padding: .25rem .5rem
+  padding: .25rem .5rem;
+  transition: 1s border-color;
 }
 
-input,
-textarea,
-button {
-  transition: 1s;
+fieldset:hover {
+  border-color: var(--blue);
 }
 
 input,
@@ -175,6 +175,7 @@ input,
 textarea {
   background-color: var(--blue);
   border: none;
+  transition: 1s outline, 1s background-color;
 }
 
 input:focus,
@@ -193,6 +194,7 @@ button {
   background-color: transparent;
   border: 1px solid var(--blue);
   color: var(--blue);
+  transition: 1s border-color, 1s color;
 }
 
 button:active,

@@ -23,6 +23,7 @@ const typeDefs = gql`
     createdAt: String
     noteCount: Int
     interviewCount: Int
+    source: String
     notes: [Note]
   }
 
@@ -44,13 +45,19 @@ const typeDefs = gql`
   type Mutation {
     login(username: String!, password: String!): Auth
     addUser(username: String!, password: String!): Auth
-    addJob(company: String!, role: String!, dateSubmitted: String!): Job
+    addJob(
+      company: String!
+      role: String!
+      dateSubmitted: String!
+      source: String
+    ): Job
     editJob(
       _id: String!
       company: String
       role: String
       dateSubmitted: String
       status: String
+      source: String
     ): Job
     deleteJob(_id: String!): Job
     addNote(jobId: ID!, note: String!, interview: Boolean): Job
