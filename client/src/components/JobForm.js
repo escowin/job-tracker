@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ADD_JOB, EDIT_JOB } from "../utils/mutations";
 import { QUERY_ME } from "../utils/queries";
-import { capitalizeFirstLetter } from "../utils/helpers";
+import { format } from "../utils/helpers";
 
 function JobForm({ initialValues, title }) {
 
@@ -13,7 +13,7 @@ function JobForm({ initialValues, title }) {
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedSource, setSelectedSource] = useState("")
   const statusValues = ["pending", "waitlisted", "rejected", "hired"];
-  const sourceValues = ["job-board", "job-fair", "referral", "company"];
+  const sourceValues = ["company", "job-board", "job-fair", "referral"];
 
   const formStates = [
     { name: "company", value: company, setState: setCompany },
@@ -85,7 +85,6 @@ function JobForm({ initialValues, title }) {
       dateSubmitted,
       source: selectedSource
     };
-    console.log(variables)
 
     if (editPath) {
       variables = {
@@ -111,7 +110,7 @@ function JobForm({ initialValues, title }) {
 
   return (
     <section className="form-section">
-      <h2>{capitalizeFirstLetter(title)}</h2>
+      <h2>{format(title, "title")}</h2>
 
       <form onSubmit={handleFormSubmit} className="job-form">
         <article className="wrapper">
@@ -132,7 +131,7 @@ function JobForm({ initialValues, title }) {
                 value={source}
                 checked={source === selectedSource}
                 onChange={handleChange} />
-              {source}
+              {format(source, "id")}
             </label>
           ))}
         </fieldset>

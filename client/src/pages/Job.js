@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_JOB } from "../utils/queries";
 import Auth from "../utils/auth";
-import { formatDate } from "../utils/helpers";
+import { format } from "../utils/helpers";
 import NoteList from "../components/NoteList";
 import JobOptions from "../components/JobOptions";
 import "../assets/css/job.css";
@@ -41,7 +41,7 @@ function Job() {
             <p className={job.status}>
               {stat.value !== job?.dateSubmitted
                 ? stat.value
-                : formatDate(stat.value)}
+                : format(stat.value, "date")}
             </p>
           </article>
         ))}

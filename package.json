@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/escowin/job-tracker#readme",
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "concurrently": "^8.2.0"
   }
 }

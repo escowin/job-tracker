@@ -16,12 +16,6 @@
     grid-column: 1 / -1;
 }
 
-#job-profile article:nth-child(2) {
-    flex-direction: row;
-    gap: .5rem;
-    align-items: baseline;
-}
-
 #job-profile article:nth-child(5) p {
     text-align: center;
 }
@@ -84,9 +78,7 @@
     }
 
     #job-profile article:nth-child(2) {
-        flex-direction: column;
         grid-column: 1;
-        gap: 0;
     }
 
     #job-profile article:nth-child(5) p {
