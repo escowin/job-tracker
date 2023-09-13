@@ -3,8 +3,15 @@ import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_NOTE, DELETE_JOB } from "../utils/mutations";
 import { QUERY_JOB, QUERY_ME } from "../utils/queries";
+import JobForm from "./JobForm";
 
 function JobOptions({ jobId }) {
+  // state variables
+  const [note, setNote] = useState("");
+  const [interview, setInterview] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
+
+  // database variables
   const { id: _id } = useParams();
   const [removeJob] = useMutation(DELETE_JOB, {
     update(cache, { data }) {
@@ -38,12 +45,11 @@ function JobOptions({ jobId }) {
   });
   const job = data?.job || {};
 
+  // option variables
   const navigate = useNavigate();
   const handleDelete = async () => {
     try {
-      const { data } = await removeJob({
-        variables: { id: _id },
-      });
+      const { data } = await removeJob({ variables: { id: _id } });
       console.log(data);
       navigate("/");
     } catch (err) {
@@ -51,13 +57,18 @@ function JobOptions({ jobId }) {
     }
   };
   const handleGoBack = () => navigate(-1);
-  const handleEdit = () => navigate(`/edit-job/${jobId}`);
+  const handleEdit = () => {
+    // navigate(`/edit-job/${jobId}`)
+
+    // toggles state variable to show/hide job form
+    // - pro: keeps both forms here.
+    // - con: bloats up jobOption.js purpose (button clicks, notes, form editing )
+    // - modularize post & put forms into components. this component should only only handle button click states
+    setShowEditForm(!showEditForm);
+  };
 
   // note form variables
   const [addNote, { error }] = useMutation(ADD_NOTE);
-  const [note, setNote] = useState("");
-  const [interview, setInterview] = useState(false);
-
   const handleChange = (e) => setNote(e.target.value);
   const handleChecked = (e) => {
     const checked = e.target.checked;
@@ -104,6 +115,8 @@ function JobOptions({ jobId }) {
         <button type="submit">submit</button>
       </form>
       {error && <span>error</span>}
+
+      {!showEditForm ? null : <p>job edit form</p>}
     </section>
   );
 }
