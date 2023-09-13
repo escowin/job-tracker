@@ -5,7 +5,7 @@ function Profile({ user }) {
 
   return (
     <section className="details-section" id="user-profile">
-      <h2>{format(user.username, "title")} overview</h2>
+      <h2>{format.title(user.username)} overview</h2>
       {stats.map((stat, i) => (
         <article key={i} className="stat">
           <p>{stat.label}</p>

@@ -41,7 +41,7 @@ function Job() {
             <p className={job.status}>
               {stat.value !== job?.dateSubmitted
                 ? stat.value
-                : format(stat.value, "date")}
+                : format.date(stat.value)}
             </p>
           </article>
         ))}

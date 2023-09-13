@@ -110,7 +110,7 @@ function JobForm({ initialValues, title }) {
 
   return (
     <section className="form-section">
-      <h2>{format(title, "title")}</h2>
+      <h2>{format.title(title)}</h2>
 
       <form onSubmit={handleFormSubmit} className="job-form">
         <article className="wrapper">
@@ -131,7 +131,7 @@ function JobForm({ initialValues, title }) {
                 value={source}
                 checked={source === selectedSource}
                 onChange={handleChange} />
-              {format(source, "id")}
+              {format.id(source)}
             </label>
           ))}
         </fieldset>
