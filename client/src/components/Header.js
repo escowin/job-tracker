@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import Auth from "../utils/auth";
 
 function Header() {
-  const navLinks = [{ name: "add job", path: "add-job", class: "hide-lg" }];
+  const navLinks = [{ name: "add job", path: "add-job", class: "hide-m" }];
 
   const logout = (e) => {
     e.preventDefault();

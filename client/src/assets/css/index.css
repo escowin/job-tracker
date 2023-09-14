@@ -221,6 +221,10 @@ button:hover {
     display: initial;
   }
 
+  .hide-m {
+    display: none;
+  }
+
   body,
   input,
   textarea,
@@ -233,6 +237,14 @@ button:hover {
     gap: 1rem;
   }
 
+  main {
+    display: grid;
+    grid-template-columns: 15rem auto;
+    grid-template-rows: max-content;
+    align-items: flex-start;
+    gap: .5rem;
+  }
+
   section {
     gap: 1.25rem;
   }
@@ -240,12 +252,15 @@ button:hover {
   .list-section {
     height: 100%;
   }
+  
+  nav {
+    flex-grow: 0;
+  }
 }
 
 @media screen and (min-width: 1024px) {
 
-  ::-webkit-scrollbar,
-  .hide-lg {
+  ::-webkit-scrollbar {
     display: none;
   }
 
@@ -254,16 +269,9 @@ button:hover {
   }
 
   main {
-    display: grid;
     grid-template-columns: 25rem auto;
-    grid-template-rows: max-content;
-    align-items: flex-start;
-    gap: .5rem;
   }
 
-  nav {
-    flex-grow: 0;
-  }
 
   .form-section,
   .details-section {

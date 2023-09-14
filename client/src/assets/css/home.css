@@ -35,22 +35,30 @@
 }
 
 @media screen and (min-width: 768px) {
-    #user-profile {
-        grid-template-columns: repeat(6, 1fr);
-    }
-
-    #jobs article {
-        grid-template-columns: 3.75rem 1fr 2fr 3.5rem 3rem 5rem;
-        gap: 1rem;
-    }
-}
-
-@media screen and (min-width: 1024px) {
-
     main {
         grid-template-areas:
             "c a"
             "c b";
+    }
+
+    #user-profile {
+        grid-template-columns: repeat(6, 1fr);
+        grid-area: a;
+    }
+
+    .list-section {
+        grid-area: b;
+    }
+    
+    .aside {
+        grid-area: c;
+        height: 100%;
+        align-items: flex-start;
+    }    
+
+    #jobs article {
+        grid-template-columns: 3.75rem 1fr 2fr 3.5rem 3rem 5rem;
+        gap: 1rem;
     }
 
     /* section | displays users stats */
@@ -67,10 +75,6 @@
     }
 
     /* section | form */
-    .form-section {
-        grid-area: c;
-    }
-
     .list-section {
         grid-area: b;
     }

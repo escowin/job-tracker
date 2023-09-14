@@ -6,7 +6,7 @@ import { QUERY_ME } from "../utils/queries";
 import { format } from "../utils/helpers";
 import "../assets/css/job-form.css"
 
-function JobForm({ initialValues, id }) {
+function JobForm({ initialValues, id, type }) {
 
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
@@ -23,7 +23,7 @@ function JobForm({ initialValues, id }) {
     { name: "status", value: selectedStatus, setState: setSelectedStatus },
     { name: "source", value: selectedSource, setState: setSelectedSource },
   ]
-  console.log(id)
+
   const jobPath = window.location.pathname.includes("/job");
   const navigate = useNavigate();
 
@@ -111,7 +111,7 @@ function JobForm({ initialValues, id }) {
   };
 
   return (
-    <section className="job-form-section" id="edit-section">
+    <section className={`${type} form-section`} id={id}>
       <h2>{format.title(format.id(id))}</h2>
 
       <form onSubmit={handleFormSubmit} className="job-form" id={id}>

@@ -26,11 +26,11 @@ function Home() {
   ];
 
   // form component renders by tracking the state of the display width
-  const [minWidth, setMinWidth] = useState(window.innerWidth >= 1024);
+  const [minWidth, setMinWidth] = useState(window.innerWidth >= 750);
   useEffect(() => {
     // Define a function to update the `minWidth` state based on the window width
     const handleResize = () => {
-      setMinWidth(window.innerWidth >= 1024);
+      setMinWidth(window.innerWidth >= 750);
     };
 
     // Add event listener to track window width changes
@@ -50,7 +50,7 @@ function Home() {
     <>
       {loggedIn && user?.username ? (
         <>
-          {minWidth && <JobForm initialValues={{}} title={"add-job"} />}
+          {minWidth && <JobForm initialValues={{}} id={"add-job"} type="aside" />}
           <Profile
             user={{
               username: user.username,

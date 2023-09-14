@@ -11,7 +11,7 @@ function AddJob() {
 
   return (
     <>
-      <JobForm initialValues={{}} id={"add-job"} />
+      <JobForm initialValues={{}} id={"add-job"} type={"page"}/>
     </>
   );
 }

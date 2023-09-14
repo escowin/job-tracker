@@ -81,7 +81,7 @@ function JobOptions(props) {
   };
 
   return (
-    <section className="form-section" id="job-options">
+    <section className="form-section aside" id="job-options">
       <h2>Options</h2>
       <article className="job-buttons">
         <button onClick={handleGoBack}>back</button>

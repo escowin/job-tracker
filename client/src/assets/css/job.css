@@ -75,6 +75,7 @@
 @media screen and (min-width: 768px) {
     #job-profile {
         grid-template-columns: 2fr repeat(4, 1fr);
+        height: 100%;
     }
 
     #job-profile article:nth-child(2) {
@@ -86,11 +87,7 @@
     }
 
     #job-options {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        grid-template-areas:
-            "a b"
-            "c c";
+        display: flex;
         gap: .5rem 1rem;
     }
 
@@ -105,14 +102,10 @@
     #job-options .note-form {
         grid-area: c;
     }
+
 }
 
 @media screen and (min-width: 1024px) {
-
-    #job-options {
-        display: flex;
-    }
-
     #notes-section button {
         padding: .15rem 1rem;
     }
