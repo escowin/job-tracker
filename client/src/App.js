@@ -13,7 +13,6 @@ import Page404 from "./pages/Page404";
 
 // mobile display
 import AddJob from "./pages/AddJob";
-import EditJob from "./pages/EditJob";
 
 import "./assets/css/index.css";
 
@@ -64,7 +63,6 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/job/:id" element={<Job />} />
               <Route path="/add-job" element={<AddJob />} />
-              <Route path="/edit-job/:id" element={<EditJob />} />
               <Route path="*" element={<Page404 />} />
             </Routes>
           </main>
