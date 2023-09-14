@@ -1,16 +1,36 @@
 .job-form {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: .5rem 3rem;
 }
 
-.job-form article {
+.job-form button {
+    align-items: center;
+}
+
+.job-form button,
+.job-form label[for='role'], 
+.job-form label[for='company'] {
+    grid-column: 1/-1;
+}
+
+.job-form .wrapper {
     display: flex;
     flex-direction: column;
 }
 
-.job-form .wrapper {
-    grid-column: span 2;
+#add-job fieldset label {
+    display: flex;
+    align-items: center;
+    gap: .25rem;
+}
+
+#add-job {
+    grid-template-columns: 1fr 1fr;
+    gap: .5rem 3rem;
+}
+
+#edit-job {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: .5rem 1rem;
 }
 
 @media screen and (min-width: 1024px) {

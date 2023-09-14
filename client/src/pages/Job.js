@@ -11,7 +11,7 @@ import "../assets/css/job.css";
 
 function Job() {
   // state variables
-  const [editBtnSelected, setEditBtnSelected] = useState(false);
+  const [editSelected, setEditSelected] = useState(false);
 
   const loggedIn = Auth.loggedIn();
   const { id: _id } = useParams();
@@ -34,19 +34,10 @@ function Job() {
   // - eliminates the need for an /edit/:id route
   return (
     <>
-      <JobOptions
-        jobId={job._id}
-        setEditBtnSelected={setEditBtnSelected}
-      />
-      <section>
-      {editBtnSelected ? (
-        <JobForm initialValues={job} title={"edit job"} />
-      ) : (
-        <JobProfile job={job} />
-      )}        
-      </section>
-
-
+      <JobOptions jobId={job._id} setEditSelected={setEditSelected} />
+        {editSelected 
+        ? <JobForm initialValues={job} id={"edit-job"} /> 
+        : <JobProfile job={job} />}
       <JobNotes notes={job.notes} jobId={job._id} status={job.status} />
     </>
   );

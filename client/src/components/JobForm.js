@@ -4,8 +4,9 @@ import { useMutation } from "@apollo/client";
 import { ADD_JOB, EDIT_JOB } from "../utils/mutations";
 import { QUERY_ME } from "../utils/queries";
 import { format } from "../utils/helpers";
+import "../assets/css/job-form.css"
 
-function JobForm({ initialValues, title }) {
+function JobForm({ initialValues, id }) {
 
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
@@ -23,7 +24,7 @@ function JobForm({ initialValues, title }) {
     { name: "source", value: selectedSource, setState: setSelectedSource },
   ]
   
-  const editPath = window.location.pathname.includes("/edit-job");
+  const editPath = id.includes("edit");
   const navigate = useNavigate();
 
   const [addJob, { error }] = useMutation(ADD_JOB, {
@@ -109,20 +110,20 @@ function JobForm({ initialValues, title }) {
   };
 
   return (
-    <section className="form-section">
-      <h2>{format.title(title)}</h2>
+    <section className="job-form-section" id="edit-section">
+      <h2>{format.title(format.id(id))}</h2>
 
-      <form onSubmit={handleFormSubmit} className="job-form">
-        <article className="wrapper">
-          <label htmlFor="company">Company</label>
-          <input name="company" value={company} onChange={handleChange} />
-        </article>
-        <article className="wrapper">
-          <label htmlFor="role">Role</label>
+      <form onSubmit={handleFormSubmit} className="job-form" id={id}>
+        <label className="wrapper" htmlFor="role">Role
           <input name="role" value={role} onChange={handleChange} />
-        </article>
+        </label>
+
+        <label className="wrapper" htmlFor="company">Company
+          <input name="company" value={company} onChange={handleChange} />
+        </label>
+
         <fieldset className="wrapper" id="source">
-          <legend>source</legend>
+          <legend>Source</legend>
           {sourceValues.map((source, i) => (
             <label htmlFor={source} key={i}>
               <input 
@@ -136,7 +137,7 @@ function JobForm({ initialValues, title }) {
           ))}
         </fieldset>
         {editPath ? (
-          <fieldset>
+          <fieldset className="wrapper">
             <legend>status</legend>
             {statusValues.map((status, i) => (
               <label htmlFor={status} key={i}>
@@ -152,18 +153,15 @@ function JobForm({ initialValues, title }) {
             ))}
           </fieldset>
         ) : null}
-        <article>
-          <label htmlFor="date-submitted">Date submitted</label>
+        <label className="wrapper" htmlFor="date-submitted">Applied
           <input
             name="date-submitted"
             type="date"
             value={dateSubmitted}
             onChange={handleChange}
           />
-        </article>
-        <article className="wrapper">
-          <button type="submit">submit</button>
-        </article>
+        </label>
+        <button className="wrapper" type="submit">submit</button>
         {error && <span>error</span>}
       </form>
     </section>

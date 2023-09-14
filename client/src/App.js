@@ -8,17 +8,17 @@ import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
-import AddJob from "./pages/AddJob";
-import EditJob from "./pages/EditJob";
 import Job from "./pages/Job";
 import Page404 from "./pages/Page404";
+
+// mobile display
+import AddJob from "./pages/AddJob";
+import EditJob from "./pages/EditJob";
 
 import "./assets/css/index.css";
 
 // apollo server | graphql
-const httpLink = createHttpLink({
-  uri: "/graphql",
-});
+const httpLink = createHttpLink({ uri: "/graphql" });
 
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("id_token");
@@ -52,7 +52,6 @@ const client = new ApolloClient({
 });
 
 function App() {
-
   return (
     <ApolloProvider client={client}>
       <Router>
@@ -63,9 +62,9 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/job/:id" element={<Job />} />
               <Route path="/add-job" element={<AddJob />} />
               <Route path="/edit-job/:id" element={<EditJob />} />
-              <Route path="/job/:id" element={<Job />} />
               <Route path="*" element={<Page404 />} />
             </Routes>
           </main>

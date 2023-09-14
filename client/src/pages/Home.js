@@ -50,7 +50,7 @@ function Home() {
     <>
       {loggedIn && user?.username ? (
         <>
-          {minWidth && <JobForm initialValues={{}} title={"add job"} />}
+          {minWidth && <JobForm initialValues={{}} title={"add-job"} />}
           <Profile
             user={{
               username: user.username,

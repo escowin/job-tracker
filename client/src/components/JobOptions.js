@@ -6,7 +6,7 @@ import { QUERY_JOB, QUERY_ME } from "../utils/queries";
 
 function JobOptions(props) {
   // props
-  const { jobId, setEditBtnSelected } = props
+  const { jobId, setEditSelected } = props
   // state variables
   const [note, setNote] = useState("");
   const [interview, setInterview] = useState(false);
@@ -48,7 +48,7 @@ function JobOptions(props) {
   // option variables
   const navigate = useNavigate();
   const handleGoBack = () => navigate(-1);
-  const handleEdit = () => setEditBtnSelected(true);
+  const handleEdit = () => setEditSelected(true);
   const handleDelete = async () => {
     try {
       const { data } = await removeJob({ variables: { id: _id } });
@@ -107,8 +107,6 @@ function JobOptions(props) {
         <button type="submit">submit</button>
       </form>
       {error && <span>error</span>}
-
-      {/* {!showEditForm ? null : <p>job edit form</p>} */}
     </section>
   );
 }
