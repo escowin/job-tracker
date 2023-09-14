@@ -255,6 +255,7 @@ button:hover {
   
   nav {
     flex-grow: 0;
+    gap: 1rem;
   }
 }
 
@@ -269,7 +270,11 @@ button:hover {
   }
 
   main {
-    grid-template-columns: 25rem auto;
+    grid-template-columns: 20rem auto;
+  }
+
+  .aside form {
+    width: 100%;
   }
 
 

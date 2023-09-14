@@ -106,7 +106,7 @@
 }
 
 @media screen and (min-width: 1024px) {
-    #notes-section button {
+    .aside button {
         padding: .15rem 1rem;
     }
 }

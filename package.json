@@ -1,6 +1,6 @@
 {
   "name": "job-tracker",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "tracks job hunting stats",
   "main": "index.js",
   "scripts": {
