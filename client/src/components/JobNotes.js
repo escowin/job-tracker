@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import { QUERY_JOB, QUERY_ME } from "../utils/queries";
 import { DELETE_NOTE } from "../utils/mutations";
 
-function NoteList({ notes, jobId, status }) {
+function JobNotes({ notes, jobId, status }) {
   let deletedNoteId;
   const [deleteNote, { error }] = useMutation(DELETE_NOTE, {
     update(cache, { data }) {
@@ -34,11 +34,13 @@ function NoteList({ notes, jobId, status }) {
           me: {
             ...me,
             jobs: me.jobs.map((job) =>
-              job._id === jobId ? { ...job, noteCount: updatedNotes.length } : job
+              job._id === jobId
+                ? { ...job, noteCount: updatedNotes.length }
+                : job
             ),
           },
-        }
-      })
+        },
+      });
     },
   });
 
@@ -56,17 +58,27 @@ function NoteList({ notes, jobId, status }) {
   };
 
   return (
-    <ul id="notes">
-      {notes.map((note, i) => (
-        <li key={i} className="note">
-          <h3>{note.createdAt}</h3>
-          <p className={status}>{note.note}</p>
-          <button className="warning" onClick={() => handleDeleteNote(note._id)}>delete</button>
-        </li>
-      ))}
-      {error && <span>error</span>}
-    </ul>
+    <section className="list-section" id="notes-section">
+      <h2>Notes</h2>
+      {/* {job.noteCount > 0 && ( */}
+      <ul id="notes">
+        {notes.map((note, i) => (
+          <li key={i} className="note">
+            <h3>{note.createdAt}</h3>
+            <p className={status}>{note.note}</p>
+            <button
+              className="warning"
+              onClick={() => handleDeleteNote(note._id)}
+            >
+              delete
+            </button>
+          </li>
+        ))}
+        {error && <span>error</span>}
+      </ul>
+      {/* )} */}
+    </section>
   );
 }
 
-export default NoteList;
+export default JobNotes;

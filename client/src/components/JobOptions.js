@@ -3,13 +3,13 @@ import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_NOTE, DELETE_JOB } from "../utils/mutations";
 import { QUERY_JOB, QUERY_ME } from "../utils/queries";
-import JobForm from "./JobForm";
 
-function JobOptions({ jobId }) {
+function JobOptions(props) {
+  // props
+  const { jobId, setEditBtnSelected } = props
   // state variables
   const [note, setNote] = useState("");
   const [interview, setInterview] = useState(false);
-  const [showEditForm, setShowEditForm] = useState(false);
 
   // database variables
   const { id: _id } = useParams();
@@ -47,6 +47,8 @@ function JobOptions({ jobId }) {
 
   // option variables
   const navigate = useNavigate();
+  const handleGoBack = () => navigate(-1);
+  const handleEdit = () => setEditBtnSelected(true);
   const handleDelete = async () => {
     try {
       const { data } = await removeJob({ variables: { id: _id } });
@@ -55,16 +57,6 @@ function JobOptions({ jobId }) {
     } catch (err) {
       console.error(err);
     }
-  };
-  const handleGoBack = () => navigate(-1);
-  const handleEdit = () => {
-    // navigate(`/edit-job/${jobId}`)
-
-    // toggles state variable to show/hide job form
-    // - pro: keeps both forms here.
-    // - con: bloats up jobOption.js purpose (button clicks, notes, form editing )
-    // - modularize post & put forms into components. this component should only only handle button click states
-    setShowEditForm(!showEditForm);
   };
 
   // note form variables
@@ -116,7 +108,7 @@ function JobOptions({ jobId }) {
       </form>
       {error && <span>error</span>}
 
-      {!showEditForm ? null : <p>job edit form</p>}
+      {/* {!showEditForm ? null : <p>job edit form</p>} */}
     </section>
   );
 }

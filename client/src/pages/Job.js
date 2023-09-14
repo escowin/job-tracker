@@ -1,26 +1,24 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_JOB } from "../utils/queries";
 import Auth from "../utils/auth";
-import { format } from "../utils/helpers";
-import NoteList from "../components/NoteList";
+import JobNotes from "../components/JobNotes";
 import JobOptions from "../components/JobOptions";
+import JobProfile from "../components/JobProfile";
+import JobForm from "../components/JobForm";
 import "../assets/css/job.css";
 
 function Job() {
+  // state variables
+  const [editBtnSelected, setEditBtnSelected] = useState(false);
+
   const loggedIn = Auth.loggedIn();
   const { id: _id } = useParams();
   const { loading, data } = useQuery(QUERY_JOB, {
     variables: { id: _id },
   });
   const job = data?.job || {};
-  const jobStats = [
-    { value: job?.company, label: "Company" },
-    { value: job?.source, label: "Source" },
-    { value: job?.status, label: "Status" },
-    { value: job?.interviewCount, label: "Interviews" },
-    { value: job?.dateSubmitted, label: "Applied" },
-  ];
 
   if (!loggedIn) {
     return <section>log in to view contents</section>;
@@ -30,28 +28,26 @@ function Job() {
     return <section>loading...</section>;
   }
 
+  // use global state to handle button clicks
+  // Job.js purpose
+  // - edit button clicked in JobOptions determines whether  #job-profile contents or JobForm.js renders
+  // - eliminates the need for an /edit/:id route
   return (
     <>
-      <JobOptions jobId={job._id} />
-      <section className="details-section" id="job-profile">
-        <h2 className={job.status}>{job.role}</h2>
-        {jobStats.map((stat, i) => (
-          <article key={i} className="job-detail">
-            <h3>{stat.label}</h3>
-            <p className={job.status}>
-              {stat.value !== job?.dateSubmitted
-                ? stat.value
-                : format.date(stat.value)}
-            </p>
-          </article>
-        ))}
+      <JobOptions
+        jobId={job._id}
+        setEditBtnSelected={setEditBtnSelected}
+      />
+      <section>
+      {editBtnSelected ? (
+        <JobForm initialValues={job} title={"edit job"} />
+      ) : (
+        <JobProfile job={job} />
+      )}        
       </section>
-      <section className="list-section" id="notes-section">
-        <h2>Notes</h2>
-        {job.noteCount > 0 && (
-          <NoteList notes={job.notes} jobId={job._id} status={job.status} />
-        )}
-      </section>
+
+
+      <JobNotes notes={job.notes} jobId={job._id} status={job.status} />
     </>
   );
 }
