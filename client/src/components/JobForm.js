@@ -23,8 +23,8 @@ function JobForm({ initialValues, id }) {
     { name: "status", value: selectedStatus, setState: setSelectedStatus },
     { name: "source", value: selectedSource, setState: setSelectedSource },
   ]
-  
-  const editPath = id.includes("edit");
+  console.log(id)
+  const jobPath = window.location.pathname.includes("/job");
   const navigate = useNavigate();
 
   const [addJob, { error }] = useMutation(ADD_JOB, {
@@ -87,15 +87,16 @@ function JobForm({ initialValues, id }) {
       source: selectedSource
     };
 
-    if (editPath) {
+    if (jobPath) {
       variables = {
         ...variables,
         status: selectedStatus,
       };
+      console.log(variables)
     }
 
     try {
-      if (editPath) {
+      if (jobPath) {
         await editJob({
           variables: { id: initialValues._id, ...variables },
         });
@@ -136,7 +137,7 @@ function JobForm({ initialValues, id }) {
             </label>
           ))}
         </fieldset>
-        {editPath ? (
+        {jobPath ? (
           <fieldset className="wrapper">
             <legend>status</legend>
             {statusValues.map((status, i) => (
