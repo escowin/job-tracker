@@ -64,8 +64,11 @@ function JobNotes({ notes, jobId, status }) {
       <ul id="notes">
         {notes.map((note, i) => (
           <li key={i} className="note">
-            <h3>{note.createdAt}</h3>
-            <p className={status}>{note.note} {console.log(note)}</p>
+            <h3>
+              {note.createdAt}{" "}
+              {note.interview === true ? <code className={status}>interview</code> : ""}
+            </h3>
+            <p className={status}>{note.note}</p>
             <button
               className="warning"
               onClick={() => handleDeleteNote(note._id)}
@@ -76,7 +79,6 @@ function JobNotes({ notes, jobId, status }) {
         ))}
         {error && <span>error</span>}
       </ul>
-      {/* )} */}
     </section>
   );
 }

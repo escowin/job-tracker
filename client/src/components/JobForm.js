@@ -4,25 +4,26 @@ import { useMutation } from "@apollo/client";
 import { ADD_JOB, EDIT_JOB } from "../utils/mutations";
 import { QUERY_ME } from "../utils/queries";
 import { format } from "../utils/helpers";
-import "../assets/css/job-form.css"
+import "../assets/css/job-form.css";
 
-function JobForm({ initialValues, id, type }) {
+function JobForm(props) {
+  const { initialValues, setEditSelected, id, type } = props;
 
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
-  const [dateSubmitted, setDateSubmitted] = useState("");
+  const [applied, setApplied] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
-  const [selectedSource, setSelectedSource] = useState("")
+  const [selectedSource, setSelectedSource] = useState("");
   const statusValues = ["pending", "waitlisted", "rejected", "hired"];
   const sourceValues = ["company", "job-board", "job-fair", "referral"];
 
   const formStates = [
     { name: "company", value: company, setState: setCompany },
     { name: "role", value: role, setState: setRole },
-    { name: "date-submitted", value: dateSubmitted, setState: setDateSubmitted },
+    { name: "applied", value: applied, setState: setApplied,},
     { name: "status", value: selectedStatus, setState: setSelectedStatus },
     { name: "source", value: selectedSource, setState: setSelectedSource },
-  ]
+  ];
 
   const jobPath = window.location.pathname.includes("/job");
   const navigate = useNavigate();
@@ -63,19 +64,19 @@ function JobForm({ initialValues, id, type }) {
     if (initialValues) {
       setCompany(initialValues.company || "");
       setRole(initialValues.role || "");
-      setDateSubmitted(initialValues.dateSubmitted || "");
+      setApplied(initialValues.applied || format.today());
       setSelectedStatus(initialValues.status || "");
       setSelectedSource(initialValues.source || "");
     } else {
       setSelectedStatus("pending");
-      setSelectedSource("job-board")
+      setSelectedSource("job-board");
     }
   }, [initialValues]);
 
   //  captures & sets form state
   const handleChange = (e) => {
-    const newState = formStates.find(state => state.name === e.target.name)
-    newState ? newState.setState(e.target.value) : console.error("error")
+    const newState = formStates.find((state) => state.name === e.target.name);
+    newState ? newState.setState(e.target.value) : console.error("error");
   };
 
   const handleFormSubmit = async (e) => {
@@ -83,8 +84,8 @@ function JobForm({ initialValues, id, type }) {
     let variables = {
       company,
       role,
-      dateSubmitted,
-      source: selectedSource
+      applied,
+      source: selectedSource,
     };
 
     if (jobPath) {
@@ -92,19 +93,20 @@ function JobForm({ initialValues, id, type }) {
         ...variables,
         status: selectedStatus,
       };
-      console.log(variables)
+      console.log(variables);
     }
 
     try {
       if (jobPath) {
-        await editJob({
-          variables: { id: initialValues._id, ...variables },
-        });
+        // resets state to false after mutation
+        await editJob({ variables: { id: initialValues._id, ...variables } });
+        setEditSelected(false)
       } else {
+        console.log(variables)
+        // sends the user to homepage after mutation
         await addJob({ variables });
+        navigate("/");
       }
-      // redirects user back to home
-      navigate("/");
     } catch (err) {
       console.error(err);
     }
@@ -115,11 +117,13 @@ function JobForm({ initialValues, id, type }) {
       <h2>{format.title(format.id(id))}</h2>
 
       <form onSubmit={handleFormSubmit} className="job-form" id={id}>
-        <label className="wrapper" htmlFor="role">Role
+        <label className="wrapper" htmlFor="role">
+          Role
           <input name="role" value={role} onChange={handleChange} />
         </label>
 
-        <label className="wrapper" htmlFor="company">Company
+        <label className="wrapper" htmlFor="company">
+          Company
           <input name="company" value={company} onChange={handleChange} />
         </label>
 
@@ -127,12 +131,13 @@ function JobForm({ initialValues, id, type }) {
           <legend>Source</legend>
           {sourceValues.map((source, i) => (
             <label htmlFor={source} key={i}>
-              <input 
-                type="radio" 
-                name="source" 
+              <input
+                type="radio"
+                name="source"
                 value={source}
                 checked={source === selectedSource}
-                onChange={handleChange} />
+                onChange={handleChange}
+              />
               {format.id(source)}
             </label>
           ))}
@@ -154,15 +159,18 @@ function JobForm({ initialValues, id, type }) {
             ))}
           </fieldset>
         ) : null}
-        <label className="wrapper" htmlFor="date-submitted">Applied
+        <label className="wrapper" htmlFor="applied">
+          Applied
           <input
-            name="date-submitted"
+            name="applied"
             type="date"
-            value={dateSubmitted}
+            value={applied}
             onChange={handleChange}
           />
         </label>
-        <button className="wrapper" type="submit">submit</button>
+        <button className="wrapper" type="submit">
+          submit
+        </button>
         {error && <span>error</span>}
       </form>
     </section>

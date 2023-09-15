@@ -25,14 +25,14 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_JOB = gql`
-  mutation addJob($company: String!, $role: String!, $dateSubmitted: String!, $source: String) {
-    addJob(company: $company, role: $role, dateSubmitted: $dateSubmitted, source: $source) {
+  mutation addJob($company: String!, $role: String!, $applied: String!, $source: String) {
+    addJob(company: $company, role: $role, applied: $applied, source: $source) {
       _id
       company
       role
       status
       source
-      dateSubmitted
+      applied
       noteCount
     }
   }
@@ -44,7 +44,7 @@ export const EDIT_JOB = gql`
     $company: String
     $role: String
     $status: String
-    $dateSubmitted: String
+    $applied: String
     $source: String
   ) {
     editJob(
@@ -52,14 +52,14 @@ export const EDIT_JOB = gql`
       company: $company
       role: $role
       status: $status
-      dateSubmitted: $dateSubmitted
+      applied: $applied
       source: $source
     ) {
       _id
       company
       role
       status
-      dateSubmitted
+      applied
       source
     }
   }

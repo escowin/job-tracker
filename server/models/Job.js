@@ -24,7 +24,7 @@ const JobSchema = new Schema(
       type: String,
       trim: true
     },
-    dateSubmitted: {
+    applied: {
       type: String,
       required: true,
     },

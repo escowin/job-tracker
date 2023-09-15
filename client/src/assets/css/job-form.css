@@ -25,7 +25,7 @@
 
 #add-job {
     grid-template-columns: 1fr 1fr;
-    gap: .5rem 3rem;
+    gap: .5rem 2rem;
 }
 
 #edit-job {
@@ -47,8 +47,7 @@
     }
 
     #add-job {
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
+        gap: .75rem;
     }
 
     #add-job .wrapper {

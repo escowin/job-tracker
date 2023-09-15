@@ -19,7 +19,7 @@ const typeDefs = gql`
     company: String
     role: String
     status: String
-    dateSubmitted: String
+    applied: String
     createdAt: String
     noteCount: Int
     interviewCount: Int
@@ -48,14 +48,14 @@ const typeDefs = gql`
     addJob(
       company: String!
       role: String!
-      dateSubmitted: String!
+      applied: String!
       source: String
     ): Job
     editJob(
       _id: String!
       company: String
       role: String
-      dateSubmitted: String
+      applied: String
       status: String
       source: String
     ): Job

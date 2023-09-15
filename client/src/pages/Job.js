@@ -28,15 +28,13 @@ function Job() {
     return <section>loading...</section>;
   }
 
-  // use global state to handle button clicks
-  // Job.js purpose
-  // - edit button clicked in JobOptions determines whether  #job-profile contents or JobForm.js renders
-  // - eliminates the need for an /edit/:id route
+  // Job.js purpose:
+  // - edit button clicked in JobOptions determines whether JobForm or JobProfile renders
   return (
     <>
       <JobOptions jobId={job._id} setEditSelected={setEditSelected} />
         {editSelected 
-        ? <JobForm initialValues={job} id={"edit-job"} type={"section"}/> 
+        ? <JobForm initialValues={job} setEditSelected={setEditSelected} id={"edit-job"} type={"section"}/> 
         : <JobProfile job={job} />}
       <JobNotes notes={job.notes} jobId={job._id} status={job.status} />
     </>

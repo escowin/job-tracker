@@ -22,7 +22,7 @@ function JobLists({ jobs }) {
           <Link to={`/job/${job._id}`} className="link">{job.role}</Link>
           <p>{job.status}</p>
           <p className="count">{job.noteCount}</p>
-          <p className="display-md">{format.date(job.dateSubmitted)}</p>
+          <p className="display-md">{format.date(job.applied)}</p>
         </article>
       ))}
     </section>

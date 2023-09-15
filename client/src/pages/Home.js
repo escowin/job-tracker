@@ -51,12 +51,7 @@ function Home() {
       {loggedIn && user?.username ? (
         <>
           {minWidth && <JobForm initialValues={{}} id={"add-job"} type="aside" />}
-          <Profile
-            user={{
-              username: user.username,
-              stats: userStats,
-            }}
-          />
+          <Profile user={{ username: user.username, stats: userStats }} />
           <JobLists jobs={jobs} />
         </>
       ) : (

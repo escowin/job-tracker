@@ -6,7 +6,7 @@ function JobProfile({ job }) {
     { value: job?.source, label: "Source" },
     { value: job?.status, label: "Status" },
     { value: job?.interviewCount, label: "Interviews" },
-    { value: job?.dateSubmitted, label: "Applied" },
+    { value: job?.applied, label: "Applied" },
   ];
 
   return (
@@ -16,9 +16,7 @@ function JobProfile({ job }) {
         <article key={i} className="job-detail">
           <h3>{stat.label}</h3>
           <p className={job.status}>
-            {stat.value !== job?.dateSubmitted
-              ? stat.value
-              : format.date(stat.value)}
+            {stat.value !== job?.applied ? stat.value : format.date(stat.value)}
           </p>
         </article>
       ))}

@@ -10,7 +10,7 @@ export const QUERY_ME = gql`
         role
         status
         source
-        dateSubmitted
+        applied
         noteCount
       }
       hiredCount
@@ -31,12 +31,13 @@ export const QUERY_JOB = gql`
       role
       status
       source
-      dateSubmitted
+      applied
       noteCount
       interviewCount
       notes {
         _id
         note
+        interview
         createdAt
       }
     }
