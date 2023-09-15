@@ -65,7 +65,7 @@ function JobNotes({ notes, jobId, status }) {
         {notes.map((note, i) => (
           <li key={i} className="note">
             <h3>{note.createdAt}</h3>
-            <p className={status}>{note.note}</p>
+            <p className={status}>{note.note} {console.log(note)}</p>
             <button
               className="warning"
               onClick={() => handleDeleteNote(note._id)}

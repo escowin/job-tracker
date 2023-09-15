@@ -1,16 +1,13 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
+// import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
-import { ADD_NOTE, DELETE_JOB } from "../utils/mutations";
+import { DELETE_JOB } from "../utils/mutations";
 import { QUERY_JOB, QUERY_ME } from "../utils/queries";
+import NoteForm from "./NoteForm";
 
 function JobOptions(props) {
   // props
   const { jobId, setEditSelected } = props
-  // state variables
-  const [note, setNote] = useState("");
-  const [interview, setInterview] = useState(false);
-
   // database variables
   const { id: _id } = useParams();
   const [removeJob] = useMutation(DELETE_JOB, {
@@ -59,27 +56,6 @@ function JobOptions(props) {
     }
   };
 
-  // note form variables
-  const [addNote, { error }] = useMutation(ADD_NOTE);
-  const handleChange = (e) => setNote(e.target.value);
-  const handleChecked = (e) => {
-    const checked = e.target.checked;
-    setInterview(checked);
-  };
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-
-    try {
-      await addNote({
-        variables: { jobId, note, interview },
-      });
-      setNote("");
-      setInterview(false);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   return (
     <section className="form-section aside" id="job-options">
       <h2>Options</h2>
@@ -90,23 +66,7 @@ function JobOptions(props) {
           delete
         </button>
       </article>
-
-      <form onSubmit={handleFormSubmit} className="note-form">
-        <label>note</label>
-        <textarea name="note" value={note} onChange={handleChange} />
-        <article id="note-checkbox">
-          <label htmlFor="interview">interview</label>
-          <input
-            type="checkbox"
-            name="interview"
-            id="interview"
-            onClick={handleChecked}
-            value={interview}
-          />
-        </article>
-        <button type="submit">submit</button>
-      </form>
-      {error && <span>error</span>}
+      <NoteForm jobId={jobId}/>
     </section>
   );
 }

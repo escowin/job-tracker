@@ -36,7 +36,7 @@ function Job() {
     <>
       <JobOptions jobId={job._id} setEditSelected={setEditSelected} />
         {editSelected 
-        ? <JobForm initialValues={job} id={"edit-job"} type={""}/> 
+        ? <JobForm initialValues={job} id={"edit-job"} type={"section"}/> 
         : <JobProfile job={job} />}
       <JobNotes notes={job.notes} jobId={job._id} status={job.status} />
     </>
