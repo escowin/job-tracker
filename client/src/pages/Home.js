@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
+// import { useStoreContext } from "../utils/GlobalState";
 import Auth from "../utils/auth";
 import Profile from "../components/Profile";
 import JobLists from "../components/JobsList";

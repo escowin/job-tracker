@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_JOB } from "../utils/queries";
+import { useStoreContext } from "../utils/GlobalState";
 import Auth from "../utils/auth";
 import JobNotes from "../components/JobNotes";
 import JobOptions from "../components/JobOptions";
@@ -10,8 +11,13 @@ import JobForm from "../components/JobForm";
 import "../assets/css/job.css";
 
 function Job() {
+  // global state
+  // const [state, dispatch] = useStoreContext();
+  // const { job } = state;
+  // const { data: }
+
   // state variables
-  const [editSelected, setEditSelected] = useState(false);
+  const [selectedEdit, setSelectedEdit] = useState(false);
 
   const loggedIn = Auth.loggedIn();
   const { id: _id } = useParams();
@@ -32,9 +38,9 @@ function Job() {
   // - edit button clicked in JobOptions determines whether JobForm or JobProfile renders
   return (
     <>
-      <JobOptions jobId={job._id} setEditSelected={setEditSelected} />
-        {editSelected 
-        ? <JobForm initialValues={job} setEditSelected={setEditSelected} id={"edit-job"} type={"section"}/> 
+      <JobOptions jobId={job._id} setSelectedEdit={setSelectedEdit} />
+        {selectedEdit 
+        ? <JobForm initialValues={job} setSelectedEdit={setSelectedEdit} id={"edit-job"} type={"section"}/> 
         : <JobProfile job={job} />}
       <JobNotes notes={job.notes} jobId={job._id} status={job.status} />
     </>

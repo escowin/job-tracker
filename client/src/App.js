@@ -3,6 +3,10 @@ import { InMemoryCache } from "@apollo/client/cache";
 import { setContext } from "@apollo/client/link/context";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+// global state
+import { StoreProvider } from "./utils/GlobalState";
+
+// components & pages
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -10,9 +14,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Job from "./pages/Job";
 import Page404 from "./pages/Page404";
-
-// mobile display
-import AddJob from "./pages/AddJob";
+import AddJob from "./pages/AddJob"; // used for mobile
 
 import "./assets/css/index.css";
 
@@ -55,18 +57,20 @@ function App() {
     <ApolloProvider client={client}>
       <Router>
         <div className="App">
-          <Header />
-          <main>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/job/:id" element={<Job />} />
-              <Route path="/add-job" element={<AddJob />} />
-              <Route path="*" element={<Page404 />} />
-            </Routes>
-          </main>
-          <Footer />
+          <StoreProvider>
+            <Header />
+            <main>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/job/:id" element={<Job />} />
+                <Route path="/add-job" element={<AddJob />} />
+                <Route path="*" element={<Page404 />} />
+              </Routes>
+            </main>
+            <Footer />
+          </StoreProvider>
         </div>
       </Router>
     </ApolloProvider>

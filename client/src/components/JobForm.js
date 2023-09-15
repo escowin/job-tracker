@@ -7,7 +7,7 @@ import { format } from "../utils/helpers";
 import "../assets/css/job-form.css";
 
 function JobForm(props) {
-  const { initialValues, setEditSelected, id, type } = props;
+  const { initialValues, setSelectedEdit, id, type } = props;
 
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
@@ -100,7 +100,7 @@ function JobForm(props) {
       if (jobPath) {
         // resets state to false after mutation
         await editJob({ variables: { id: initialValues._id, ...variables } });
-        setEditSelected(false)
+        setSelectedEdit(false)
       } else {
         console.log(variables)
         // sends the user to homepage after mutation

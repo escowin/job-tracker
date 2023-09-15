@@ -7,7 +7,7 @@ import NoteForm from "./NoteForm";
 
 function JobOptions(props) {
   // props
-  const { jobId, setEditSelected } = props
+  const { jobId, setSelectedEdit } = props
   // database variables
   const { id: _id } = useParams();
   const [removeJob] = useMutation(DELETE_JOB, {
@@ -45,7 +45,7 @@ function JobOptions(props) {
   // option variables
   const navigate = useNavigate();
   const handleGoBack = () => navigate(-1);
-  const handleEdit = () => setEditSelected(true);
+  const handleEdit = () => setSelectedEdit(true);
   const handleDelete = async () => {
     try {
       const { data } = await removeJob({ variables: { id: _id } });
