@@ -45,6 +45,15 @@ function JobForm(props) {
                 pendingCount: updatedJobs.filter(
                   (job) => job.status === "pending"
                 ).length,
+                waitlistedCount: updatedJobs.filter(
+                  (job) => job.status === "waitlisted"
+                ).length,
+                rejectedCount: updatedJobs.filter(
+                  (job) => job.status === "rejected"
+                ).length,
+                hiredCount: updatedJobs.filter(
+                  (job) => job.status === "hired"
+                ).length,
                 totalSubmitted: updatedJobs.length,
                 rate: me.hiredCount / (updatedJobs.length + 1),
               },
