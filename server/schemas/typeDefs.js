@@ -62,6 +62,7 @@ const typeDefs = gql`
     deleteJob(_id: String!): Job
     addNote(jobId: ID!, note: String!, interview: Boolean): Job
     deleteNote(_id: String!, jobId: String!): Note
+    updatePendingJobs: Int
   }
 
   type Auth {

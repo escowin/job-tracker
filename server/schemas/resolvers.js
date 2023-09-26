@@ -1,6 +1,7 @@
 const { User, Job } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
+const { calculateTime } = require("../utils/helpers")
 
 const resolvers = {
   Query: {
@@ -129,6 +130,26 @@ const resolvers = {
         throw new Error("failed to delete note");
       }
     },
+    updatePendingJobs: async (parent, args, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("login required");
+      }
+
+      // finds all 'pending' jobs
+      const pendingJobs = await Job.find({status: "pending" });
+      let updatedCount = 0;
+
+      for (const job of pendingJobs) {
+        // calculates elapsed time between application date & now. 
+        const elapsed = calculateTime(job.applied, 14)
+        if (elapsed) {
+          job.status = "no response";
+          await job.save()
+          updatedCount++
+        }
+      }
+      return updatedCount
+    }
   },
 };
 
