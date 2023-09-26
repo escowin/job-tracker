@@ -12,7 +12,7 @@ function JobLists({ jobs }) {
       <h2>job applications</h2>
       <article>
         {fields.map((field, i) => (
-          field === "source" || field === "applied" ? <h3 key={i} className="display-md">{field}</h3> : <h3 key={i}>{field}</h3>
+          field === "source" || field === "applied" || field === "status" ? <h3 key={i} className="display-md">{field}</h3> : <h3 key={i}>{field}</h3>
         ))}
       </article>
       {jobs.map((job, i) => (
@@ -20,7 +20,7 @@ function JobLists({ jobs }) {
           <p className="display-md">{format.id(job.source)}</p>
           <Link to={`/job/${job._id}`} className="link">{job.company}</Link>
           <Link to={`/job/${job._id}`} className="link">{job.role}</Link>
-          <p>{job.status}</p>
+          <p className="display-md">{format.id(job.status)}</p>
           <p className="count">{job.noteCount}</p>
           <p className="display-md">{format.date(job.applied)}</p>
         </article>

@@ -143,7 +143,7 @@ const resolvers = {
         // calculates elapsed time between application date & now. 
         const elapsed = calculateTime(job.applied, 14)
         if (elapsed) {
-          job.status = "no response";
+          job.status = "no-response";
           await job.save()
           updatedCount++
         }

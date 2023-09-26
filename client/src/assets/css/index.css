@@ -8,6 +8,7 @@
   --green: rgb(116, 220, 167);
   --blue: rgb(116, 174, 220);
   --yellow: rgb(231, 189, 64);
+  --grey: rgb(97, 106, 121);
 }
 
 * {
@@ -38,6 +39,10 @@
 
 .waitlisted {
   color: var(--yellow);
+}
+
+.no-response {
+  color: var(--grey);
 }
 
 .message {
@@ -203,7 +208,6 @@ button:hover {
   border-color: var(--green);
   color: var(--green);
 }
-
 
 .warning {
   border-color: var(--light-red);
