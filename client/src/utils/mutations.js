@@ -25,7 +25,12 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_JOB = gql`
-  mutation addJob($company: String!, $role: String!, $applied: String!, $source: String) {
+  mutation addJob(
+    $company: String!
+    $role: String!
+    $applied: String!
+    $source: String
+  ) {
     addJob(company: $company, role: $role, applied: $applied, source: $source) {
       _id
       company
@@ -93,5 +98,11 @@ export const DELETE_NOTE = gql`
     deleteNote(_id: $id, jobId: $jobId) {
       _id
     }
+  }
+`;
+
+export const UPDATE_PENDING_JOBS = gql`
+  mutation Mutation {
+    updatePendingJobs
   }
 `;

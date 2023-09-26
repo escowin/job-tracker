@@ -17,6 +17,7 @@ export const QUERY_ME = gql`
       rejectedCount
       pendingCount
       waitlistedCount
+      noResponseCount
       totalSubmitted
       rate
     }

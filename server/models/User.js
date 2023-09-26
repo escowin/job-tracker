@@ -42,8 +42,7 @@ UserSchema.virtual("totalSubmitted").get(function () {
   return this.jobs.length;
 });
 
-// uses .filter() to return the specified totals
-// pending count
+// specific counts use .filter() to return total
 UserSchema.virtual("pendingCount").get(function () {
   const result = this.jobs.filter(
     (job) => job.status === "pending"
@@ -51,7 +50,6 @@ UserSchema.virtual("pendingCount").get(function () {
   return result.length;
 });
 
-// rejected count
 UserSchema.virtual("rejectedCount").get(function () {
   const result = this.jobs.filter(
     (job) => job.status === "rejected"
@@ -59,7 +57,6 @@ UserSchema.virtual("rejectedCount").get(function () {
   return result.length;
 });
 
-// hired count
 UserSchema.virtual("hiredCount").get(function () {
   const result = this.jobs.filter(
     (job) => job.status === "hired"
@@ -67,10 +64,16 @@ UserSchema.virtual("hiredCount").get(function () {
   return result.length;
 });
 
-// waitlisted count
 UserSchema.virtual("waitlistedCount").get(function () {
   const result = this.jobs.filter(
     (job) => job.status === "waitlisted"
+  );
+  return result.length;
+});
+
+UserSchema.virtual("noResponseCount").get(function () {
+  const result = this.jobs.filter(
+    (job) => job.status === "no response"
   );
   return result.length;
 });
