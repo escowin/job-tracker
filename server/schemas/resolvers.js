@@ -140,7 +140,7 @@ const resolvers = {
       let updatedCount = 0;
 
       for (const job of pendingJobs) {
-        // calculates elapsed time between application date & now. 
+        // calculates elapsed time between application date & now 
         const elapsed = calculateTime(job.applied, 14)
         if (elapsed) {
           job.status = "no-response";
