@@ -11,22 +11,22 @@ function JobForm(props) {
   const { initialValues, setEditSelected, id, type } = props;
   // defines state & form properties
   const fields = [
-    { name: "role", max: 50, type: "input" },
+    { name: "role", max: 20, type: "input" },
     { name: "company", max: 50, type: "input" },
-    { name: "applied", max: 50, type: "date" },
     {
       name: "status",
-      max: 50,
+      max: 15,
       type: "radio",
       radios: ["pending", "waitlisted", "interviewing", "rejected", "hired"],
       jobPage: true,
     },
     {
       name: "source",
-      max: 50,
+      max: 10,
       type: "radio",
-      radio: ["company", "job-board", "job-fair", "referral"],
+      radios: ["company", "job-board", "job-fair", "referral"],
     },
+    { name: "applied", max: 10, type: "date" },
   ];
 
   // console.log(
@@ -165,32 +165,50 @@ function JobForm(props) {
   //   }
   // }
 
-  // UI display
+  // UI | elements & attributes are conditionally rendered.
   const displayField = (field, i) => {
     switch (field.type) {
-      case "input":
-        console.log(field.type)
-        break;
-      case "date":
-        console.log(field.type)
-        break;
       case "radio":
-        if (!jobPath && field.name === "status") {
-          break;
-        }
-        console.log(field);
-        break;
+        return !jobPath && field.name === "status" ? null : (
+          <fieldset className="wrapper" id={field.name} key={i}>
+            <legend>{format.title(field.name)}</legend>
+            {field.radios.map((radio, i) => (
+              <label key={i} htmlFor={field.name}>
+                <input
+                  type={field.type}
+                  id={field.name}
+                  name={field.name}
+                  max={field.max}
+                />
+                {format.id(radio)}
+              </label>
+            ))}
+          </fieldset>
+        );
       default:
-        console.log("invalid field.type " + field.type);
+        return (
+          <label key={i} className="wrapper" htmlFor={field.name}>
+            {format.title(field.name)}
+            <input
+              type={field.type}
+              id={field.name}
+              name={field.name}
+              max={field.max}
+            />
+          </label>
+        );
     }
   };
 
-  // ui takes into consideration url endpoint
   return (
     <section className={`${type} form-section`} id={id}>
       <form className="job-form" id={id} onSubmit={handleFormSubmit}>
         <h2>{format.title(format.id(id))}</h2>
         {fields.map((field, i) => displayField(field, i))}
+        <button className="wrapper" type="submit">
+          submit
+        </button>
+        {error && <span>error</span>}
       </form>
     </section>
   );
