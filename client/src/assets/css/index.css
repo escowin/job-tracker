@@ -5,9 +5,10 @@
   --text: rgb(182, 199, 215);
   --light-red: hsl(0, 40%, 67%);
   --red: hsl(0, 50%, 55%);
-  --green: rgb(116, 220, 167);
-  --blue: rgb(116, 174, 220);
   --yellow: rgb(231, 189, 64);
+  --green: rgb(116, 220, 167);
+  --blue-green: rgb(58, 189, 176);
+  --blue: rgb(116, 174, 220);
   --grey: rgb(97, 106, 121);
 }
 
@@ -33,12 +34,16 @@
   color: var(--green);
 }
 
-.hired {
-  color: var(--blue);
-}
-
 .waitlisted {
   color: var(--yellow);
+}
+
+.interviewing {
+ color: var(--blue-green)
+}
+
+.hired {
+  color: var(--blue);
 }
 
 .no-response {
