@@ -7,8 +7,9 @@ import { format } from "../utils/helpers";
 import "../assets/css/job-form.css";
 
 function JobForm(props) {
-  const jobPath = window.location.pathname.includes("/job");
   const { initialValues, setEditSelected, id, type } = props;
+  const navigate = useNavigate();
+  const jobPath = window.location.pathname.includes("/job");
   // defines state & form properties
   const fields = [
     { name: "role", max: 20, type: "input" },
@@ -18,7 +19,6 @@ function JobForm(props) {
       max: 15,
       type: "radio",
       radios: ["pending", "waitlisted", "interviewing", "rejected", "hired"],
-      jobPage: true,
     },
     {
       name: "source",
@@ -29,47 +29,12 @@ function JobForm(props) {
     { name: "applied", max: 10, type: "date" },
   ];
 
-  // console.log(
-  //   jobPath ? fields : fields.filter((field) => field.name !== "status")
-  // );
-
-  //   // maps array object key w/ empty string value to define initial form state
-  //   const initialState = Object.fromEntries(
-  //     fields.map((field) => [field.name, ""])
-  //   );
-  //   const [formState, setFormState] = useState(initialState);
-
-  //   // updates state object's key-values with corresponding user input
-  //   const handleChange = (e) => {
-  //     const { name, value } = e.target;
-  //     setFormState({ ...formState, [name]: value });
-  //   };
-
-  const [company, setCompany] = useState("");
-  const [role, setRole] = useState("");
-  const [applied, setApplied] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState("");
-  const [selectedSource, setSelectedSource] = useState("");
-  const statusValues = ["pending", "waitlisted", "rejected", "hired"];
-  const sourceValues = ["company", "job-board", "job-fair", "referral"];
-
-  const formStates = [
-    { name: "company", value: company, setState: setCompany },
-    { name: "role", value: role, setState: setRole },
-    { name: "applied", value: applied, setState: setApplied },
-    { name: "status", value: selectedStatus, setState: setSelectedStatus },
-    { name: "source", value: selectedSource, setState: setSelectedSource },
-  ];
-
-  // const jobPath = window.location.pathname.includes("/job");
-  const navigate = useNavigate();
-
-  const [addJob, { error }] = useMutation(ADD_JOB, {
+  // server
+  const [job, { error }] = useMutation(id === "add-job" ? ADD_JOB : EDIT_JOB, {
     update(cache, { data: { addJob } }) {
       try {
         const queryData = cache.readQuery({ query: QUERY_ME });
         const me = queryData?.me;
-
         if (me) {
           const updatedJobs = [addJob, ...me.jobs];
           cache.writeQuery({
@@ -102,68 +67,50 @@ function JobForm(props) {
     },
   });
 
-  const [editJob] = useMutation(EDIT_JOB);
+  // state | maps array object key w/ empty string value to define initial form state
+  const initialState = Object.fromEntries(
+    fields.map((field) => [field.name, ""])
+  );
+  const [formState, setFormState] = useState(initialState);
 
   useEffect(() => {
     if (initialValues) {
-      setCompany(initialValues.company || "");
-      setRole(initialValues.role || "");
-      setApplied(initialValues.applied || format.today());
-      setSelectedStatus(initialValues.status || "");
-      setSelectedSource(initialValues.source || "");
+      setFormState({
+        role: initialValues.role || "",
+        company: initialValues.company || "",
+        status: initialValues.status || "",
+        source: initialValues.source || "",
+        applied: initialValues.applied || "",
+      });
     } else {
-      setSelectedStatus("pending");
-      setSelectedSource("job-board");
+      setFormState((prevState) => ({
+        ...prevState,
+        status: "pending",
+        source: "job-board",
+      }));
     }
   }, [initialValues]);
 
-  //  captures & sets form state
+  // updates state object's key-values with corresponding user input
   const handleChange = (e) => {
-    const newState = formStates.find((state) => state.name === e.target.name);
-    newState ? newState.setState(e.target.value) : console.error("error");
+    const { name, value } = e.target;
+    setFormState({ ...formState, [name]: value });
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    let variables = {
-      company,
-      role,
-      applied,
-      source: selectedSource,
-    };
-
-    if (jobPath) {
-      variables = {
-        ...variables,
-        status: selectedStatus,
-      };
-      console.log(variables);
-    }
 
     try {
-      if (jobPath) {
-        // resets state to false after mutation
-        await editJob({ variables: { id: initialValues._id, ...variables } });
-        setEditSelected(false);
-      } else {
-        console.log(variables);
-        // sends the user to homepage after mutation
-        await addJob({ variables });
-        navigate("/");
-      }
+      const mutation = {
+        ...formState,
+        ...(id === "edit-job" ? { id: initialValues._id } : {}),
+      };
+      await job({ variables: mutation });
+      id === "add-job" ? navigate("/") : setEditSelected(false);
     } catch (err) {
       console.error(err);
     }
   };
-
-  // const handleFormSubmit = async (e) => {
-  //   e.preventDefault();
-
-  //   if (jobPath) {
-  //     let variables = {...formState}
-  //     console.log(variables)
-  //   }
-  // }
 
   // UI | elements & attributes are conditionally rendered.
   const displayField = (field, i) => {
@@ -172,13 +119,16 @@ function JobForm(props) {
         return !jobPath && field.name === "status" ? null : (
           <fieldset className="wrapper" id={field.name} key={i}>
             <legend>{format.title(field.name)}</legend>
-            {field.radios.map((radio, i) => (
-              <label key={i} htmlFor={field.name}>
+            {field.radios.map((radio, j) => (
+              <label key={j} htmlFor={radio}>
                 <input
                   type={field.type}
-                  id={field.name}
+                  id={radio}
                   name={field.name}
                   max={field.max}
+                  value={radio}
+                  checked={formState[field.name] === radio}
+                  onChange={handleChange}
                 />
                 {format.id(radio)}
               </label>
@@ -194,6 +144,8 @@ function JobForm(props) {
               id={field.name}
               name={field.name}
               max={field.max}
+              value={formState[field.name]}
+              onChange={handleChange}
             />
           </label>
         );
