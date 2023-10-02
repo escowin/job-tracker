@@ -7,7 +7,43 @@ import { format } from "../utils/helpers";
 import "../assets/css/job-form.css";
 
 function JobForm(props) {
+  const jobPath = window.location.pathname.includes("/job");
   const { initialValues, setEditSelected, id, type } = props;
+  // defines state & form properties
+  const fields = [
+    { name: "role", max: 50, type: "input" },
+    { name: "company", max: 50, type: "input" },
+    { name: "applied", max: 50, type: "date" },
+    {
+      name: "status",
+      max: 50,
+      type: "radio",
+      radios: ["pending", "waitlisted", "interviewing", "rejected", "hired"],
+      jobPage: true,
+    },
+    {
+      name: "source",
+      max: 50,
+      type: "radio",
+      radio: ["company", "job-board", "job-fair", "referral"],
+    },
+  ];
+
+  // console.log(
+  //   jobPath ? fields : fields.filter((field) => field.name !== "status")
+  // );
+
+  //   // maps array object key w/ empty string value to define initial form state
+  //   const initialState = Object.fromEntries(
+  //     fields.map((field) => [field.name, ""])
+  //   );
+  //   const [formState, setFormState] = useState(initialState);
+
+  //   // updates state object's key-values with corresponding user input
+  //   const handleChange = (e) => {
+  //     const { name, value } = e.target;
+  //     setFormState({ ...formState, [name]: value });
+  //   };
 
   const [company, setCompany] = useState("");
   const [role, setRole] = useState("");
@@ -20,12 +56,12 @@ function JobForm(props) {
   const formStates = [
     { name: "company", value: company, setState: setCompany },
     { name: "role", value: role, setState: setRole },
-    { name: "applied", value: applied, setState: setApplied,},
+    { name: "applied", value: applied, setState: setApplied },
     { name: "status", value: selectedStatus, setState: setSelectedStatus },
     { name: "source", value: selectedSource, setState: setSelectedSource },
   ];
 
-  const jobPath = window.location.pathname.includes("/job");
+  // const jobPath = window.location.pathname.includes("/job");
   const navigate = useNavigate();
 
   const [addJob, { error }] = useMutation(ADD_JOB, {
@@ -51,9 +87,8 @@ function JobForm(props) {
                 rejectedCount: updatedJobs.filter(
                   (job) => job.status === "rejected"
                 ).length,
-                hiredCount: updatedJobs.filter(
-                  (job) => job.status === "hired"
-                ).length,
+                hiredCount: updatedJobs.filter((job) => job.status === "hired")
+                  .length,
                 totalSubmitted: updatedJobs.length,
                 rate: me.hiredCount / (updatedJobs.length + 1),
               },
@@ -109,9 +144,9 @@ function JobForm(props) {
       if (jobPath) {
         // resets state to false after mutation
         await editJob({ variables: { id: initialValues._id, ...variables } });
-        setEditSelected(false)
+        setEditSelected(false);
       } else {
-        console.log(variables)
+        console.log(variables);
         // sends the user to homepage after mutation
         await addJob({ variables });
         navigate("/");
@@ -121,66 +156,41 @@ function JobForm(props) {
     }
   };
 
+  // const handleFormSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   if (jobPath) {
+  //     let variables = {...formState}
+  //     console.log(variables)
+  //   }
+  // }
+
+  // UI display
+  const displayField = (field, i) => {
+    switch (field.type) {
+      case "input":
+        console.log(field.type)
+        break;
+      case "date":
+        console.log(field.type)
+        break;
+      case "radio":
+        if (!jobPath && field.name === "status") {
+          break;
+        }
+        console.log(field);
+        break;
+      default:
+        console.log("invalid field.type " + field.type);
+    }
+  };
+
+  // ui takes into consideration url endpoint
   return (
     <section className={`${type} form-section`} id={id}>
-      <h2>{format.title(format.id(id))}</h2>
-
-      <form onSubmit={handleFormSubmit} className="job-form" id={id}>
-        <label className="wrapper" htmlFor="role">
-          Role
-          <input name="role" value={role} onChange={handleChange} />
-        </label>
-
-        <label className="wrapper" htmlFor="company">
-          Company
-          <input name="company" value={company} onChange={handleChange} />
-        </label>
-
-        <fieldset className="wrapper" id="source">
-          <legend>Source</legend>
-          {sourceValues.map((source, i) => (
-            <label htmlFor={source} key={i}>
-              <input
-                type="radio"
-                name="source"
-                value={source}
-                checked={source === selectedSource}
-                onChange={handleChange}
-              />
-              {format.id(source)}
-            </label>
-          ))}
-        </fieldset>
-        {jobPath ? (
-          <fieldset className="wrapper">
-            <legend>status</legend>
-            {statusValues.map((status, i) => (
-              <label htmlFor={status} key={i}>
-                <input
-                  type="radio"
-                  name="status"
-                  value={status}
-                  checked={status === selectedStatus}
-                  onChange={handleChange}
-                />
-                {status}
-              </label>
-            ))}
-          </fieldset>
-        ) : null}
-        <label className="wrapper" htmlFor="applied">
-          Applied
-          <input
-            name="applied"
-            type="date"
-            value={applied}
-            onChange={handleChange}
-          />
-        </label>
-        <button className="wrapper" type="submit">
-          submit
-        </button>
-        {error && <span>error</span>}
+      <form className="job-form" id={id} onSubmit={handleFormSubmit}>
+        <h2>{format.title(format.id(id))}</h2>
+        {fields.map((field, i) => displayField(field, i))}
       </form>
     </section>
   );

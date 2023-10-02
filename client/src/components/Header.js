@@ -34,6 +34,7 @@ function Header() {
               </Link>
             ))}
             <button onClick={update}>update status</button>
+            {error && <p>error</p>}
             <a href="/" onClick={logout} className="link">
               log out
             </a>
