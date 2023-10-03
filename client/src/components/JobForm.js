@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ADD_JOB, EDIT_JOB } from "../utils/mutations";
-import { QUERY_ME } from "../utils/queries";
-import { format } from "../utils/helpers";
+import { format, updateCache } from "../utils/helpers";
 import "../assets/css/job-form.css";
 
 function JobForm(props) {
@@ -29,41 +28,12 @@ function JobForm(props) {
     { name: "applied", max: 10, type: "date" },
   ];
 
+
   // server
   const [job, { error }] = useMutation(id === "add-job" ? ADD_JOB : EDIT_JOB, {
     update(cache, { data: { addJob } }) {
-      try {
-        const queryData = cache.readQuery({ query: QUERY_ME });
-        const me = queryData?.me;
-        if (me) {
-          const updatedJobs = [addJob, ...me.jobs];
-          cache.writeQuery({
-            query: QUERY_ME,
-            data: {
-              me: {
-                ...me,
-                jobs: updatedJobs,
-                pendingCount: updatedJobs.filter(
-                  (job) => job.status === "pending"
-                ).length,
-                waitlistedCount: updatedJobs.filter(
-                  (job) => job.status === "waitlisted"
-                ).length,
-                rejectedCount: updatedJobs.filter(
-                  (job) => job.status === "rejected"
-                ).length,
-                hiredCount: updatedJobs.filter((job) => job.status === "hired")
-                  .length,
-                totalSubmitted: updatedJobs.length,
-                rate: me.hiredCount / (updatedJobs.length + 1),
-              },
-            },
-          });
-        }
-      } catch (err) {
-        console.error(err);
-        console.warn("first job app submitted by user");
-      }
+      const virtuals = fields.find(item => item.name === "status").radios
+      updateCache.me(cache, addJob, virtuals)
     },
   });
 
