@@ -19,7 +19,6 @@ module.exports = {
       const formattedString = string
         .replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
         .replace(/-/g, "");
-      console.log(formattedString);
       return formattedString;
     },
   },

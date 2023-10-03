@@ -48,10 +48,9 @@ function JobNotes({ notes, jobId, status }) {
     // value is set here in order to use the .filter() method to modify job query cache
     deletedNoteId = _id;
     try {
-      const { data } = await deleteNote({
+      await deleteNote({
         variables: { jobId: jobId, id: _id },
       });
-      console.log(data);
     } catch (err) {
       console.error(err);
     }

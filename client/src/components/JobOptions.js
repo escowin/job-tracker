@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from "react-router-dom";
-// import { useState } from "react";
 import { useMutation, useQuery } from "@apollo/client";
 import { DELETE_JOB } from "../utils/mutations";
 import { QUERY_JOB, QUERY_ME } from "../utils/queries";
@@ -48,8 +47,7 @@ function JobOptions(props) {
   const handleEdit = () => setEditSelected(true);
   const handleDelete = async () => {
     try {
-      const { data } = await removeJob({ variables: { id: _id } });
-      console.log(data);
+      await removeJob({ variables: { id: _id } });
       navigate("/");
     } catch (err) {
       console.error(err);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
@@ -15,11 +15,7 @@ function Home() {
   const loggedIn = Auth.loggedIn();
   const [updatePendingJobs, { error }] = useMutation(UPDATE_PENDING_JOBS);
   const { loading, data } = useQuery(QUERY_ME);
-  // Wrap the initialization of 'user' in a useMemo Hook to memorize `user`. Ensures variable remains stable between renders, preventing unnecessary useEffect re-renders. 
-  const user = useMemo(
-    () => (loading || !data?.me ? {} : data.me),
-    [loading, data]
-  );
+  const user = data?.me || [];
   const jobs = user?.jobs || [];
 
   const userStats = [
@@ -37,7 +33,7 @@ function Home() {
   const [minWidth, setMinWidth] = useState(window.innerWidth >= 750);
   useEffect(() => {
     // Triggers update mutation when the component loads for a logged-in user with a defined username
-    loggedIn && user?.username ? updatePendingJobs() : console.error(error);
+    loggedIn ? updatePendingJobs() : console.error(error);
 
     // Updates the `minWidth` state based on the window width
     const handleResize = () => {
@@ -51,7 +47,7 @@ function Home() {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [loggedIn, user, error, updatePendingJobs]);
+  }, [loggedIn, error, updatePendingJobs]);
 
   if (loading) {
     return <section className="message">Loading...</section>;
