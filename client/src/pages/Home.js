@@ -21,7 +21,9 @@ function Home() {
     { value: user?.pendingCount, label: "pending" },
     { value: user?.waitlistedCount, label: "waitlisted" },
     { value: user?.rejectedCount, label: "rejected" },
+    { value: user?.interviewingCount, label: "interviewing" },
     { value: user?.hiredCount, label: "hired" },
+    { value: user?.noResponseCount, label: "no-response" },
     { value: user?.totalSubmitted, label: "total" },
     { value: user?.rate, label: "rate" },
   ];

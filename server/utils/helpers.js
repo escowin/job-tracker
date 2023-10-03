@@ -10,21 +10,16 @@ module.exports = {
     return elapsedDays >= days;
   },
   format: {
+    // converts kebab case to camel case
     camel: (string) => {
       if (!string) {
         return "";
       }
-      // splits string by space
-      const words = string.split(" ");
-      // capitlizes first char of second word onwards, then joins words
-      const formattedString = words
-        .map((word, i) =>
-          i === 0
-            ? word.toLowerCase()
-            : word.charAt(0).toUpperCase() + word.slice(1)
-        )
-        .join("");
-
+      // uses regex to capitalize letters preceded by hyphens, then removes the hyphen
+      const formattedString = string
+        .replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
+        .replace(/-/g, "");
+      console.log(formattedString);
       return formattedString;
     },
   },
