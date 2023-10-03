@@ -15,6 +15,7 @@ function Home() {
   const { loading, data } = useQuery(QUERY_ME);
   const user = data?.me || {};
   const jobs = user?.jobs || [];
+  console.log(user)
 
   const userStats = [
     { value: user?.pendingCount, label: "pending" },

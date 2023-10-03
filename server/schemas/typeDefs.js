@@ -11,6 +11,7 @@ const typeDefs = gql`
     pendingCount: Int
     waitlistedCount: Int
     noResponseCount: Int
+    interviewingCount: Int
     rate: String
     jobs: [Job]
   }

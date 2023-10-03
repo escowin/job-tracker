@@ -1,5 +1,6 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
+const { format } = require("../utils/helpers");
 
 const UserSchema = new Schema(
   {
@@ -37,54 +38,27 @@ UserSchema.pre("save", async function (next) {
   next();
 });
 
-// virtual | used to get the total numer of job  submissions
+// specific virtual counts
+const virtuals = ["pending", "rejected", "hired", "waitlisted", "no response", "interviewing"];
+virtuals.forEach((virtual) => {
+  UserSchema.virtual(`${format.camel(virtual)}Count`).get(function () {
+    const result = this.jobs.filter((job) => job.status === virtual);
+    return result.length;
+  });
+});
+
+// gets the total numer of job submissions
 UserSchema.virtual("totalSubmitted").get(function () {
   return this.jobs.length;
 });
 
-// specific counts use .filter() to return total
-UserSchema.virtual("pendingCount").get(function () {
-  const result = this.jobs.filter(
-    (job) => job.status === "pending"
-  );
-  return result.length;
-});
-
-UserSchema.virtual("rejectedCount").get(function () {
-  const result = this.jobs.filter(
-    (job) => job.status === "rejected"
-  );
-  return result.length;
-});
-
-UserSchema.virtual("hiredCount").get(function () {
-  const result = this.jobs.filter(
-    (job) => job.status === "hired"
-  );
-  return result.length;
-});
-
-UserSchema.virtual("waitlistedCount").get(function () {
-  const result = this.jobs.filter(
-    (job) => job.status === "waitlisted"
-  );
-  return result.length;
-});
-
-UserSchema.virtual("noResponseCount").get(function () {
-  const result = this.jobs.filter(
-    (job) => job.status === "no response"
-  );
-  return result.length;
-});
-
-UserSchema.virtual("rate").get(function() {
+UserSchema.virtual("rate").get(function () {
   const hiredCount = this.hiredCount;
   const totalCount = this.totalSubmitted;
   const result = (hiredCount / totalCount) * 100;
   const rounded = Math.round(result * 100) / 100;
-  return `${rounded}%`
-})
+  return `${rounded}%`;
+});
 
 UserSchema.methods.isCorrectPassword = async function (password) {
   return bcrypt.compare(password, this.password);
