@@ -5,11 +5,11 @@
 }
 
 #user-profile {
-    grid-template-columns: repeat(6, auto);
-}
+    grid-template-columns: repeat(5, auto);
 
-#user-profile h2 {
-    grid-column: 1 / -1;
+    & h2 {
+        grid-column: 1 / -1;
+    }
 }
 
 /* job list */
@@ -22,16 +22,16 @@
     background-color: rgba(255, 255, 255, 0.05);
     border-radius: 2rem;
     align-items: center;
-}
 
-.job a {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
+    & a {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+    }
 
-.job .count {
-    text-align: center;
+    & .count {
+        text-align: center;
+    }
 }
 
 @media screen and (min-width: 768px) {
@@ -44,17 +44,21 @@
     #user-profile {
         grid-template-columns: repeat(6, 1fr);
         grid-area: a;
+
+        & h2 {
+            flex: 1 1 100%
+        }
     }
 
     .list-section {
         grid-area: b;
     }
-    
+
     .aside {
         grid-area: c;
         height: 100%;
         align-items: flex-start;
-    }    
+    }
 
     #jobs article {
         grid-template-columns: 3.75rem 1fr 2fr 4.5rem 3rem 5rem;
@@ -65,14 +69,16 @@
     #user-profile {
         display: flex;
         flex-direction: row;
+        flex-wrap: wrap;
         justify-content: space-between;
         grid-area: a;
+
+        & article {
+            display: grid;
+            text-align: center;
+        }
     }
 
-    #user-profile article {
-        display: grid;
-        text-align: center;
-    }
 
     /* section | form */
     .list-section {
@@ -90,10 +96,4 @@
         position: sticky;
         background-color: var(--primary);
     }
-}
-
-@media screen and (min-width: 1024px) {
-    /* .aside {
-        width: max-content;
-    } */
 }
