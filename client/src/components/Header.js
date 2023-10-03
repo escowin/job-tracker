@@ -1,6 +1,4 @@
 import { Link } from "react-router-dom";
-import { useMutation } from "@apollo/client";
-import { UPDATE_PENDING_JOBS } from "../utils/mutations";
 import Auth from "../utils/auth";
 
 function Header() {
@@ -10,9 +8,6 @@ function Header() {
     e.preventDefault();
     Auth.logout();
   };
-
-  // to-do: modify mutation in order to update cache
-  const [update, { error }] = useMutation(UPDATE_PENDING_JOBS);
 
   return (
     <header>
@@ -33,8 +28,6 @@ function Header() {
                 {link.name}
               </Link>
             ))}
-            <button onClick={update}>update status</button>
-            {error && <p>error</p>}
             <a href="/" onClick={logout} className="link">
               log out
             </a>

@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
+import { UPDATE_PENDING_JOBS } from "../utils/mutations";
 import Auth from "../utils/auth";
 import Profile from "../components/Profile";
 import JobLists from "../components/JobsList";
@@ -12,10 +13,14 @@ import "../assets/css/home.css";
 function Home() {
   // user info is dependent in being logged in
   const loggedIn = Auth.loggedIn();
+  const [updatePendingJobs, { error }] = useMutation(UPDATE_PENDING_JOBS);
   const { loading, data } = useQuery(QUERY_ME);
-  const user = data?.me || {};
+  // Wrap the initialization of 'user' in a useMemo Hook to memorize `user`. Ensures variable remains stable between renders, preventing unnecessary useEffect re-renders. 
+  const user = useMemo(
+    () => (loading || !data?.me ? {} : data.me),
+    [loading, data]
+  );
   const jobs = user?.jobs || [];
-  console.log(user)
 
   const userStats = [
     { value: user?.pendingCount, label: "pending" },
@@ -31,19 +36,22 @@ function Home() {
   // form component renders by tracking the state of the display width
   const [minWidth, setMinWidth] = useState(window.innerWidth >= 750);
   useEffect(() => {
-    // Define a function to update the `minWidth` state based on the window width
+    // Triggers update mutation when the component loads for a logged-in user with a defined username
+    loggedIn && user?.username ? updatePendingJobs() : console.error(error);
+
+    // Updates the `minWidth` state based on the window width
     const handleResize = () => {
       setMinWidth(window.innerWidth >= 750);
     };
 
-    // Add event listener to track window width changes
+    // Adds event listener to track window width changes
     window.addEventListener("resize", handleResize);
 
-    // Clean up the event listener when the component unmounts
+    // Cleans up event listener when the component unmounts
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [loggedIn, user, error, updatePendingJobs]);
 
   if (loading) {
     return <section className="message">Loading...</section>;
@@ -53,13 +61,18 @@ function Home() {
     <>
       {loggedIn && user?.username ? (
         <>
-          {minWidth && <JobForm initialValues={{}} id={"add-job"} type="aside" />}
+          {minWidth && (
+            <JobForm initialValues={{}} id={"add-job"} type="aside" />
+          )}
           <Profile user={{ username: user.username, stats: userStats }} />
           <JobLists jobs={jobs} />
         </>
       ) : (
         <section className="message">
-          <Link to="/login" className="link">log in</Link> to view contents
+          <Link to="/login" className="link">
+            log in
+          </Link>{" "}
+          to view contents
         </section>
       )}
     </>
