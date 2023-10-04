@@ -39,6 +39,7 @@ const typeDefs = gql`
 
   type Resume {
     _id: ID
+    createdAt: String
     firstName: String
     lastName: String
     email: String
@@ -76,8 +77,8 @@ const typeDefs = gql`
       source: String
     ): Job
     updatePendingJobs: Int
-
     deleteJob(_id: String!): Job
+
     addNote(jobId: ID!, note: String!, interview: Boolean): Job
     deleteNote(_id: String!, jobId: String!): Note
 
@@ -88,6 +89,7 @@ const typeDefs = gql`
       phone: String
       location: String
       currentCompany: String
+      createdAt: String
     ): Resume
   }
 

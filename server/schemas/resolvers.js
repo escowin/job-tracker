@@ -1,7 +1,7 @@
-const { User, Job } = require("../models");
+const { User, Job, Resume } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
-const { calculateTime } = require("../utils/helpers")
+const { calculateTime } = require("../utils/helpers");
 
 const resolvers = {
   Query: {
@@ -11,10 +11,13 @@ const resolvers = {
       }
       const user = await User.findOne({ _id: context.user._id })
         .select("-__v -password")
-        .populate({
-          path: "jobs",
-          options: { sort: { applied: -1 } },
-        });
+        .populate(
+          {
+            path: "jobs",
+            options: { sort: { applied: -1 } },
+          },
+          { path: "resumes", options: { sort: { applied: -1 } } }
+        );
 
       return user;
     },
@@ -27,9 +30,9 @@ const resolvers = {
         .populate("jobs");
     },
     jobs: async () => Job.find().sort({ applied: -1 }),
-    job: async (parent, { _id }) => {
-      return Job.findOne({ _id });
-    },
+    job: async (parent, { _id }) =>  Job.findOne({ _id }),
+    resumes: async () => Resume.find().sort({ createdAt: -1 }),
+    resume: async (parent, { _id }) => Job.findOne({ _id }),
   },
   Mutation: {
     addUser: async (parent, args) => {
@@ -136,19 +139,36 @@ const resolvers = {
       }
 
       // finds all 'pending' jobs
-      const pendingJobs = await Job.find({status: "pending" });
+      const pendingJobs = await Job.find({ status: "pending" });
       let updatedCount = 0;
 
       for (const job of pendingJobs) {
-        // calculates elapsed time between application date & now 
-        const elapsed = calculateTime(job.applied, 14)
+        // calculates elapsed time between application date & now
+        const elapsed = calculateTime(job.applied, 14);
         if (elapsed) {
           job.status = "no-response";
-          await job.save()
-          updatedCount++
+          await job.save();
+          updatedCount++;
         }
       }
-      return updatedCount
+      return updatedCount;
+    },
+    addResume: async (parent, args, context) => {
+      if (!context.user) {
+        throw AuthenticationError("login required")
+      }
+
+      const resume = await Resume.create({
+        ...args,
+        username: context.user.username,
+      })
+
+      await User.findByIdAndUpdate(
+        { _id: context.user._id },
+        { $push: { resumes: resume._id } },
+        { new: true }
+      );
+      return resume;
     }
   },
 };

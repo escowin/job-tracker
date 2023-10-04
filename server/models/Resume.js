@@ -1,7 +1,13 @@
 const { Schema, model } = require("mongoose");
+const dateFormat = require("../utils/dateFormat");
 
 const ResumeSchema = new Schema(
   {
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      get: (timestamp) => dateFormat(timestamp),
+    },
     // username: {
     //   type: String,
     //   required: true,
@@ -45,9 +51,7 @@ const ResumeSchema = new Schema(
     //   experience: [ExperienceSchema]
   },
   {
-    toJSON: {
-      virtuals: true,
-    },
+    toJSON: { getters: true },
   }
 );
 
