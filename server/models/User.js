@@ -21,6 +21,12 @@ const UserSchema = new Schema(
         ref: "Job",
       },
     ],
+    resumes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Resume",
+      },
+    ],
   },
   {
     toJSON: {
@@ -39,7 +45,14 @@ UserSchema.pre("save", async function (next) {
 });
 
 // specific virtual counts
-const virtuals = ["pending", "rejected", "hired", "waitlisted", "no-response", "interviewing"];
+const virtuals = [
+  "pending",
+  "rejected",
+  "hired",
+  "waitlisted",
+  "no-response",
+  "interviewing",
+];
 virtuals.forEach((virtual) => {
   UserSchema.virtual(`${format.camel(virtual)}Count`).get(function () {
     const result = this.jobs.filter((job) => job.status === virtual);
