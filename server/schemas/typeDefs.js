@@ -14,6 +14,7 @@ const typeDefs = gql`
     interviewingCount: Int
     rate: String
     jobs: [Job]
+    resumes: [Resume]
   }
 
   type Job {
@@ -36,17 +37,30 @@ const typeDefs = gql`
     createdAt: String
   }
 
+  type Resume {
+    _id: ID
+    firstName: String
+    lastName: String
+    email: String
+    phone: String
+    location: String
+    currentCompany: String
+  }
+
   type Query {
     me: User
     users: [User]
     user(username: String!): User
     jobs: [Job]
     job(_id: ID!): Job
+    resumes: [Resume]
+    resume(_id: ID!): Resume
   }
 
   type Mutation {
     login(username: String!, password: String!): Auth
     addUser(username: String!, password: String!): Auth
+
     addJob(
       company: String!
       role: String!
@@ -61,10 +75,20 @@ const typeDefs = gql`
       status: String
       source: String
     ): Job
+    updatePendingJobs: Int
+
     deleteJob(_id: String!): Job
     addNote(jobId: ID!, note: String!, interview: Boolean): Job
     deleteNote(_id: String!, jobId: String!): Note
-    updatePendingJobs: Int
+
+    addResume(
+      firstName: String
+      lastName: String
+      email: String
+      phone: String
+      location: String
+      currentCompany: String
+    ): Resume
   }
 
   type Auth {

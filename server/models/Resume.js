@@ -2,10 +2,10 @@ const { Schema, model } = require("mongoose");
 
 const ResumeSchema = new Schema(
   {
-    username: {
-      type: String,
-      required: true,
-    },
+    // username: {
+    //   type: String,
+    //   required: true,
+    // },
     firstName: {
       type: String,
       trim: true,
