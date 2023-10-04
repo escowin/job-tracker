@@ -89,7 +89,6 @@ const typeDefs = gql`
       phone: String
       location: String
       currentCompany: String
-      createdAt: String
     ): Resume
   }
 

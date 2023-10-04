@@ -11,14 +11,10 @@ const resolvers = {
       }
       const user = await User.findOne({ _id: context.user._id })
         .select("-__v -password")
-        .populate(
-          {
-            path: "jobs",
-            options: { sort: { applied: -1 } },
-          },
-          { path: "resumes", options: { sort: { applied: -1 } } }
-        );
-
+        .populate([
+          { path: "jobs", options: { sort: { applied: -1 } } },
+          { path: "resumes", options: { sort: { applied: -1 } } },
+        ]);
       return user;
     },
     users: async () => {
@@ -30,7 +26,7 @@ const resolvers = {
         .populate("jobs");
     },
     jobs: async () => Job.find().sort({ applied: -1 }),
-    job: async (parent, { _id }) =>  Job.findOne({ _id }),
+    job: async (parent, { _id }) => Job.findOne({ _id }),
     resumes: async () => Resume.find().sort({ createdAt: -1 }),
     resume: async (parent, { _id }) => Job.findOne({ _id }),
   },
@@ -72,7 +68,7 @@ const resolvers = {
       );
       return job;
     },
-    editJob: async (parents, args, context) => {
+    editJob: async (parent, args, context) => {
       if (!context.user) {
         throw new AuthenticationError("you must be logged in");
       }
@@ -89,7 +85,7 @@ const resolvers = {
 
       return job;
     },
-    deleteJob: async (parents, args, context) => {
+    deleteJob: async (parent, args, context) => {
       if (!context.user) {
         throw new AuthenticationError("you must be logged in");
       }
@@ -102,7 +98,7 @@ const resolvers = {
       );
       return job;
     },
-    addNote: async (parents, { jobId, note, interview }, context) => {
+    addNote: async (parent, { jobId, note, interview }, context) => {
       if (!context.user) {
         throw new AuthenticationError("you must be logged in");
       }
@@ -115,7 +111,7 @@ const resolvers = {
 
       return updatedJob;
     },
-    deleteNote: async (parents, { _id, jobId }, context) => {
+    deleteNote: async (parent, { _id, jobId }, context) => {
       if (!context.user) {
         throw new AuthenticationError("you must be logged in");
       }
@@ -155,13 +151,13 @@ const resolvers = {
     },
     addResume: async (parent, args, context) => {
       if (!context.user) {
-        throw AuthenticationError("login required")
+        throw AuthenticationError("login required");
       }
 
       const resume = await Resume.create({
         ...args,
         username: context.user.username,
-      })
+      });
 
       await User.findByIdAndUpdate(
         { _id: context.user._id },
@@ -169,7 +165,7 @@ const resolvers = {
         { new: true }
       );
       return resume;
-    }
+    },
   },
 };
 
