@@ -37,6 +37,21 @@ const resolvers = {
 
       return { token, user };
     },
+    editUser: async (parent, args, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("login required");
+      }
+      const { _id, ...updatedFields } = args;
+      const user = await User.findByIdAndUpdate(
+        _id,
+        { $set: updatedFields },
+        { new: true }
+      );
+      if (!user) {
+        throw new Error("user not found");
+      }
+      return user;
+    },
     login: async (parent, { username, password }) => {
       const user = await User.findOne({ username });
       if (!user) {
@@ -70,7 +85,7 @@ const resolvers = {
     },
     editJob: async (parent, args, context) => {
       if (!context.user) {
-        throw new AuthenticationError("you must be logged in");
+        throw new AuthenticationError("login required");
       }
       const { _id, ...updatedFields } = args;
 

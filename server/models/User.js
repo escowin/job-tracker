@@ -15,6 +15,35 @@ const UserSchema = new Schema(
       required: true,
       minLength: 5,
     },
+    firstName: {
+      type: String,
+      trim: true,
+    },
+    lastName: {
+      type: String,
+      trim: true,
+    },
+    email: {
+      type: String,
+      trim: true,
+      match: [/.+@.+\..+/, "provide a properly formatted email address"],
+    },
+    phone: {
+      type: String,
+      trim: true,
+      min: 5,
+      max: 24,
+    },
+    location: {
+      type: String,
+      trim: true,
+      max: 50,
+    },
+    currentCompany: {
+      type: String,
+      trim: true,
+      max: 50,
+    },
     jobs: [
       {
         type: Schema.Types.ObjectId,

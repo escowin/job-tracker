@@ -5,6 +5,12 @@ const typeDefs = gql`
     _id: ID
     username: String
     password: String
+    firstName: String
+    lastName: String
+    email: String
+    phone: String
+    location: String
+    currentCompany: String
     totalSubmitted: Int
     rejectedCount: Int
     hiredCount: Int
@@ -61,6 +67,7 @@ const typeDefs = gql`
   type Mutation {
     login(username: String!, password: String!): Auth
     addUser(username: String!, password: String!): Auth
+    editUser(_id: ID!, firstName: String, lastName: String, email: String, phone: String, location: String, currentCompany: String): User
 
     addJob(
       company: String!
@@ -90,6 +97,16 @@ const typeDefs = gql`
       location: String
       currentCompany: String
     ): Resume
+    editResume(
+      _id: ID!
+      firstName: String
+      lastName: String
+      email: String
+      phone: String
+      location: String
+      currentCompany: String
+    ): Resume
+    deleteResume(_id: ID!): Resume
   }
 
   type Auth {
