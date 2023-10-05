@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Job from "./pages/Job";
 import Page404 from "./pages/Page404";
+import Profile from "./pages/Profile";
 
 // mobile display
 import AddJob from "./pages/AddJob";
@@ -63,6 +64,7 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/job/:id" element={<Job />} />
               <Route path="/add-job" element={<AddJob />} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="*" element={<Page404 />} />
             </Routes>
           </main>
