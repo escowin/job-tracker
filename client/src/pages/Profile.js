@@ -6,7 +6,6 @@ function Profile() {
   const loggedIn = Auth.loggedIn();
   const { loading, data } = useQuery(QUERY_PROFILE);
   const profile = data?.me || {};
-  console.log(profile);
 
   const details = [
     { stat: "first name", data: profile.firstName },
@@ -17,8 +16,15 @@ function Profile() {
     { stat: "current company", data: profile.currentCompany },
   ];
 
-  // to-do: copy corresponding detail.data to clipboard
-  const copyDetail = () => console.log("clicked");
+  // copies profile stat to clipboard when triggered
+  const copyDetail = async (data) => {
+    try {
+        let stat = data
+        await navigator.clipboard.writeText(stat)
+    } catch(err) {
+        console.error(err)
+    }
+};
 
   if (loading) {
     return <section className="message">Loading...</section>;
@@ -33,7 +39,7 @@ function Profile() {
             <article key={i} className="profile-detail">
               <p>{detail.stat}</p>
               <p>{detail.data}</p>
-              <button onClick={copyDetail}>copy</button>
+              <button onClick={() => copyDetail(detail.data)}>copy</button>
             </article>
           ))}
         </section>
