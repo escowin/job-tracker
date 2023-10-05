@@ -181,6 +181,21 @@ const resolvers = {
       );
       return resume;
     },
+    editResume: async (parent, args, context) => {
+      if (!context.user) {
+        throw AuthenticationError("login required");
+      }
+      const { _id, ...updatedFields } = args;
+      const resume = await Resume.findByIdAndUpdate(
+        _id,
+        { $set: updatedFields },
+        { new: true }
+      );
+      if (!resume) {
+        throw new Error("resume not found");
+      }
+      return resume;
+    },
   },
 };
 

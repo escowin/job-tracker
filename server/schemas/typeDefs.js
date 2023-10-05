@@ -46,12 +46,7 @@ const typeDefs = gql`
   type Resume {
     _id: ID
     createdAt: String
-    firstName: String
-    lastName: String
-    email: String
-    phone: String
-    location: String
-    currentCompany: String
+    title: String
   }
 
   type Query {
@@ -67,7 +62,15 @@ const typeDefs = gql`
   type Mutation {
     login(username: String!, password: String!): Auth
     addUser(username: String!, password: String!): Auth
-    editUser(_id: ID!, firstName: String, lastName: String, email: String, phone: String, location: String, currentCompany: String): User
+    editUser(
+      _id: ID!
+      firstName: String
+      lastName: String
+      email: String
+      phone: String
+      location: String
+      currentCompany: String
+    ): User
 
     addJob(
       company: String!
@@ -89,23 +92,8 @@ const typeDefs = gql`
     addNote(jobId: ID!, note: String!, interview: Boolean): Job
     deleteNote(_id: String!, jobId: String!): Note
 
-    addResume(
-      firstName: String
-      lastName: String
-      email: String
-      phone: String
-      location: String
-      currentCompany: String
-    ): Resume
-    editResume(
-      _id: ID!
-      firstName: String
-      lastName: String
-      email: String
-      phone: String
-      location: String
-      currentCompany: String
-    ): Resume
+    addResume(title: String!): Resume
+    editResume(_id: ID!, title: String): Resume
     deleteResume(_id: ID!): Resume
   }
 

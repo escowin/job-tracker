@@ -8,39 +8,12 @@ const ResumeSchema = new Schema(
       default: Date.now,
       get: (timestamp) => dateFormat(timestamp),
     },
-    // username: {
-    //   type: String,
-    //   required: true,
-    // },
-    firstName: {
+    title: {
       type: String,
+      required: true,
       trim: true,
-    },
-    lastName: {
-      type: String,
-      trim: true,
-    },
-    email: {
-      type: String,
-      trim: true,
-      match: [/.+@.+\..+/, "Must match an email address!"],
-    },
-    phone: {
-      type: String,
-      trim: true,
-      min: 5,
-      max: 24,
-    },
-    location: {
-      type: String,
-      trim: true,
-      max: 50,
-    },
-    currentCompany: {
-      type: String,
-      trim: true,
-      max: 50,
-    },
+      max: 25,
+    }
     //  tbd fields
     //   coverLetter: {
     //     type: String,
