@@ -25,6 +25,21 @@ export const QUERY_ME = gql`
   }
 `;
 
+export const QUERY_PROFILE = gql`
+  {
+    me {
+      _id
+      username
+      firstName
+      lastName
+      email
+      phone
+      location
+      currentCompany
+    }
+  }
+`;
+
 export const QUERY_JOB = gql`
   query Job($id: ID!) {
     job(_id: $id) {
