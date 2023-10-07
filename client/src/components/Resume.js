@@ -7,7 +7,6 @@ function Resume({ resumeId }) {
     variables: { id: _id },
   });
   const resume = data?.resume || {};
-  console.log(resume);
 
   // copies profile stat to clipboard when triggered
   const copyDetail = async (data) => {
@@ -29,7 +28,7 @@ function Resume({ resumeId }) {
 
   return (
     <section id="resume">
-      <article>
+      <article id="links">
         <h3>links</h3>
         {resume.links.map((link, i) => (
           <div key={i}>
@@ -38,7 +37,7 @@ function Resume({ resumeId }) {
           </div>
         ))}
       </article>
-      <article>
+      <article id="edu">
         <h3>education</h3>
         {resume.education.map((edu, i) => (
           <div key={i}>
@@ -49,7 +48,7 @@ function Resume({ resumeId }) {
           </div>
         ))}
       </article>
-      <article>
+      <article id="exp">
         <h3>experience</h3>
         {resume.experience.map((exp, i) => (
           <div key={i}>
