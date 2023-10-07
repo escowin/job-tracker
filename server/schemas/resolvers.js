@@ -28,7 +28,7 @@ const resolvers = {
     jobs: async () => Job.find().sort({ applied: -1 }),
     job: async (parent, { _id }) => Job.findOne({ _id }),
     resumes: async () => Resume.find().sort({ createdAt: -1 }),
-    resume: async (parent, { _id }) => Job.findOne({ _id }),
+    resume: async (parent, { _id }) => Resume.findOne({ _id }),
   },
   Mutation: {
     addUser: async (parent, args) => {
