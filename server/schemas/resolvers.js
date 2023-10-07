@@ -193,6 +193,7 @@ const resolvers = {
       }
       return resume;
     },
+    // resume subdocument mutations
     addLink: async (parent, { resumeId, link, url }, context) => {
       if (!context.user) {
         throw new AuthenticationError("login required");
@@ -201,6 +202,32 @@ const resolvers = {
       const updatedResume = await Resume.findOneAndUpdate(
         { _id: resumeId },
         { $push: { links: { link, url } } },
+        { new: true, runValidators: true }
+      );
+
+      return updatedResume;
+    },
+    addEducation: async (parent, { resumeId, ...args }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("login required");
+      }
+
+      const updatedResume = await Resume.findOneAndUpdate(
+        { _id: resumeId },
+        { $push: { education: args } },
+        { new: true, runValidators: true }
+      );
+
+      return updatedResume;
+    },
+    addExperience: async (parent, { resumeId, ...args }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("login required");
+      }
+
+      const updatedResume = await Resume.findOneAndUpdate(
+        { _id: resumeId },
+        { $push: { experience: args } },
         { new: true, runValidators: true }
       );
 
@@ -219,6 +246,36 @@ const resolvers = {
         return !updatedResume ? new Error("resume not found") : updatedResume;
       } catch (err) {
         throw new Error("failed to delete link");
+      }
+    },
+    deleteEducation: async (parent, { _id, resumeId }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("login required");
+      }
+      try {
+        const updatedResume = await Resume.findOneAndUpdate(
+          { _id: resumeId },
+          { $pull: { education: { _id: _id } } },
+          { new: true, runValidators: true }
+        );
+        return !updatedResume ? new Error("resume not found") : updatedResume;
+      } catch (err) {
+        throw new Error("failed to delete education");
+      }
+    },
+    deleteExperience: async (parent, { _id, resumeId }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("login required");
+      }
+      try {
+        const updatedResume = await Resume.findOneAndUpdate(
+          { _id: resumeId },
+          { $pull: { experience: { _id: _id } } },
+          { new: true, runValidators: true }
+        );
+        return !updatedResume ? new Error("resume not found") : updatedResume;
+      } catch (err) {
+        throw new Error("failed to delete experience");
       }
     },
   },

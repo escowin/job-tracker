@@ -2,10 +2,6 @@ const { Schema, model, Types } = require("mongoose");
 const dateFormat = require("../utils/dateFormat");
 
 const LinkSchema = new Schema({
-  // linkId: {
-  //   type: Schema.Types.ObjectId,
-  //   default: () => new Types.ObjectId(),
-  // },
   link: {
     type: String,
     required: true,
@@ -14,6 +10,41 @@ const LinkSchema = new Schema({
   url: {
     type: String,
     required: true,
+  },
+});
+
+const EducationSchema = new Schema({
+  school: {
+    type: String,
+    required: true,
+    maxLength: 80,
+  },
+  location: {
+    type: String,
+    required: false,
+    maxLength: 80,
+  },
+});
+
+const ExperienceSchema = new Schema({
+  role: {
+    type: String,
+    required: true,
+    maxLength: 80,
+  },
+  company: {
+    type: String,
+    required: true,
+    maxLength: 80,
+  },
+  location: {
+    type: String,
+    required: false,
+    maxLength: 80,
+  },
+  description: {
+    type: String,
+    required: false,
   },
 });
 
@@ -36,8 +67,8 @@ const ResumeSchema = new Schema(
     //     trim: true,
     //   },
     links: [LinkSchema],
-    //   education: [EducationSchema],
-    //   experience: [ExperienceSchema]
+    education: [EducationSchema],
+    experience: [ExperienceSchema]
   },
   {
     toJSON: { getters: true },

@@ -48,12 +48,28 @@ const typeDefs = gql`
     createdAt: String
     title: String
     links: [Link]
+    education: [Education]
+    experience: [Experience]
   }
 
   type Link {
     _id: ID
     link: String
     url: String
+  }
+
+  type Education {
+    _id: ID
+    school: String
+    location: String
+  }
+
+  type Experience {
+    _id: ID
+    role: String
+    company: String
+    location: String
+    description: String
   }
 
   type Query {
@@ -86,7 +102,7 @@ const typeDefs = gql`
       source: String
     ): Job
     editJob(
-      _id: String!
+      _id: ID!
       company: String
       role: String
       applied: String
@@ -94,10 +110,10 @@ const typeDefs = gql`
       source: String
     ): Job
     updatePendingJobs: Int
-    deleteJob(_id: String!): Job
+    deleteJob(_id: ID!): Job
 
     addNote(jobId: ID!, note: String!, interview: Boolean): Job
-    deleteNote(_id: String!, jobId: String!): Note
+    deleteNote(_id: ID!, jobId: String!): Note
 
     addResume(title: String!): Resume
     editResume(_id: ID!, title: String): Resume
@@ -105,6 +121,18 @@ const typeDefs = gql`
 
     addLink(resumeId: ID!, link: String!, url: String!): Resume
     deleteLink(_id: ID!, resumeId: ID!): Resume
+
+    addEducation(resumeId: ID!, school: String!, location: String): Resume
+    deleteEducation(_id: ID!, resumeId: ID!): Resume
+
+    addExperience(
+      resumeId: ID!
+      role: String!
+      company: String!
+      location: String
+      description: String
+    ): Resume
+    deleteExperience(_id: ID!, resumeId: ID!): Resume
   }
 
   type Auth {
