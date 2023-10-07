@@ -36,6 +36,37 @@ export const QUERY_PROFILE = gql`
       phone
       location
       currentCompany
+      resumes {
+        _id
+        title
+      }
+    }
+  }
+`;
+
+export const QUERY_RESUME = gql`
+  query Resume($id: ID!) {
+    resume(_id: $id) {
+      _id
+      createdAt
+      title
+      links {
+        _id
+        link
+        url
+      }
+      education {
+        _id
+        location
+        school
+      }
+      experience {
+        _id
+        company
+        description
+        location
+        role
+      }
     }
   }
 `;
