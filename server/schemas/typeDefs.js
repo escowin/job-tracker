@@ -47,6 +47,13 @@ const typeDefs = gql`
     _id: ID
     createdAt: String
     title: String
+    links: [Link]
+  }
+
+  type Link {
+    _id: ID
+    link: String
+    url: String
   }
 
   type Query {
@@ -95,6 +102,9 @@ const typeDefs = gql`
     addResume(title: String!): Resume
     editResume(_id: ID!, title: String): Resume
     deleteResume(_id: ID!): Resume
+
+    addLink(resumeId: ID!, link: String!, url: String!): Resume
+    deleteLink(_id: ID!, resumeId: ID!): Resume
   }
 
   type Auth {

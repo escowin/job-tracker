@@ -7,7 +7,7 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (!context.user) {
-        throw new AuthenticationError("you must be logged in");
+        throw new AuthenticationError("login required");
       }
       const user = await User.findOne({ _id: context.user._id })
         .select("-__v -password")
@@ -68,7 +68,7 @@ const resolvers = {
     },
     addJob: async (parent, args, context) => {
       if (!context.user) {
-        throw new AuthenticationError("you must be logged in");
+        throw new AuthenticationError("login required");
       }
 
       const job = await Job.create({
@@ -102,7 +102,7 @@ const resolvers = {
     },
     deleteJob: async (parent, args, context) => {
       if (!context.user) {
-        throw new AuthenticationError("you must be logged in");
+        throw new AuthenticationError("login required");
       }
       const job = await Job.findByIdAndDelete(args._id);
 
@@ -115,7 +115,7 @@ const resolvers = {
     },
     addNote: async (parent, { jobId, note, interview }, context) => {
       if (!context.user) {
-        throw new AuthenticationError("you must be logged in");
+        throw new AuthenticationError("login required");
       }
 
       const updatedJob = await Job.findOneAndUpdate(
@@ -128,7 +128,7 @@ const resolvers = {
     },
     deleteNote: async (parent, { _id, jobId }, context) => {
       if (!context.user) {
-        throw new AuthenticationError("you must be logged in");
+        throw new AuthenticationError("login required");
       }
       try {
         const updatedJob = await Job.findOneAndUpdate(
@@ -136,10 +136,7 @@ const resolvers = {
           { $pull: { notes: { _id: _id } } },
           { new: true, runValidators: true }
         );
-        if (!updatedJob) {
-          throw new Error("job not found");
-        }
-        return updatedJob;
+        return !updatedJob ? new Error("job not found") : updatedJob;
       } catch (err) {
         throw new Error("failed to delete note");
       }
@@ -195,6 +192,34 @@ const resolvers = {
         throw new Error("resume not found");
       }
       return resume;
+    },
+    addLink: async (parent, { resumeId, link, url }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("login required");
+      }
+
+      const updatedResume = await Resume.findOneAndUpdate(
+        { _id: resumeId },
+        { $push: { links: { link, url } } },
+        { new: true, runValidators: true }
+      );
+
+      return updatedResume;
+    },
+    deleteLink: async (parent, { _id, resumeId }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("login required");
+      }
+      try {
+        const updatedResume = await Resume.findOneAndUpdate(
+          { _id: resumeId },
+          { $pull: { links: { _id: _id } } },
+          { new: true, runValidators: true }
+        );
+        return !updatedResume ? new Error("resume not found") : updatedResume;
+      } catch (err) {
+        throw new Error("failed to delete link");
+      }
     },
   },
 };
