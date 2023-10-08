@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client";
 import { QUERY_PROFILE } from "../utils/queries";
 import Auth from "../utils/auth";
 import Resume from "../components/Resume";
+import "../assets/css/profile.css"
 
 function Profile() {
   const loggedIn = Auth.loggedIn();
@@ -38,18 +39,18 @@ function Profile() {
     <>
       {loggedIn ? (
         <>
-          <section className="profile-section">
+          <section id="profile-section">
             <h2>{profile.username} details</h2>
             {details.map((detail, i) => (
               <article key={i} className="profile-detail">
-                <p>{detail.stat}</p>
+                <h3>{detail.stat}</h3>
                 <p>{detail.data}</p>
                 <button onClick={() => copyDetail(detail.data)}>copy</button>
               </article>
             ))}
             <button onClick={() => console.log("edit details")}>edit</button>
           </section>
-          <section id="resumes">
+          <section id="resumes-section">
             <h2>resumes</h2>
             {profile.resumes.map((resume, i) => (
               <button key={i} onClick={() => setSelectedResume(resume._id)}>

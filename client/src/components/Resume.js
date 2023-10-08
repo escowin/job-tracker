@@ -19,32 +19,34 @@ function Resume({ resumeId }) {
   };
 
   if (!resumeId) {
-    return <section>select resume</section>;
+    return <section id="resume-section">
+      <p className="message">select resume</p></section>;
   }
 
   if (loading) {
-    return <section>loading</section>;
+    return <section id="resume-section">loading</section>;
   }
 
   return (
-    <section id="resume">
+    <section id="resume-section">
+      <h2>{resume.title}</h2>
       <article id="links">
-        <h3>links</h3>
+        <h3>Links</h3>
         {resume.links.map((link, i) => (
           <div key={i}>
-            <p>{link.link}</p>
             <button onClick={() => copyDetail(link.url)}>copy</button>
+            <p>{link.link}</p>
           </div>
         ))}
       </article>
       <article id="edu">
-        <h3>education</h3>
+        <h3>Education</h3>
         {resume.education.map((edu, i) => (
           <div key={i}>
-            <p>{edu.school}</p>
             <button onClick={() => copyDetail(edu.school)}>copy</button>
-            <p>{edu.location}</p>
+            <p>{edu.school}</p>
             <button onClick={() => copyDetail(edu.location)}>copy</button>
+            <p>{edu.location}</p>
           </div>
         ))}
       </article>
@@ -52,14 +54,14 @@ function Resume({ resumeId }) {
         <h3>experience</h3>
         {resume.experience.map((exp, i) => (
           <div key={i}>
-            <p>{exp.role}</p>
             <button onClick={() => copyDetail(exp.role)}>copy</button>
-            <p>{exp.company}</p>
+            <p>{exp.role}</p>
             <button onClick={() => copyDetail(exp.company)}>copy</button>
-            <p>{exp.location}</p>
+            <p>{exp.company}</p>
             <button onClick={() => copyDetail(exp.location)}>copy</button>
-            <p style={{ whiteSpace: "pre-line" }}>{exp.description}</p>
+            <p>{exp.location}</p>
             <button onClick={() => copyDetail(exp.description)}>copy</button>
+            <p style={{ whiteSpace: "pre-line" }}>{exp.description}</p>
           </div>
         ))}
       </article>

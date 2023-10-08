@@ -1,0 +1,53 @@
+/* main * {
+    outline: 1px dotted white;
+} */
+
+#profile-section {
+    grid-row: 1 / -1;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(5, min-content);
+    align-items: flex-start;
+
+    & h2,
+    button {
+        grid-column: 1 / -1;
+    }
+
+    & .profile-detail {
+        display: flex;
+        flex-direction: column;
+        gap: .25rem;
+    }
+}
+
+#resume-section {
+    height: 100%;
+    overflow-y: scroll;
+
+    & button {
+        padding: 0 .5rem;
+        height: min-content;
+    }
+
+    & h3 {
+        width: 100%;
+    }
+
+    & article {
+        display: inherit;
+        flex-wrap: wrap;
+        gap: .5rem 2rem;
+
+        & div {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: .5rem 1rem;
+            outline: 1px solid var(--blue);
+            padding: .5rem;
+            width: 100%;
+            border-radius: 1rem;
+        }
+    }
+}

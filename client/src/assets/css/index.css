@@ -249,7 +249,8 @@ button:hover {
   main {
     display: grid;
     grid-template-columns: 15rem auto;
-    grid-template-rows: max-content;
+    /* grid-template-rows: max-content; */
+    grid-template-rows: auto 1fr;
     align-items: flex-start;
     gap: .5rem;
   }
