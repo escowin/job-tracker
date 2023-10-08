@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
-// import { useMutation } from "@apollo/client";
-// import { EDIT_PROFILE } from "../utils/mutations";
+import { useMutation } from "@apollo/client";
+import { EDIT_USER } from "../utils/mutations";
 import { format } from "../utils/helpers";
 
 function ProfileForm(props) {
   const { id, profile, details, setEditSelected } = props;
-  // state variables
   const [formState, setFormState] = useState({});
-  
+  const [user, { error }] = useMutation(EDIT_USER);
+
   // populates form state with profile data when component mounts
   useEffect(() => {
     // filters 'profile' object based on the 'details' array
@@ -18,7 +18,6 @@ function ProfileForm(props) {
   }, [profile, details]);
 
   const handleChange = (e) => {
-    // console.log(e.target);
     const { name, value } = e.target;
     // updates form state with user input
     setFormState((prevState) => ({
@@ -27,13 +26,11 @@ function ProfileForm(props) {
     }));
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log("form submission");
-
     try {
-      console.log(formState);
-      // exits form, returning profile details
+      // updates server-side user data through graphql mutation before exiting form component
+      await user({ variables: { id, ...formState } });
       setEditSelected(false);
     } catch (err) {
       console.error(err);
@@ -68,8 +65,8 @@ function ProfileForm(props) {
             />
           </label>
         ))}
-
         <button>save</button>
+        {error && <span>error</span>}
       </form>
     </section>
   );

@@ -24,6 +24,36 @@ export const ADD_USER = gql`
   }
 `;
 
+export const EDIT_USER = gql`
+  mutation EditUser(
+    $id: ID!
+    $firstName: String
+    $lastName: String
+    $email: String
+    $phone: String
+    $location: String
+    $currentCompany: String
+  ) {
+    editUser(
+      _id: $id
+      firstName: $firstName
+      lastName: $lastName
+      email: $email
+      phone: $phone
+      location: $location
+      currentCompany: $currentCompany
+    ) {
+      _id
+      firstName
+      lastName
+      email
+      phone
+      location
+      currentCompany
+    }
+  }
+`;
+
 export const ADD_JOB = gql`
   mutation addJob(
     $company: String!
