@@ -4,6 +4,8 @@ import { QUERY_PROFILE } from "../utils/queries";
 import Auth from "../utils/auth";
 import Resume from "../components/Resume";
 import "../assets/css/profile.css";
+import ProfileDetails from "../components/ProfileDetails";
+import ProfileForm from "../components/ProfileForm";
 
 function Profile() {
   const loggedIn = Auth.loggedIn();
@@ -11,27 +13,13 @@ function Profile() {
   const profile = data?.me || {};
   const details = Object.keys(profile).filter(
     (key) =>
-      key !== "__typename" &&
-      key !== "_id" &&
-      key !== "username" &&
-      !Array.isArray(profile[key])
+      !key.startsWith("_") && key !== "username" && !Array.isArray(profile[key])
   );
-  console.log(details)
 
   // state variables
   const [selectedResume, setSelectedResume] = useState("");
-  // const [selectedEdit, setSelectedEdit] = useState(false)
-
-  // copies profile stat to clipboard when triggered
-  const copyDetail = async (data) => {
-    try {
-      let stat = data;
-      console.log(stat);
-      await navigator.clipboard.writeText(stat);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  const [editSelected, setEditSelected] = useState(false);
+  console.log(editSelected);
 
   if (loading) {
     return <section className="message">Loading...</section>;
@@ -41,19 +29,20 @@ function Profile() {
     <>
       {loggedIn ? (
         <>
-          <section id="profile-section">
-            <h2>{profile.username} details</h2>
-            {details.map((detail, i) => (
-              <article key={i} className="profile-detail">
-                <h3>{detail}</h3>
-                <p>{profile[detail]}</p>
-                <button onClick={() => copyDetail(profile[detail])}>
-                  copy
-                </button>
-              </article>
-            ))}
-            <button onClick={() => console.log("edit details")}>edit</button>
-          </section>
+          {!editSelected ? (
+            <ProfileDetails
+              profile={profile}
+              details={details}
+              setEditSelected={setEditSelected}
+            />
+          ) : (
+            <ProfileForm
+              id={profile._id}
+              profile={profile}
+              details={details}
+              setEditSelected={setEditSelected}
+            />
+          )}
 
           <section id="resumes-section">
             <h2>resumes</h2>

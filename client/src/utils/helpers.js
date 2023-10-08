@@ -1,10 +1,12 @@
 import { QUERY_ME } from "./queries";
 export const format = {
+  today: () => new Date().toISOString().split("T")[0],
   id: (string) => (string ? string.replace(/-/g, " ") : string),
   date: (string) => (string ? string.replace(/-/g, ".") : string),
   title: (string) =>
     string ? string.charAt(0).toUpperCase() + string.slice(1) : string,
-  today: () => new Date().toISOString().split("T")[0],
+  unCamel: (string) =>
+    string ? string.replace(/([A-Z])/g, " $1").toLowerCase() : string,
 };
 
 export const updateCache = {
