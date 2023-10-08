@@ -1,6 +1,6 @@
 import { format } from "../utils/helpers";
 
-function Profile({ user }) {
+function UserStats({ user }) {
   const stats = user.stats;
 
   return (
@@ -16,4 +16,4 @@ function Profile({ user }) {
   );
 }
 
-export default Profile;
+export default UserStats;

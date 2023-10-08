@@ -4,7 +4,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
 import { UPDATE_PENDING_JOBS } from "../utils/mutations";
 import Auth from "../utils/auth";
-import Profile from "../components/Profile";
+import UserStats from "../components/UserStats";
 import JobLists from "../components/JobsList";
 import JobForm from "../components/JobForm";
 
@@ -60,7 +60,7 @@ function Home() {
           {minWidth && (
             <JobForm initialValues={{}} id={"add-job"} type="aside" />
           )}
-          <Profile user={{ username: user.username, stats: userStats }} />
+          <UserStats user={{ username: user.username, stats: userStats }} />
           <JobLists jobs={jobs} />
         </>
       ) : (
