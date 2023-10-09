@@ -5,15 +5,19 @@ import ResumeForm from "./ResumeForm";
 import ResumeItem from "./ResumeItem";
 
 function Resume({ resumeId }) {
+  // resume document id derived from prop
   const _id = resumeId;
+  
+  // server data retrieved from graphql query
   const { loading, data } = useQuery(QUERY_RESUME, { variables: { id: _id } });
   const resume = data?.resume || {};
-  console.log(resume)
 
+  // state variables
   const [addItem, setAddItem] = useState(null);
-
   const handleAddItem = (item) => setAddItem(item);
 
+  // UI display
+  // - conditional displays
   if (!resumeId) {
     return (
       <section id="resume-section">
@@ -26,8 +30,7 @@ function Resume({ resumeId }) {
     return <section id="resume-section">loading</section>;
   }
 
-  // UI renders dynamically by only mapping `resume` array keys
-  // bug | resume form fields doesn't map
+  // elements render dynamically by only mapping `resume` array keys
   return (
     <section id="resume-section">
       <h2>{resume.title}</h2>
@@ -35,7 +38,7 @@ function Resume({ resumeId }) {
         Array.isArray(resume[key]) && (
           <article key={key} id={key}>
             <h3>
-              <button onClick={() => handleAddItem(key)}>+</button>
+              <button onClick={() => handleAddItem(key)}>+</button>{console.log(resume[key][0])}
               {key.charAt(0).toUpperCase() + key.slice(1)}
             </h3>
             {addItem === key && (
