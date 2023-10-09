@@ -8,6 +8,7 @@ function Resume({ resumeId }) {
   const _id = resumeId;
   const { loading, data } = useQuery(QUERY_RESUME, { variables: { id: _id } });
   const resume = data?.resume || {};
+  console.log(resume)
 
   const [addItem, setAddItem] = useState(null);
 
@@ -25,49 +26,27 @@ function Resume({ resumeId }) {
     return <section id="resume-section">loading</section>;
   }
 
+  // UI renders dynamically by only mapping `resume` array keys
+  // bug | resume form fields doesn't map
   return (
     <section id="resume-section">
       <h2>{resume.title}</h2>
-      <article id="links">
-        <h3>
-          <button onClick={() => handleAddItem("link")}>+</button>
-          Links
-        </h3>
-        {addItem === "link" && (
-          <ResumeForm fields={["url", "link"]} setAddItem={setAddItem} />
-        )}
-        {resume.links.map((link, i) => (
-          <ResumeItem item={link} key={i} />
-        ))}
-      </article>
-      <article id="edu">
-        <h3>
-          <button onClick={() => handleAddItem("edu")}>+</button>
-          Education
-        </h3>
-        {addItem === "edu" && (
-          <ResumeForm fields={["school", "location"]} setAddItem={setAddItem} />
-        )}
-
-        {resume.education.map((edu, i) => (
-          <ResumeItem item={edu} key={i} />
-        ))}
-      </article>
-      <article id="exp">
-        <h3>
-          <button onClick={() => handleAddItem("exp")}>+</button>
-          Experience
-        </h3>
-        {addItem === "exp" && (
-          <ResumeForm
-            fields={["company", "role", "location", "description"]}
-            setAddItem={setAddItem}
-          />
-        )}
-        {resume.experience.map((exp, i) => (
-          <ResumeItem item={exp} key={i} />
-        ))}
-      </article>
+      {Object.keys(resume).map(key => (
+        Array.isArray(resume[key]) && (
+          <article key={key} id={key}>
+            <h3>
+              <button onClick={() => handleAddItem(key)}>+</button>
+              {key.charAt(0).toUpperCase() + key.slice(1)}
+            </h3>
+            {addItem === key && (
+              <ResumeForm fields={resume[key][0]} setAddItem={setAddItem}/>
+            )}
+            {resume[key].map((item, i) => (
+              <ResumeItem key={i} item={item} />
+            ))}
+          </article>
+        )
+      ))}
     </section>
   );
 }

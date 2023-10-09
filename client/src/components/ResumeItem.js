@@ -2,6 +2,7 @@ import React from "react";
 
 function ResumeItem({ item }) {
   const resumeItem = item.__typename.toLowerCase();
+  console.log(resumeItem)
   // copies profile stat to clipboard when triggered
   const copyDetail = async (data) => {
     try {

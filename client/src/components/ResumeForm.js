@@ -1,4 +1,5 @@
 function ResumeForm({ fields, setAddItem }) {
+  console.log(fields)
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     console.log("form submit");
