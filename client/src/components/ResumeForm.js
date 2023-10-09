@@ -13,7 +13,7 @@ function ResumeForm({ fields, setAddItem }) {
         </label>
       ))}
       <button type="submit">submit</button>
-      <button type="button" onClick={() => setAddItem(false)}>cancel</button>
+      <button type="button" onClick={() => setAddItem(null)}>cancel</button>
     </form>
   );
 }
