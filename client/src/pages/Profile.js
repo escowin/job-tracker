@@ -19,7 +19,6 @@ function Profile() {
   // state variables
   const [selectedResume, setSelectedResume] = useState("");
   const [editSelected, setEditSelected] = useState(false);
-  console.log(editSelected);
 
   if (loading) {
     return <section className="message">Loading...</section>;

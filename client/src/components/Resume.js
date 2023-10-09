@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_RESUME } from "../utils/queries";
+import ResumeForm from "./ResumeForm";
 
 function Resume({ resumeId }) {
   const _id = resumeId;
-  const { loading, data } = useQuery(QUERY_RESUME, {
-    variables: { id: _id },
-  });
+  const { loading, data } = useQuery(QUERY_RESUME, { variables: { id: _id } });
   const resume = data?.resume || {};
-  console.log(resume);
+
+  const [addItem, setAddItem] = useState(false);
+
+  const handleAddItem = () => setAddItem(true);
 
   // copies profile stat to clipboard when triggered
   const copyDetail = async (data) => {
@@ -32,14 +34,18 @@ function Resume({ resumeId }) {
     return <section id="resume-section">loading</section>;
   }
 
+  // bug | form for every section is triggered when state oject is set true
   return (
     <section id="resume-section">
       <h2>{resume.title}</h2>
       <article id="links">
         <h3>
-          <button onClick={() => console.log("trigger link form")}>+</button>
+          <button onClick={handleAddItem}>+</button>
           Links
         </h3>
+        {addItem && (
+          <ResumeForm fields={["url", "link"]} setAddItem={setAddItem} />
+        )}
         {resume.links.map((link, i) => (
           <div key={i} className="link">
             <button onClick={() => copyDetail(link.url)}>copy</button>
@@ -55,9 +61,13 @@ function Resume({ resumeId }) {
       </article>
       <article id="edu">
         <h3>
-          <button onClick={() => console.log("trigger link form")}>+</button>
+          <button onClick={handleAddItem}>+</button>
           Education
         </h3>
+        {addItem && (
+          <ResumeForm fields={["school", "location"]} setAddItem={setAddItem} />
+        )}
+
         {resume.education.map((edu, i) => (
           <div key={i} className="edu">
             {Object.entries(edu)
@@ -76,9 +86,12 @@ function Resume({ resumeId }) {
       </article>
       <article id="exp">
         <h3>
-          <button onClick={() => console.log("trigger link form")}>+</button>
+          <button onClick={handleAddItem}>+</button>
           Experience
         </h3>
+        {addItem && (
+          <ResumeForm fields={["company", "role", "location", "description"]} setAddItem={setAddItem} />
+        )}
         {resume.experience.map((exp, i) => (
           <div key={i} className="exp">
             {Object.entries(exp)
