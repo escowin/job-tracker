@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_LINK, ADD_EDU, ADD_EXP } from "../utils/mutations";
 
-function ResumeForm({ fields, setAddItem, _id }) {
+function ResumeForm({ fields, setAddItem, resumeId }) {
   // defines array from `fields` prop, excluding keys that start with '_'
   const formFields = Object.keys(fields).filter(
     (field) => !field.startsWith("_")
@@ -38,21 +38,25 @@ function ResumeForm({ fields, setAddItem, _id }) {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(formState);
-      // await item({ variables: {_id, ...formState} });
-      // setAddItem(false)
+      await item({ variables: { resumeId, ...formState } });
+      setAddItem(false);
     } catch (err) {
       console.error(err);
     }
   };
 
-  // form elements dynamically scale based on the composition of `formFields` array
+  // form elements dynamically scale based on the composition of `formFields` array. input `type` attribute conditionally set to provide client-side validation
   return (
     <form className="resume-form-item" onSubmit={handleFormSubmit}>
       {formFields.map((field, i) => (
         <label key={i} htmlFor={field}>
           {field}
-          <input type="text" name={field} id={field} onChange={handleChange} />
+          <input
+            type={field === "url" ? "url" : "text"}
+            name={field}
+            id={field}
+            onChange={handleChange}
+          />
         </label>
       ))}
       <button type="submit">submit</button>
