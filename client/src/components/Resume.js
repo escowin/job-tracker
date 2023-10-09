@@ -1,3 +1,4 @@
+import React from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_RESUME } from "../utils/queries";
 
@@ -7,6 +8,7 @@ function Resume({ resumeId }) {
     variables: { id: _id },
   });
   const resume = data?.resume || {};
+  console.log(resume);
 
   // copies profile stat to clipboard when triggered
   const copyDetail = async (data) => {
@@ -19,8 +21,11 @@ function Resume({ resumeId }) {
   };
 
   if (!resumeId) {
-    return <section id="resume-section">
-      <p className="message">select resume</p></section>;
+    return (
+      <section id="resume-section">
+        <p className="message">select resume</p>
+      </section>
+    );
   }
 
   if (loading) {
@@ -31,11 +36,15 @@ function Resume({ resumeId }) {
     <section id="resume-section">
       <h2>{resume.title}</h2>
       <article id="links">
-        <h3>Links</h3>
+        <h3>
+          Links{" "}
+          <button onClick={() => console.log("trigger link form")}>+</button>
+        </h3>
         {resume.links.map((link, i) => (
           <div key={i}>
             <button onClick={() => copyDetail(link.url)}>copy</button>
             <p>{link.link}</p>
+            <button className="delete-btn" onClick={() => console.log(link._id)}>-</button>
           </div>
         ))}
       </article>
@@ -43,10 +52,15 @@ function Resume({ resumeId }) {
         <h3>Education</h3>
         {resume.education.map((edu, i) => (
           <div key={i}>
-            <button onClick={() => copyDetail(edu.school)}>copy</button>
-            <p>{edu.school}</p>
-            <button onClick={() => copyDetail(edu.location)}>copy</button>
-            <p>{edu.location}</p>
+            {Object.entries(edu)
+              .filter(([key]) => !key.startsWith("_"))
+              .map(([key, value], j) => (
+                <React.Fragment key={j}>
+                  <button onClick={() => copyDetail(value)}>copy</button>
+                  <p>{value}</p>
+                </React.Fragment>
+              ))}
+              <button className="delete-btn" onClick={() => console.log(edu._id)}>-</button>
           </div>
         ))}
       </article>
@@ -62,6 +76,7 @@ function Resume({ resumeId }) {
             <p>{exp.location}</p>
             <button onClick={() => copyDetail(exp.description)}>copy</button>
             <p style={{ whiteSpace: "pre-line" }}>{exp.description}</p>
+            <button className="delete-btn" onClick={() => console.log(exp._id)}>-</button>
           </div>
         ))}
       </article>
