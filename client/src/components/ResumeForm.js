@@ -1,9 +1,28 @@
+import { useMutation } from "@apollo/client";
+import { ADD_LINK, ADD_EDU, ADD_EXP } from "../utils/mutations";
+
 function ResumeForm({ fields, setAddItem }) {
   // defines array from `fields` prop, excluding keys that start with '_'
   const formFields = Object.keys(fields).filter(
     (field) => !field.startsWith("_")
   );
-  console.log(formFields);
+
+  console.log(fields.__typename);
+
+  const determineMutation = (type) => {
+    switch (type) {
+      case "Education":
+        return ADD_EDU;
+      case "Experience":
+        return ADD_EXP;
+      case "Link":
+        return ADD_LINK;
+      default:
+        return console.error("invalid mutation");
+    }
+  };
+
+  console.log(determineMutation(fields.__typename));
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();

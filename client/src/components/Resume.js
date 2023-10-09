@@ -38,7 +38,7 @@ function Resume({ resumeId }) {
         Array.isArray(resume[key]) && (
           <article key={key} id={key}>
             <h3>
-              <button onClick={() => handleAddItem(key)}>+</button>{console.log(resume[key][0])}
+              <button onClick={() => handleAddItem(key)}>+</button>
               {key.charAt(0).toUpperCase() + key.slice(1)}
             </h3>
             {addItem === key && (

@@ -1,5 +1,6 @@
 import { gql } from "@apollo/client";
 
+// user document mutations
 export const LOGIN_USER = gql`
   mutation login($username: String!, $password: String!) {
     login(username: $username, password: $password) {
@@ -54,6 +55,7 @@ export const EDIT_USER = gql`
   }
 `;
 
+// job document & sub document mutations
 export const ADD_JOB = gql`
   mutation addJob(
     $company: String!
@@ -108,6 +110,12 @@ export const DELETE_JOB = gql`
   }
 `;
 
+export const UPDATE_PENDING_JOBS = gql`
+  mutation Mutation {
+    updatePendingJobs
+  }
+`;
+
 export const ADD_NOTE = gql`
   mutation addNote($jobId: ID!, $note: String!, $interview: Boolean) {
     addNote(jobId: $jobId, note: $note, interview: $interview) {
@@ -131,8 +139,98 @@ export const DELETE_NOTE = gql`
   }
 `;
 
-export const UPDATE_PENDING_JOBS = gql`
-  mutation Mutation {
-    updatePendingJobs
+// resume document & subdocument mutations
+export const ADD_RESUME = gql`
+  mutation AddResume($title: String!) {
+    addResume(title: $title) {
+      _id
+      createdAt
+      title
+    }
+  }
+`;
+
+export const DELETE_RESUME = gql`
+  mutation DeleteResume($id: ID!) {
+    deleteResume(_id: $id) {
+      _id
+    }
+  }
+`;
+
+export const ADD_LINK = gql`
+  mutation AddLink($resumeId: ID!, $link: String!, $url: String!) {
+    addLink(resumeId: $resumeId, link: $link, url: $url) {
+      _id
+      links {
+        _id
+        link
+        url
+      }
+    }
+  }
+`;
+
+export const DELETE_LINK = gql`
+  mutation DeleteLink($id: ID!, $resumeId: ID!) {
+    deleteLink(_id: $id, resumeId: $resumeId) {
+      _id
+    }
+  }
+`;
+
+export const ADD_EDU = gql`
+  mutation AddEducation($resumeId: ID!, $school: String!, $location: String) {
+    addEducation(resumeId: $resumeId, school: $school, location: $location) {
+      _id
+      education {
+        _id
+        location
+        school
+      }
+    }
+  }
+`;
+
+export const DELETE_EDU = gql`
+  mutation DeleteEducation($id: ID!, $resumeId: ID!) {
+    deleteEducation(_id: $id, resumeId: $resumeId) {
+      _id
+    }
+  }
+`;
+
+export const ADD_EXP = gql`
+  mutation AddExperience(
+    $resumeId: ID!
+    $role: String!
+    $company: String!
+    $location: String
+    $description: String
+  ) {
+    addExperience(
+      resumeId: $resumeId
+      role: $role
+      company: $company
+      location: $location
+      description: $description
+    ) {
+      _id
+      experience {
+        _id
+        company
+        description
+        location
+        role
+      }
+    }
+  }
+`;
+
+export const DELETE_EXP = gql`
+  mutation DeleteExperience($id: ID!, $resumeId: ID!) {
+    deleteExperience(_id: $id, resumeId: $resumeId) {
+      _id
+    }
   }
 `;
