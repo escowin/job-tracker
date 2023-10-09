@@ -37,21 +37,29 @@ function Resume({ resumeId }) {
       <h2>{resume.title}</h2>
       <article id="links">
         <h3>
-          Links{" "}
           <button onClick={() => console.log("trigger link form")}>+</button>
+          Links
         </h3>
         {resume.links.map((link, i) => (
-          <div key={i}>
+          <div key={i} className="link">
             <button onClick={() => copyDetail(link.url)}>copy</button>
             <p>{link.link}</p>
-            <button className="delete-btn" onClick={() => console.log(link._id)}>-</button>
+            <button
+              className="delete-btn"
+              onClick={() => console.log(link._id)}
+            >
+              delete
+            </button>
           </div>
         ))}
       </article>
       <article id="edu">
-        <h3>Education</h3>
+        <h3>
+          <button onClick={() => console.log("trigger link form")}>+</button>
+          Education
+        </h3>
         {resume.education.map((edu, i) => (
-          <div key={i}>
+          <div key={i} className="edu">
             {Object.entries(edu)
               .filter(([key]) => !key.startsWith("_"))
               .map(([key, value], j) => (
@@ -60,23 +68,30 @@ function Resume({ resumeId }) {
                   <p>{value}</p>
                 </React.Fragment>
               ))}
-              <button className="delete-btn" onClick={() => console.log(edu._id)}>-</button>
+            <button className="delete-btn" onClick={() => console.log(edu._id)}>
+              delete
+            </button>
           </div>
         ))}
       </article>
       <article id="exp">
-        <h3>experience</h3>
+        <h3>
+          <button onClick={() => console.log("trigger link form")}>+</button>
+          Experience
+        </h3>
         {resume.experience.map((exp, i) => (
-          <div key={i}>
-            <button onClick={() => copyDetail(exp.role)}>copy</button>
-            <p>{exp.role}</p>
-            <button onClick={() => copyDetail(exp.company)}>copy</button>
-            <p>{exp.company}</p>
-            <button onClick={() => copyDetail(exp.location)}>copy</button>
-            <p>{exp.location}</p>
-            <button onClick={() => copyDetail(exp.description)}>copy</button>
-            <p style={{ whiteSpace: "pre-line" }}>{exp.description}</p>
-            <button className="delete-btn" onClick={() => console.log(exp._id)}>-</button>
+          <div key={i} className="exp">
+            {Object.entries(exp)
+              .filter(([key]) => !key.startsWith("_"))
+              .map(([key, value], j) => (
+                <React.Fragment key={j}>
+                  <button onClick={() => copyDetail(value)}>copy</button>
+                  <p style={{ whiteSpace: "pre-line" }}>{value}</p>
+                </React.Fragment>
+              ))}
+            <button className="delete-btn" onClick={() => console.log(exp._id)}>
+              delete
+            </button>
           </div>
         ))}
       </article>

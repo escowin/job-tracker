@@ -57,15 +57,15 @@ export const QUERY_RESUME = gql`
       }
       education {
         _id
-        location
         school
+        location
       }
       experience {
         _id
         company
-        description
-        location
         role
+        location
+        description
       }
     }
   }
