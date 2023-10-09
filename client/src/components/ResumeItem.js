@@ -4,25 +4,21 @@ import { determineMutation } from "../utils/helpers";
 import { QUERY_RESUME } from "../utils/queries";
 
 function ResumeItem({ item, resumeId, arr }) {
-  const resumeItem = item.__typename.toLowerCase();
   let deletedItemId;
+  const resumeItem = item.__typename.toLowerCase();
   const [deleteItem, { error }] = useMutation(
     determineMutation(item.__typename, "delete"),
     {
       update(cache, { data }) {
-        console.log(data);
         const { resume } = cache.readQuery({
           query: QUERY_RESUME,
           variables: { id: resumeId },
         });
-        console.log(resume);
-        console.log(arr);
-        console.log(typeof arr);
+
         // uses bracket notation to dynamically target corresponding resume array key
         const updatedResume = resume[arr].filter(
           (item) => item._id !== deletedItemId
         );
-        console.log(updatedResume);
 
         // resume query is rewritten with updated resume data
         cache.writeQuery({
@@ -47,6 +43,7 @@ function ResumeItem({ item, resumeId, arr }) {
 
   const handleDelete = async (_id) => {
     try {
+      // sets id value here in order to filter out item later in cache update
       deletedItemId = _id;
       await deleteItem({ variables: { resumeId: resumeId, id: _id } });
     } catch (err) {
