@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_LINK, ADD_EDU, ADD_EXP } from "../utils/mutations";
+// import { ADD_LINK, ADD_EDU, ADD_EXP } from "../utils/mutations";
+import { determineMutation } from "../utils/helpers";
 
 function ResumeForm({ fields, setAddItem, resumeId }) {
   // defines array from `fields` prop, excluding keys that start with '_'
@@ -8,20 +9,20 @@ function ResumeForm({ fields, setAddItem, resumeId }) {
     (field) => !field.startsWith("_")
   );
   // determines sub document graphql mutation
-  const determineMutation = (type) => {
-    switch (type) {
-      case "Education":
-        return ADD_EDU;
-      case "Experience":
-        return ADD_EXP;
-      case "Link":
-        return ADD_LINK;
-      default:
-        return console.error("invalid mutation");
-    }
-  };
+  // const determineMutation = (type) => {
+  //   switch (type) {
+  //     case "Education":
+  //       return ADD_EDU;
+  //     case "Experience":
+  //       return ADD_EXP;
+  //     case "Link":
+  //       return ADD_LINK;
+  //     default:
+  //       return console.error("invalid mutation");
+  //   }
+  // };
   // server graphql mutations variables
-  const [item, { error }] = useMutation(determineMutation(fields.__typename));
+  const [item, { error }] = useMutation(determineMutation(fields.__typename, "add"));
 
   // state variables
   const [formState, setFormState] = useState({});

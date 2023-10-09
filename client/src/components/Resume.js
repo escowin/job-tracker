@@ -45,7 +45,7 @@ function Resume({ resumeId }) {
               <ResumeForm fields={resume[key][0]} setAddItem={setAddItem} resumeId={_id}/>
             )}
             {resume[key].map((item, i) => (
-              <ResumeItem key={i} item={item} />
+              <ResumeItem key={i} item={item} resumeId={_id} arr={key} />
             ))}
           </article>
         )

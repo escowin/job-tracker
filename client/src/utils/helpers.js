@@ -1,4 +1,13 @@
 import { QUERY_ME } from "./queries";
+import {
+  ADD_EDU,
+  ADD_EXP,
+  ADD_LINK,
+  DELETE_EDU,
+  DELETE_EXP,
+  DELETE_LINK,
+} from "./mutations";
+
 export const format = {
   today: () => new Date().toISOString().split("T")[0],
   id: (string) => (string ? string.replace(/-/g, " ") : string),
@@ -42,4 +51,17 @@ export const updateCache = {
     }
   },
   // job: () => {},
+};
+
+export const determineMutation = (doc, type) => {
+  switch (doc) {
+    case "Education":
+      return type === "add" ? ADD_EDU : DELETE_EDU;
+    case "Experience":
+      return type === "add" ? ADD_EXP : DELETE_EXP;
+    case "Link":
+      return type === "add" ? ADD_LINK : DELETE_LINK;
+    default:
+      return console.error("invalid mutation");
+  }
 };

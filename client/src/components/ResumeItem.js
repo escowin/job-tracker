@@ -1,13 +1,54 @@
 import React from "react";
+import { useMutation } from "@apollo/client";
+import { determineMutation } from "../utils/helpers";
+import { QUERY_RESUME } from "../utils/queries";
 
-function ResumeItem({ item }) {
+function ResumeItem({ item, resumeId, arr }) {
   const resumeItem = item.__typename.toLowerCase();
-//   console.log(resumeItem)
+  let deletedItemId;
+  const [deleteItem, { error }] = useMutation(
+    determineMutation(item.__typename, "delete"),
+    {
+      update(cache, { data }) {
+        console.log(data);
+        const { resume } = cache.readQuery({
+          query: QUERY_RESUME,
+          variables: { id: resumeId },
+        });
+        console.log(resume);
+        console.log(arr);
+        console.log(typeof arr);
+        // uses bracket notation to dynamically target corresponding resume array key
+        const updatedResume = resume[arr].filter(
+          (item) => item._id !== deletedItemId
+        );
+        console.log(updatedResume);
+
+        // resume query is rewritten with updated resume data
+        cache.writeQuery({
+          query: QUERY_RESUME,
+          variables: { id: resumeId },
+          // updated array is dynamically set through bracket notation
+          data: { resume: { ...resume, [arr]: updatedResume } },
+        });
+      },
+    }
+  );
+
   // copies profile stat to clipboard when triggered
   const copyDetail = async (data) => {
     try {
       let stat = data;
       await navigator.clipboard.writeText(stat);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleDelete = async (_id) => {
+    try {
+      deletedItemId = _id;
+      await deleteItem({ variables: { resumeId: resumeId, id: _id } });
     } catch (err) {
       console.error(err);
     }
@@ -33,8 +74,11 @@ function ResumeItem({ item }) {
         </>
       )}
 
-      <button className="delete-btn" onClick={() => console.log(item._id)}>
-        delete
+      <button
+        className="delete-btn warning"
+        onClick={() => handleDelete(item._id)}
+      >
+        {error ? "error" : "delete"}
       </button>
     </div>
   );
