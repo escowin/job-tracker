@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-// import { ADD_LINK, ADD_EDU, ADD_EXP } from "../utils/mutations";
 import { determineMutation } from "../utils/helpers";
 
 function ResumeItemForm({ fields, setAddItem, resumeId }) {

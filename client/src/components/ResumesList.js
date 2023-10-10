@@ -1,25 +1,35 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { ADD_RESUME } from "../utils/mutations";
 
 function ResumesList({ id, setSelectedResume, profile }) {
-  console.log(id);
+  // graphql schema used to send data to server database
+  const [resume, { error }] = useMutation(ADD_RESUME);
+  // defines form elements & initial state key-value to match corresponding graphql mutation schema
   const fields = [{ name: "title", min: 1, max: 25 }];
-  const initialState = Object.fromEntries(
-    fields.map((field) => [field.name, ""])
-  );
+  const initialState = Object.fromEntries(fields.map((field) => [field.name, ""]));
+  // defines component state variables with initial values
   const [addResume, setAddResume] = useState(false);
-  const [formState, setFormState] = useState("");
+  const [formState, setFormState] = useState(initialState);
 
-  const handleAddItem = () => {
-    console.log("add resume");
-    setAddResume(true);
-  };
-
-  const handleFormSubmit = () => {
-    console.log("form submit");
-  };
-
+  // ui actions
+  // defines state as true to make resume form appear in ui
+  const handleAddItem = () => setAddResume(true);
+  // updates form state key-values with captured user input data
   const handleChange = (e) => {
-    console.log("input form");
+    const { name, value } = e.target;
+    setFormState((prevState) => ({ ...prevState, [name]: value }));
+  };
+  // submits current form state data to the server database through a graphql mutation
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      console.log("form submit");
+      await resume({ variables: formState });
+      setFormState(initialState);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -45,7 +55,10 @@ function ResumesList({ id, setSelectedResume, profile }) {
             </label>
           ))}
           <button type="submit">save</button>
-
+          <button type="button" onClick={() => setAddResume(null)}>
+            cancel
+          </button>
+          {error && <span>error</span>}
         </form>
       )}
 
