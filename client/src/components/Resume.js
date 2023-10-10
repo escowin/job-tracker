@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_RESUME } from "../utils/queries";
-import ResumeForm from "./ResumeForm";
+import ResumeItemForm from "./ResumeItemForm";
 import ResumeItem from "./ResumeItem";
 
 function Resume({ resumeId }) {
@@ -42,7 +42,7 @@ function Resume({ resumeId }) {
               {key.charAt(0).toUpperCase() + key.slice(1)}
             </h3>
             {addItem === key && (
-              <ResumeForm fields={resume[key][0]} setAddItem={setAddItem} resumeId={_id}/>
+              <ResumeItemForm fields={resume[key][0]} setAddItem={setAddItem} resumeId={_id}/>
             )}
             {resume[key].map((item, i) => (
               <ResumeItem key={i} item={item} resumeId={_id} arr={key} />

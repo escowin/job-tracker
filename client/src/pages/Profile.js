@@ -6,6 +6,7 @@ import Resume from "../components/Resume";
 import "../assets/css/profile.css";
 import ProfileDetails from "../components/ProfileDetails";
 import ProfileForm from "../components/ProfileForm";
+import ResumesList from "../components/ResumesList";
 
 function Profile() {
   const loggedIn = Auth.loggedIn();
@@ -42,15 +43,7 @@ function Profile() {
               setEditSelected={setEditSelected}
             />
           )}
-
-          <section id="resumes-section">
-            <h2>resumes</h2>
-            {profile.resumes.map((resume, i) => (
-              <button key={i} onClick={() => setSelectedResume(resume._id)}>
-                {resume.title}
-              </button>
-            ))}
-          </section>
+          <ResumesList id={profile._id} profile={profile} setSelectedResume={setSelectedResume}/>
           <Resume resumeId={selectedResume} />
         </>
       ) : (

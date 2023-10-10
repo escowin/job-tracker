@@ -3,24 +3,11 @@ import { useMutation } from "@apollo/client";
 // import { ADD_LINK, ADD_EDU, ADD_EXP } from "../utils/mutations";
 import { determineMutation } from "../utils/helpers";
 
-function ResumeForm({ fields, setAddItem, resumeId }) {
+function ResumeItemForm({ fields, setAddItem, resumeId }) {
   // defines array from `fields` prop, excluding keys that start with '_'
   const formFields = Object.keys(fields).filter(
     (field) => !field.startsWith("_")
   );
-  // determines sub document graphql mutation
-  // const determineMutation = (type) => {
-  //   switch (type) {
-  //     case "Education":
-  //       return ADD_EDU;
-  //     case "Experience":
-  //       return ADD_EXP;
-  //     case "Link":
-  //       return ADD_LINK;
-  //     default:
-  //       return console.error("invalid mutation");
-  //   }
-  // };
   // server graphql mutations variables
   const [item, { error }] = useMutation(determineMutation(fields.__typename, "add"));
 
@@ -69,4 +56,4 @@ function ResumeForm({ fields, setAddItem, resumeId }) {
   );
 }
 
-export default ResumeForm;
+export default ResumeItemForm;
