@@ -5,8 +5,10 @@ import Auth from "../utils/auth";
 import "../assets/css/login.css";
 
 function Login({ doc, type }) {
-  console.log(doc);
-  console.log(type);
+  const fields = [
+    { name: "username", type: "text", min: 1, max: 25 },
+    { name: "password", type: "password", min: 5, max: 25 },
+  ];
   const [formState, setFormState] = useState({ username: "", password: "" });
   const [user, { error }] = useMutation(docMutation(doc, type));
 
@@ -33,27 +35,20 @@ function Login({ doc, type }) {
     <section className={`${doc}-form-section`}>
       <h2>{format.title(type)}</h2>
       <form className={`${doc}-form`} onSubmit={handleFormSubmit}>
-        <article className="wrapper">
-          <label htmlFor="username">username</label>
-          <input
-            name="username"
-            value={formState.username}
-            onChange={handleChange}
-          />
-        </article>
-        <article className="wrapper">
-          <label htmlFor="password">password</label>
-          <input
-            name="password"
-            type="password"
-            value={formState.password}
-            onChange={handleChange}
-          />
-        </article>
-
-        <article className="wrapper">
-          <button type="submit">submit</button>
-        </article>
+        {fields.map((field, i) => (
+          <label key={i} className="wrapper" htmlFor={field.name}>
+            {field.name}
+            <input
+              name={field.name}
+              type={field.type}
+              value={formState[field.name]}
+              minLength={field.min}
+              maxLength={field.max}
+              onChange={handleChange}
+            />
+          </label>
+        ))}
+        <button type="submit">submit</button>
       </form>
       {error && <p>{format.title(type)} failed</p>}
     </section>
