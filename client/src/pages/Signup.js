@@ -1,3 +1,4 @@
+// consolidate page w/ login. use props to determine login & sign up logic
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../utils/mutations";

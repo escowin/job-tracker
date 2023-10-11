@@ -58,7 +58,7 @@ function Home() {
       {loggedIn && user?.username ? (
         <>
           {minWidth && (
-            <JobForm initialValues={{}} id={"add-job"} type="aside" />
+            <JobForm initialValues={{}} id={"add-job"} className={"aside"} doc={"job"} type={"add"} />
           )}
           <UserStats user={{ username: user.username, stats: userStats }} />
           <JobLists jobs={jobs} />

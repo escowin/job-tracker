@@ -2,17 +2,18 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { ADD_JOB, EDIT_JOB } from "../utils/mutations";
-import { format, updateCache } from "../utils/helpers";
+import { docMutation, format, updateCache } from "../utils/helpers";
 import "../assets/css/job-form.css";
 
 function JobForm(props) {
   // rule | graphql schemas are sources of truth
-  // consolidate form field variable 
+  // consolidate form field variable
   // set form field values by reading graphql schema that corresponds with doc prop
   // graphql mutation is determined by switch case key (doc prop)
-  // use bracket notation to dynamically update cache 
+  // use bracket notation to dynamically update cache
+  console.log(props)
 
-  const { initialValues, setEditSelected, id, type } = props;
+  const { initialValues, setEditSelected, id, className, doc, type } = props;
   const navigate = useNavigate();
   const jobPath = window.location.pathname.includes("/job");
   // defines state & form properties
@@ -34,16 +35,46 @@ function JobForm(props) {
     { name: "applied", max: 10, type: "date" },
   ];
 
-
   // server
-  // to-do : 
+  // to-do :
   // - 1 | update virtual counts when status updates
   // - 2 | default `applied` input field value to today when adding a job
 
-  const [job, { error }] = useMutation(id === "add-job" ? ADD_JOB : EDIT_JOB, {
-    update(cache, { data: { addJob } }) {
-      const virtuals = fields.find(item => item.name === "status").radios
-      updateCache.me(cache, addJob, virtuals)
+  const [job, { error }] = useMutation(docMutation(doc, type), {
+    update(cache, { data }) {
+      console.log(cache);
+      console.log(data);
+      // const virtuals = fields.find((item) => item.name === "status").radios;
+      // updateCache.me(cache, addJob, virtuals);
+      
+      // matches graphql schema
+      /* add job form console.log:
+      {addJob: {…}}
+        addJob: 
+          applied: "2023-10-11"
+          company: "tt"
+          role: "tt"
+          source: "company"
+          status: "pending"
+          __typename: "Job"
+          _id: "6526d03f608f1a95255c1973"
+        [[Prototype]]: Object
+        [[Prototype]]: Object
+      */
+
+      /* edit job form console.log:
+      {editJob: {…}}
+        editJob:
+          applied: "2023-10-11"
+          company: "ss"
+          role: "aa"
+          source: "company"
+          status: "pending"
+          __typename: "Job"
+          _id: "6526d03f608f1a95255c1973"
+        [[Prototype]]: Object
+        [[Prototype]]: Object
+      */
     },
   });
 
@@ -133,7 +164,7 @@ function JobForm(props) {
   };
 
   return (
-    <section className={`${type} form-section`} id={id}>
+    <section className={`${className} form-section`} id={`${type}-${doc}`}>
       <form className="job-form" id={id} onSubmit={handleFormSubmit}>
         <h2>{format.title(format.id(id))}</h2>
         {fields.map((field, i) => displayField(field, i))}
