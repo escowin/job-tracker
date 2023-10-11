@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
-import { EDIT_USER } from "../utils/mutations";
-import { format } from "../utils/helpers";
+import { docMutation, format } from "../utils/helpers";
 
 function ProfileForm(props) {
   const { id, profile, details, setEditSelected } = props;
   const [formState, setFormState] = useState({});
-  const [user, { error }] = useMutation(EDIT_USER);
+  const [user, { error }] = useMutation(docMutation("user", "edit"));
 
   // populates form state with profile data when component mounts
   useEffect(() => {

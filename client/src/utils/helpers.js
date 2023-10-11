@@ -1,16 +1,15 @@
 import { QUERY_ME } from "./queries";
 import {
+  USER,
   ADD_EDU,
   ADD_EXP,
   ADD_JOB,
   ADD_LINK,
   ADD_RESUME,
-  ADD_USER,
   DELETE_EDU,
   DELETE_EXP,
   DELETE_LINK,
   EDIT_JOB,
-  LOGIN_USER,
 } from "./mutations";
 
 export const format = {
@@ -58,6 +57,30 @@ export const updateCache = {
   // job: () => {},
 };
 
+// returns graphql schemas for useMutation hook on document-level forms
+export const docMutation = (doc, type) => {
+  switch (doc) {
+    case "job":
+      return type === "add" ? ADD_JOB : EDIT_JOB;
+    case "resume":
+      return type === "add" ? ADD_RESUME : console.log(`use ${type}_${doc}`);
+    case "user":
+      switch (type) {
+        case "sign-up":
+          return USER.ADD_USER;
+        case "login":
+          return USER.LOGIN_USER;
+        case "edit":
+          return USER.EDIT_USER;
+        default:
+          console.log("invalid user mutation");
+      }
+      break;
+    default:
+      return console.error("invalid mutation");
+  }
+};
+
 export const determineMutation = (doc, type) => {
   switch (doc) {
     case "Education":
@@ -66,19 +89,6 @@ export const determineMutation = (doc, type) => {
       return type === "add" ? ADD_EXP : DELETE_EXP;
     case "Link":
       return type === "add" ? ADD_LINK : DELETE_LINK;
-    default:
-      return console.error("invalid mutation");
-  }
-};
-
-export const docMutation = (doc, type) => {
-  switch (doc) {
-    case "job":
-      return type === "add" ? ADD_JOB : EDIT_JOB;
-    case "resume":
-      return type === "add" ? ADD_RESUME : console.log(`use ${type}_${doc}`);
-    case "user":
-      return type === "sign-up" ? ADD_USER : LOGIN_USER;
     default:
       return console.error("invalid mutation");
   }

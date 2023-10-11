@@ -1,59 +1,61 @@
 import { gql } from "@apollo/client";
 
 // user document
-export const LOGIN_USER = gql`
-  mutation login($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
-      token
-      user {
-        _id
-        username
+export const USER = {
+  ADD_USER: gql`
+    mutation addUser($username: String!, $password: String!) {
+      addUser(username: $username, password: $password) {
+        token
+        user {
+          _id
+          username
+        }
       }
     }
-  }
-`;
+  `,
 
-export const ADD_USER = gql`
-  mutation addUser($username: String!, $password: String!) {
-    addUser(username: $username, password: $password) {
-      token
-      user {
-        _id
-        username
+  LOGIN_USER: gql`
+    mutation login($username: String!, $password: String!) {
+      login(username: $username, password: $password) {
+        token
+        user {
+          _id
+          username
+        }
       }
     }
-  }
-`;
+  `,
 
-export const EDIT_USER = gql`
-  mutation EditUser(
-    $id: ID!
-    $firstName: String
-    $lastName: String
-    $email: String
-    $phone: String
-    $location: String
-    $currentCompany: String
-  ) {
-    editUser(
-      _id: $id
-      firstName: $firstName
-      lastName: $lastName
-      email: $email
-      phone: $phone
-      location: $location
-      currentCompany: $currentCompany
+  EDIT_USER: gql`
+    mutation EditUser(
+      $id: ID!
+      $firstName: String
+      $lastName: String
+      $email: String
+      $phone: String
+      $location: String
+      $currentCompany: String
     ) {
-      _id
-      firstName
-      lastName
-      email
-      phone
-      location
-      currentCompany
+      editUser(
+        _id: $id
+        firstName: $firstName
+        lastName: $lastName
+        email: $email
+        phone: $phone
+        location: $location
+        currentCompany: $currentCompany
+      ) {
+        _id
+        firstName
+        lastName
+        email
+        phone
+        location
+        currentCompany
+      }
     }
-  }
-`;
+  `,
+};
 
 // job document
 export const ADD_JOB = gql`
