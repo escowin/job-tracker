@@ -7,7 +7,6 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
-import Signup from "./pages/Signup";
 import Job from "./pages/Job";
 import Page404 from "./pages/Page404";
 import Profile from "./pages/Profile";
@@ -60,11 +59,17 @@ function App() {
           <main>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/signup" element={<Signup />} />
               <Route path="/job/:id" element={<Job />} />
               <Route path="/add-job" element={<AddJob />} />
               <Route path="/profile" element={<Profile />} />
+              <Route
+                path="/login"
+                element={<Login doc={"user"} type={"login"} />}
+              />
+              <Route
+                path="/signup"
+                element={<Login doc={"user"} type={"sign-up"} />}
+              />
               <Route path="*" element={<Page404 />} />
             </Routes>
           </main>

@@ -1,32 +1,32 @@
-.login-form {
+.user-form {
     display: flex;
     flex-direction: column;
     gap: .5rem;
 }
 
-.login-form .wrapper {
+.user-form .wrapper {
     display: inherit;
     flex-direction: inherit;
 }
 
 @media screen and (min-width: 768px) {
-    .login-form {
+    .user-form {
         gap: 1.25rem;
     }
 
-    .login-form .wrapper {
+    .user-form .wrapper {
         gap: .25rem;
     }
 }
 
 @media screen and (min-width: 1024px) {
 
-    .login-section {
+    .user-form-section {
         justify-self: center;
         grid-column: span 2;
     }
     
-    .login-form .wrapper {
+    .user-form .wrapper {
         gap: .5rem;
     }
 

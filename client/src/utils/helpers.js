@@ -78,7 +78,7 @@ export const docMutation = (doc, type) => {
     case "resume":
       return type === "add" ? ADD_RESUME : console.log(`use ${type}_${doc}`);
     case "user":
-      return type === "add" ? ADD_USER : LOGIN_USER;
+      return type === "sign-up" ? ADD_USER : LOGIN_USER;
     default:
       return console.error("invalid mutation");
   }
