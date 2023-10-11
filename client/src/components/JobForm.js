@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { ADD_JOB, EDIT_JOB } from "../utils/mutations";
 import { docMutation, format, updateCache } from "../utils/helpers";
 import "../assets/css/job-form.css";
 
@@ -42,39 +41,9 @@ function JobForm(props) {
 
   const [job, { error }] = useMutation(docMutation(doc, type), {
     update(cache, { data }) {
-      console.log(cache);
-      console.log(data);
-      // const virtuals = fields.find((item) => item.name === "status").radios;
-      // updateCache.me(cache, addJob, virtuals);
-      
-      // matches graphql schema
-      /* add job form console.log:
-      {addJob: {…}}
-        addJob: 
-          applied: "2023-10-11"
-          company: "tt"
-          role: "tt"
-          source: "company"
-          status: "pending"
-          __typename: "Job"
-          _id: "6526d03f608f1a95255c1973"
-        [[Prototype]]: Object
-        [[Prototype]]: Object
-      */
-
-      /* edit job form console.log:
-      {editJob: {…}}
-        editJob:
-          applied: "2023-10-11"
-          company: "ss"
-          role: "aa"
-          source: "company"
-          status: "pending"
-          __typename: "Job"
-          _id: "6526d03f608f1a95255c1973"
-        [[Prototype]]: Object
-        [[Prototype]]: Object
-      */
+      const virtuals = fields.find((item) => item.name === "status").radios;
+      updateCache.me(cache, addJob, virtuals);
+      console.log(data) // prints addJob or editJob object based on `type` prop used in docMutation()
     },
   });
 
