@@ -31,6 +31,7 @@ function Login({ doc, type }) {
     }
   };
 
+  // dyanmically renders ui elements & attributes with props & mapped array objects
   return (
     <section className={`${doc}-form-section`}>
       <h2>{format.title(type)}</h2>
@@ -45,6 +46,7 @@ function Login({ doc, type }) {
               minLength={field.min}
               maxLength={field.max}
               onChange={handleChange}
+              required
             />
           </label>
         ))}
