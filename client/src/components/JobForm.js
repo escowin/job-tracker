@@ -6,6 +6,12 @@ import { format, updateCache } from "../utils/helpers";
 import "../assets/css/job-form.css";
 
 function JobForm(props) {
+  // rule | graphql schemas are sources of truth
+  // consolidate form field variable 
+  // set form field values by reading graphql schema that corresponds with doc prop
+  // graphql mutation is determined by switch case key (doc prop)
+  // use bracket notation to dynamically update cache 
+
   const { initialValues, setEditSelected, id, type } = props;
   const navigate = useNavigate();
   const jobPath = window.location.pathname.includes("/job");
@@ -30,6 +36,10 @@ function JobForm(props) {
 
 
   // server
+  // to-do : 
+  // - 1 | update virtual counts when status updates
+  // - 2 | default `applied` input field value to today when adding a job
+
   const [job, { error }] = useMutation(id === "add-job" ? ADD_JOB : EDIT_JOB, {
     update(cache, { data: { addJob } }) {
       const virtuals = fields.find(item => item.name === "status").radios

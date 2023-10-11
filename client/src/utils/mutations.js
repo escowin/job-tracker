@@ -77,7 +77,7 @@ export const ADD_JOB = gql`
 
 export const EDIT_JOB = gql`
   mutation editJob(
-    $id: String!
+    $id: ID!
     $company: String
     $role: String
     $status: String
@@ -103,7 +103,7 @@ export const EDIT_JOB = gql`
 `;
 
 export const DELETE_JOB = gql`
-  mutation deleteJob($id: String!) {
+  mutation deleteJob($id: ID!) {
     deleteJob(_id: $id) {
       _id
     }
