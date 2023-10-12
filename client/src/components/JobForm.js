@@ -41,6 +41,7 @@ function JobForm(props) {
 
   const [job, { error }] = useMutation(docMutation(doc, type), {
     update(cache, { data }) {
+      const { addJob } = data // temp solution. the destructured object need to be defined dynamically based on `doc` & `type` prop
       const virtuals = fields.find((item) => item.name === "status").radios;
       updateCache.me(cache, addJob, virtuals);
       console.log(data) // prints addJob or editJob object based on `type` prop used in docMutation()
