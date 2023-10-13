@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { docMutation, format, updateCache } from "../utils/helpers";
+import {
+  determineMutationResult,
+  docMutation,
+  format,
+  updateCache,
+} from "../utils/helpers";
 import "../assets/css/job-form.css";
 
 function JobForm(props) {
@@ -10,7 +15,6 @@ function JobForm(props) {
   // set form field values by reading graphql schema that corresponds with doc prop
   // graphql mutation is determined by switch case key (doc prop)
   // use bracket notation to dynamically update cache
-  console.log(props)
 
   const { initialValues, setEditSelected, id, className, doc, type } = props;
   const navigate = useNavigate();
@@ -35,15 +39,11 @@ function JobForm(props) {
   ];
 
   // server
-  // to-do :
-  // - 1 | update virtual counts when status updates
-
   const [job, { error }] = useMutation(docMutation(doc, type), {
     update(cache, { data }) {
-      const { addJob } = data // temp solution. the destructured object need to be defined dynamically based on `doc` & `type` prop
+      const mutationResult = determineMutationResult(type, data)
       const virtuals = fields.find((item) => item.name === "status").radios;
-      updateCache.me(cache, addJob, virtuals);
-      console.log(data) // prints addJob or editJob object based on `type` prop used in docMutation()
+      return updateCache.me(cache, mutationResult, virtuals);
     },
   });
 
@@ -55,7 +55,7 @@ function JobForm(props) {
 
   useEffect(() => {
     if (initialValues) {
-      const today = new Date().toISOString().split('T')[0]
+      const today = new Date().toISOString().split("T")[0];
       setFormState({
         role: initialValues.role || "",
         company: initialValues.company || "",

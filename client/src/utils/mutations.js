@@ -72,6 +72,7 @@ export const ADD_JOB = gql`
       status
       source
       applied
+      noteCount
     }
   }
 `;

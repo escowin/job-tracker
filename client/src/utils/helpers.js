@@ -23,13 +23,14 @@ export const format = {
 };
 
 export const updateCache = {
-  me: (cache, addJob, virtuals) => {
+  me: (cache, mutationData, virtuals) => {
     try {
+      console.log(mutationData);
       const queryData = cache.readQuery({ query: QUERY_ME });
       const me = queryData?.me;
 
       if (me) {
-        const updatedJobs = [addJob, ...me.jobs];
+        const updatedJobs = [mutationData, ...me.jobs];
         cache.writeQuery({
           query: QUERY_ME,
           data: {
@@ -40,6 +41,7 @@ export const updateCache = {
               rate: me.hiredCount / (updatedJobs.length + 1),
               // iterates through virtuals array to update corresponding cache key-values
               ...virtuals.reduce((counts, virtual) => {
+                console.log(updatedJobs);
                 counts[`${virtual}Count`] = updatedJobs.filter(
                   (job) => job.status === virtual
                 ).length;
@@ -54,7 +56,6 @@ export const updateCache = {
       console.warn("first job app submitted by user");
     }
   },
-  // job: () => {},
 };
 
 // returns graphql schemas for useMutation hook on document-level forms
@@ -91,5 +92,18 @@ export const determineMutation = (doc, type) => {
       return type === "add" ? ADD_LINK : DELETE_LINK;
     default:
       return console.error("invalid mutation");
+  }
+};
+
+export const determineMutationResult = (type, data) => {
+  switch (type) {
+    case "add":
+      const { addJob } = data;
+      return addJob;
+    case "edit":
+      const { editJob } = data;
+      return editJob;
+    default:
+      console.error("invalid type: " + type);
   }
 };
