@@ -135,7 +135,7 @@ export const ADD_NOTE = gql`
 `;
 
 export const DELETE_NOTE = gql`
-  mutation deleteNote($id: String!, $jobId: String!) {
+  mutation deleteNote($id: ID!, $jobId: String!) {
     deleteNote(_id: $id, jobId: $jobId) {
       _id
     }
