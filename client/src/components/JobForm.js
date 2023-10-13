@@ -37,7 +37,6 @@ function JobForm(props) {
   // server
   // to-do :
   // - 1 | update virtual counts when status updates
-  // - 2 | default `applied` input field value to today when adding a job
 
   const [job, { error }] = useMutation(docMutation(doc, type), {
     update(cache, { data }) {
@@ -56,12 +55,14 @@ function JobForm(props) {
 
   useEffect(() => {
     if (initialValues) {
+      const today = new Date().toISOString().split('T')[0]
       setFormState({
         role: initialValues.role || "",
         company: initialValues.company || "",
         status: initialValues.status || "",
         source: initialValues.source || "",
-        applied: initialValues.applied || "",
+        // loads today's date in `add form` date-type input element for better ux
+        applied: initialValues.applied || today,
       });
     } else {
       setFormState((prevState) => ({
