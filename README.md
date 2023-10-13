@@ -2,7 +2,8 @@
 # job-tracker
 
 ## Description
-### [Repo](https://github.com/escowin/job-tracker)
+[Repo](https://github.com/escowin/job-tracker) | 
+[Live URL](https://escowin-job-tracker.onrender.com/)
 
 Tracks the status of job applications. I found my previous method of tracking job applications through an email folder was not useful. By building this app, I was able to further deep dive into the intrices of the MERN stack & GraphQL. The result is now I have a better idea of how many jobs I am applying to and (through Mongoose virtuals) a lit of easy to read statistics in my job hunting pursuit. With this data, I intend to further refine strategy to land a full-time tech industry job.
 
