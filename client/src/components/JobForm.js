@@ -4,6 +4,7 @@ import { useMutation } from "@apollo/client";
 import {
   determineMutationResult,
   docMutation,
+  form,
   format,
   updateCache,
 } from "../utils/helpers";
@@ -12,14 +13,13 @@ import "../assets/css/job-form.css";
 // to-do: document-related forms will rely on fields prop
 function JobForm(props) {
   // rule | graphql schemas are sources of truth
-  // consolidate form field variable
-  // set form field values by reading graphql schema that corresponds with doc prop
-  // graphql mutation is determined by switch case key (doc prop)
   // use bracket notation to dynamically update cache
 
-  const { initialValues, setEditSelected, id, className, doc, type, fields } = props;
+  const { initialValues, setEditSelected, className, doc, type } = props;
   const navigate = useNavigate();
   const jobPath = window.location.pathname.includes("/job");
+  // from 
+  const fields = form[doc]
 
   // server
   const [job, { error }] = useMutation(docMutation(doc, type), {
@@ -30,7 +30,6 @@ function JobForm(props) {
     },
   });
 
-  console.log(fields)
   // state | maps array object key w/ empty string value to define initial form state
   const initialState = Object.fromEntries(
     fields.map((field) => [field.name, ""])
@@ -69,10 +68,10 @@ function JobForm(props) {
     try {
       const mutation = {
         ...formState,
-        ...(id === "edit-job" ? { id: initialValues._id } : {}),
+        ...(type === "edit" ? { id: initialValues._id } : {}),
       };
       await job({ variables: mutation });
-      id === "add-job" ? navigate("/") : setEditSelected(false);
+      type === "add" ? navigate("/") : setEditSelected(false);
     } catch (err) {
       console.error(err);
     }
@@ -119,9 +118,9 @@ function JobForm(props) {
   };
 
   return (
-    <section className={`${className} form-section`} id={`${type}-${doc}`}>
-      <form className="job-form" id={id} onSubmit={handleFormSubmit}>
-        <h2>{format.title(format.id(id))}</h2>
+    <section className={`${className} form-section`} id={`${type}-${doc}-section`}>
+      <form className="job-form" id={`${type}-${doc}`} onSubmit={handleFormSubmit}>
+        <h2>{format.title(type)} {doc}</h2>
         {fields.map((field, i) => displayField(field, i))}
         <button className="wrapper" type="submit">
           submit

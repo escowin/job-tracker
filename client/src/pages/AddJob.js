@@ -8,7 +8,7 @@ function AddJob() {
     return <section>log in to view contents</section>;
   }
 
-  return <JobForm initialValues={{}} id={"add-job"} type={"page"} />;
+  return <JobForm initialValues={{}} doc={"job"} type={"add"} className={"page"}/>;
 }
 
 export default AddJob;
