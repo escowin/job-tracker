@@ -4,11 +4,9 @@ import { subDocMutation } from "../utils/helpers";
 import { form } from "../utils/helpers";
 
 // goal: component will handle all sub document add mutations.
-// todo: rename prop `resumeId` to `docId`.
-// - `resumeId`/`jobId` can be defined in form handler w/ `docId` value
-// - `docId` can be defined in graphql mutations to avoid above
+// todo: consolidate `resumeId` & `jobId` prop
 
-function ResumeItemForm({ subDoc, setAddItem, resumeId }) {
+function ItemForm({ subDoc, setAddItem, resumeId, jobId }) {
   // retrieves form fields dynamically based on the sub-document via bracket notation
   const formFields = form[subDoc]; // ie. form.links, form.education, etc
 
@@ -30,10 +28,15 @@ function ResumeItemForm({ subDoc, setAddItem, resumeId }) {
   // handles form submission
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    console.log(formState);
     try {
+      if (subDoc === "notes") {
+        await item({ variables: { jobId, ...formState } });
+      } else {
+        await item({ variables: { resumeId, ...formState } });
+        setAddItem(false);
+      }
       // sends data from client to server
-      await item({ variables: { resumeId, ...formState } });
-      setAddItem(false);
     } catch (err) {
       console.error(err);
     }
@@ -49,6 +52,7 @@ function ResumeItemForm({ subDoc, setAddItem, resumeId }) {
             name={field.name}
             rows={4}
             maxLength={field.max ? field.max : null}
+            onChange={handleChange}
           ></textarea>
         );
       default:
@@ -57,10 +61,10 @@ function ResumeItemForm({ subDoc, setAddItem, resumeId }) {
             type={field.type}
             name={field.name}
             id={field.name}
-            onChange={handleChange}
             minLength={field.min ? field.min : null}
             maxLength={field.max ? field.max : null}
             required={field.req ? field.req : null}
+            onChange={handleChange}
           />
         );
     }
@@ -83,4 +87,4 @@ function ResumeItemForm({ subDoc, setAddItem, resumeId }) {
   );
 }
 
-export default ResumeItemForm;
+export default ItemForm;

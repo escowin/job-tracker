@@ -81,7 +81,7 @@ export const form = {
     { name: "currentCompany", type: "text", ma: 50 },
   ],
   // sub documents
-  note: [
+  notes: [
     { name: "note", type: "textarea", max: 180 },
     { name: "interview", type: "checkbox" },
   ],
