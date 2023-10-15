@@ -43,7 +43,7 @@ function Resume({ resumeId }) {
               {key.charAt(0).toUpperCase() + key.slice(1)}
             </h3>
             {addItem === key && (
-              <ResumeItemForm fields={resume[key][0]} setAddItem={setAddItem} resumeId={_id}/>
+              <ResumeItemForm subDoc={key} setAddItem={setAddItem} resumeId={_id}/>
             )}
             {resume[key].map((item, i) => (
               <ResumeItem key={i} item={item} resumeId={_id} arr={key} />

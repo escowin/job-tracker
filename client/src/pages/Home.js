@@ -9,7 +9,7 @@ import JobLists from "../components/JobsList";
 import JobForm from "../components/JobForm";
 
 import "../assets/css/home.css";
-import { forms } from "../utils/helpers";
+import { form } from "../utils/helpers";
 
 function Home() {
   // user info is dependent in being logged in
@@ -59,7 +59,7 @@ function Home() {
       {loggedIn && user?.username ? (
         <>
           {minWidth && (
-            <JobForm initialValues={{}} id={"add-job"} className={"aside"} doc={"job"} type={"add"} fields={forms.job}/>
+            <JobForm initialValues={{}} id={"add-job"} className={"aside"} doc={"job"} type={"add"} fields={form.job}/>
           )}
           <UserStats user={{ username: user.username, stats: userStats }} />
           <JobLists jobs={jobs} />

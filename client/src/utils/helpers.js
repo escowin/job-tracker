@@ -48,15 +48,15 @@ export const updateCache = {
 };
 
 //  form fields match corresonding mutation schema
-export const forms = {
+export const form = {
   // documents
   login: [
     { name: "username", type: "text", min: 1, max: 25 },
     { name: "password", type: "password", min: 5, max: 25 },
   ],
   job: [
-    { name: "role", type: "text", max: 20, type: "input" },
-    { name: "company", type: "text", max: 50, type: "input" },
+    { name: "role", type: "text", max: 20 },
+    { name: "company", type: "text", max: 50 },
     {
       name: "status",
       type: "radio",
@@ -65,8 +65,8 @@ export const forms = {
     },
     {
       name: "source",
-      max: 10,
       type: "radio",
+      max: 10,
       radios: ["company", "job-board", "job-fair", "referral"],
     },
     { name: "applied", max: 10, type: "date" },
@@ -85,17 +85,17 @@ export const forms = {
     { name: "note", type: "textarea", max: 180 },
     { name: "interview", type: "checkbox" },
   ],
-  edu: [
+  education: [
     { name: "school", type: "text", max: 80, req: true },
     { name: "location", type: "text", max: 80 },
   ],
-  exp: [
+  experience: [
     { name: "role", type: "text", max: 80, req: true },
     { name: "company", type: "text", max: 80, req: true },
     { name: "location", type: "text", max: 80 },
     { name: "description", type: "textarea", max: 500 },
   ],
-  link: [
+  links: [
     { name: "link", type: "text", max: 50, req: true },
     { name: "url", type: "url", max: 2048, req: true },
   ],
@@ -128,18 +128,23 @@ export const docMutation = (doc, type) => {
   }
 };
 
-export const determineMutation = (doc, type) => {
+// temp solution: double cases. change or use helper to format `item._typename` string to cut down on redundancy
+export const subDocMutation = (doc, type) => {
   switch (doc) {
+    case "education":
     case "Education":
       return type === "add" ? RESUME_ITEMS.ADD_EDU : RESUME_ITEMS.DELETE_EDU;
+    case "experience":
     case "Experience":
       return type === "add" ? RESUME_ITEMS.ADD_EXP : RESUME_ITEMS.DELETE_EXP;
+    case "links":
     case "Link":
       return type === "add" ? RESUME_ITEMS.ADD_LINK : RESUME_ITEMS.DELETE_LINK;
+    case "notes":
     case "Note":
       return type === "add" ? JOB_ITEMS.ADD_NOTE : JOB_ITEMS.DELETE_NOTE;
     default:
-      return console.error("invalid mutation");
+      return console.error("invalid mutation: " + doc);
   }
 };
 

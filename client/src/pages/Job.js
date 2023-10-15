@@ -8,7 +8,7 @@ import JobOptions from "../components/JobOptions";
 import JobProfile from "../components/JobProfile";
 import JobForm from "../components/JobForm";
 import "../assets/css/job.css";
-import { forms } from "../utils/helpers";
+import { form } from "../utils/helpers";
 
 function Job() {
   // state variables
@@ -35,7 +35,7 @@ function Job() {
     <>
       <JobOptions jobId={job._id} setEditSelected={setEditSelected} />
         {editSelected 
-        ? <JobForm initialValues={job} setEditSelected={setEditSelected} id={"edit-job"} doc={"job"} type={"edit"} className={"section"} fields={forms.job}/> 
+        ? <JobForm initialValues={job} setEditSelected={setEditSelected} id={"edit-job"} doc={"job"} type={"edit"} className={"section"} fields={form.job}/> 
         : <JobProfile job={job} />}
       <JobNotes notes={job.notes} jobId={job._id} status={job.status} />
     </>
