@@ -2,9 +2,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
 import { JOB } from "../utils/mutations";
 import { QUERY_JOB, QUERY_ME } from "../utils/queries";
-import NoteForm from "./NoteForm";
+import ResumeItemForm from "./ItemForm";
 
 function JobOptions(props) {
+  // console.log(props)
   // props
   const { jobId, setEditSelected } = props
   // database variables
@@ -64,7 +65,8 @@ function JobOptions(props) {
           delete
         </button>
       </article>
-      <NoteForm jobId={jobId}/>
+      {/* <NoteForm jobId={jobId}/> */}
+      <ResumeItemForm subDoc={"notes"} setAddItem={null} jobId={jobId} />
     </section>
   );
 }

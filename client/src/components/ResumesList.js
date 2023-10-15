@@ -10,14 +10,12 @@ function ResumesList({ id, setSelectedResume, profile }) {
   const [deleteResume] = useMutation(RESUME.DELETE_RESUME, {
     update(cache, { data }) {
       const { me } = cache.readQuery({ query: QUERY_PROFILE });
-      console.log(me);
       const updatedResumes = me.resumes.filter(
         (resume) => resume._id !== deletedResumeid
       );
 
       cache.writeQuery({
         query: QUERY_PROFILE,
-        variables: { id: id },
         data: {
           me: {
             ...me,

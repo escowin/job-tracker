@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_RESUME } from "../utils/queries";
-import ResumeItemForm from "./ResumeItemForm";
+import ItemForm from "./ItemForm";
 import ResumeItem from "./ResumeItem";
 
 function Resume({ resumeId }) {
@@ -11,7 +11,6 @@ function Resume({ resumeId }) {
   // server data retrieved from graphql query
   const { loading, data } = useQuery(QUERY_RESUME, { variables: { id: _id } });
   const resume = data?.resume || {};
-  console.log(resume)
 
   // state variables
   const [addItem, setAddItem] = useState(null);
@@ -43,7 +42,7 @@ function Resume({ resumeId }) {
               {key.charAt(0).toUpperCase() + key.slice(1)}
             </h3>
             {addItem === key && (
-              <ResumeItemForm subDoc={key} setAddItem={setAddItem} resumeId={_id}/>
+              <ItemForm subDoc={key} setAddItem={setAddItem} resumeId={_id}/>
             )}
             {resume[key].map((item, i) => (
               <ResumeItem key={i} item={item} resumeId={_id} arr={key} />

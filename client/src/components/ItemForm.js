@@ -3,12 +3,8 @@ import { useMutation } from "@apollo/client";
 import { subDocMutation } from "../utils/helpers";
 import { form } from "../utils/helpers";
 
-// goal: component will handle all sub document add mutations.
-// todo: rename prop `resumeId` to `docId`.
-// - `resumeId`/`jobId` can be defined in form handler w/ `docId` value
-// - `docId` can be defined in graphql mutations to avoid above
-
-function ResumeItemForm({ subDoc, setAddItem, resumeId }) {
+// todo: consolidate `resumeId` & `jobId` prop
+function ItemForm({ subDoc, setAddItem, resumeId, jobId }) {
   // retrieves form fields dynamically based on the sub-document via bracket notation
   const formFields = form[subDoc]; // ie. form.links, form.education, etc
 
@@ -20,20 +16,26 @@ function ResumeItemForm({ subDoc, setAddItem, resumeId }) {
 
   // handles changes in input fields
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
+    const newValue = type === "checkbox" ? checked : value
     setFormState((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: newValue,
     }));
   };
 
   // handles form submission
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+    console.log(formState);
     try {
+      if (subDoc === "notes") {
+        await item({ variables: { jobId, ...formState } });
+      } else {
+        await item({ variables: { resumeId, ...formState } });
+        setAddItem(false);
+      }
       // sends data from client to server
-      await item({ variables: { resumeId, ...formState } });
-      setAddItem(false);
     } catch (err) {
       console.error(err);
     }
@@ -49,7 +51,17 @@ function ResumeItemForm({ subDoc, setAddItem, resumeId }) {
             name={field.name}
             rows={4}
             maxLength={field.max ? field.max : null}
+            onChange={handleChange}
           ></textarea>
+        );
+      case "checkbox":
+        return (
+          <input
+            type={field.type}
+            name={field.name}
+            id={field.name}
+            onChange={handleChange}
+          />
         );
       default:
         return (
@@ -57,10 +69,10 @@ function ResumeItemForm({ subDoc, setAddItem, resumeId }) {
             type={field.type}
             name={field.name}
             id={field.name}
-            onChange={handleChange}
             minLength={field.min ? field.min : null}
             maxLength={field.max ? field.max : null}
             required={field.req ? field.req : null}
+            onChange={handleChange}
           />
         );
     }
@@ -83,4 +95,4 @@ function ResumeItemForm({ subDoc, setAddItem, resumeId }) {
   );
 }
 
-export default ResumeItemForm;
+export default ItemForm;
