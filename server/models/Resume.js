@@ -1,18 +1,6 @@
 const { Schema, model, Types } = require("mongoose");
 const dateFormat = require("../utils/dateFormat");
 
-const LinkSchema = new Schema({
-  link: {
-    type: String,
-    required: true,
-    maxLength: 50,
-  },
-  url: {
-    type: String,
-    required: true,
-  },
-});
-
 const EducationSchema = new Schema({
   school: {
     type: String,
@@ -45,6 +33,20 @@ const ExperienceSchema = new Schema({
   description: {
     type: String,
     required: false,
+    maxLength: 500
+  },
+});
+
+const LinkSchema = new Schema({
+  link: {
+    type: String,
+    required: true,
+    maxLength: 50,
+  },
+  url: {
+    type: String,
+    required: true,
+    maxLength: 2048
   },
 });
 
@@ -61,14 +63,11 @@ const ResumeSchema = new Schema(
       trim: true,
       max: 25,
     },
-    //  tbd fields
-    //   coverLetter: {
-    //     type: String,
-    //     trim: true,
-    //   },
-    links: [LinkSchema],
     education: [EducationSchema],
-    experience: [ExperienceSchema]
+    experience: [ExperienceSchema],
+    links: [LinkSchema],
+    //  tbd fields
+    //   letters: [LetterSchema],
   },
   {
     toJSON: { getters: true },

@@ -1,13 +1,13 @@
 import React from "react";
 import { useMutation } from "@apollo/client";
-import { determineMutation } from "../utils/helpers";
+import { subDocMutation } from "../utils/helpers";
 import { QUERY_RESUME } from "../utils/queries";
 
 function ResumeItem({ item, resumeId, arr }) {
   let deletedItemId;
   const resumeItem = item.__typename.toLowerCase();
   const [deleteItem, { error }] = useMutation(
-    determineMutation(item.__typename, "delete"),
+    subDocMutation(item.__typename, "delete"),
     {
       update(cache, { data }) {
         const { resume } = cache.readQuery({

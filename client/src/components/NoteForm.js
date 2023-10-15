@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_NOTE } from "../utils/mutations";
+import { JOB_ITEMS } from "../utils/mutations";
 
-function NoteForm({ jobId }) {
+function NoteForm({ fields, jobId }) {
   const [note, setNote] = useState("");
   const [interview, setInterview] = useState(false);
 
-  const [addNote, { error }] = useMutation(ADD_NOTE);
+  const [addNote, { error }] = useMutation(JOB_ITEMS.ADD_NOTE);
 
   const handleChange = (e) => setNote(e.target.value);
   const handleChecked = (e) => {

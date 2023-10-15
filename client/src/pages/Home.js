@@ -2,18 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
-import { UPDATE_PENDING_JOBS } from "../utils/mutations";
+import { JOB } from "../utils/mutations";
 import Auth from "../utils/auth";
 import UserStats from "../components/UserStats";
 import JobLists from "../components/JobsList";
 import JobForm from "../components/JobForm";
 
 import "../assets/css/home.css";
+import { form } from "../utils/helpers";
 
 function Home() {
   // user info is dependent in being logged in
   const loggedIn = Auth.loggedIn();
-  const [updatePendingJobs, { error }] = useMutation(UPDATE_PENDING_JOBS);
+  const [updatePendingJobs, { error }] = useMutation(JOB.UPDATE_PENDING_JOBS);
   const { loading, data } = useQuery(QUERY_ME);
   const user = data?.me || [];
   const jobs = user?.jobs || [];
@@ -58,7 +59,7 @@ function Home() {
       {loggedIn && user?.username ? (
         <>
           {minWidth && (
-            <JobForm initialValues={{}} id={"add-job"} className={"aside"} doc={"job"} type={"add"} />
+            <JobForm initialValues={{}} id={"add-job"} className={"aside"} doc={"job"} type={"add"} fields={form.job}/>
           )}
           <UserStats user={{ username: user.username, stats: userStats }} />
           <JobLists jobs={jobs} />

@@ -9,6 +9,7 @@ import {
 } from "../utils/helpers";
 import "../assets/css/job-form.css";
 
+// to-do: document-related forms will rely on fields prop
 function JobForm(props) {
   // rule | graphql schemas are sources of truth
   // consolidate form field variable
@@ -16,27 +17,9 @@ function JobForm(props) {
   // graphql mutation is determined by switch case key (doc prop)
   // use bracket notation to dynamically update cache
 
-  const { initialValues, setEditSelected, id, className, doc, type } = props;
+  const { initialValues, setEditSelected, id, className, doc, type, fields } = props;
   const navigate = useNavigate();
   const jobPath = window.location.pathname.includes("/job");
-  // defines state & form properties
-  const fields = [
-    { name: "role", max: 20, type: "input" },
-    { name: "company", max: 50, type: "input" },
-    {
-      name: "status",
-      max: 15,
-      type: "radio",
-      radios: ["pending", "waitlisted", "interviewing", "rejected", "hired"],
-    },
-    {
-      name: "source",
-      max: 10,
-      type: "radio",
-      radios: ["company", "job-board", "job-fair", "referral"],
-    },
-    { name: "applied", max: 10, type: "date" },
-  ];
 
   // server
   const [job, { error }] = useMutation(docMutation(doc, type), {
@@ -47,6 +30,7 @@ function JobForm(props) {
     },
   });
 
+  console.log(fields)
   // state | maps array object key w/ empty string value to define initial form state
   const initialState = Object.fromEntries(
     fields.map((field) => [field.name, ""])
@@ -68,7 +52,7 @@ function JobForm(props) {
       setFormState((prevState) => ({
         ...prevState,
         status: "pending",
-        source: "job-board",
+        source: "company",
       }));
     }
   }, [initialValues]);

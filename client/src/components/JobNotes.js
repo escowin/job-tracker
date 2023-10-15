@@ -1,10 +1,10 @@
 import { useMutation } from "@apollo/client";
 import { QUERY_JOB, QUERY_ME } from "../utils/queries";
-import { DELETE_NOTE } from "../utils/mutations";
+import { JOB_ITEMS } from "../utils/mutations";
 
 function JobNotes({ notes, jobId, status }) {
   let deletedNoteId;
-  const [deleteNote, { error }] = useMutation(DELETE_NOTE, {
+  const [deleteNote, { error }] = useMutation(JOB_ITEMS.DELETE_NOTE, {
     update(cache, { data }) {
       const { job } = cache.readQuery({
         query: QUERY_JOB,

@@ -1,30 +1,37 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { determineMutation } from "../utils/helpers";
+import { subDocMutation } from "../utils/helpers";
+import { form } from "../utils/helpers";
 
-function ResumeItemForm({ fields, setAddItem, resumeId }) {
-  // defines array from `fields` prop, excluding keys that start with '_'
-  const formFields = Object.keys(fields).filter(
-    (field) => !field.startsWith("_")
-  );
-  // server graphql mutations variables
-  const [item, { error }] = useMutation(determineMutation(fields.__typename, "add"));
+// goal: component will handle all sub document add mutations.
+// todo: rename prop `resumeId` to `docId`.
+// - `resumeId`/`jobId` can be defined in form handler w/ `docId` value
+// - `docId` can be defined in graphql mutations to avoid above
 
-  // state variables
+function ResumeItemForm({ subDoc, setAddItem, resumeId }) {
+  // retrieves form fields dynamically based on the sub-document via bracket notation
+  const formFields = form[subDoc]; // ie. form.links, form.education, etc
+
+  // dynamically sets up server graphql mutation & error handling
+  const [item, { error }] = useMutation(subDocMutation(subDoc, "add"));
+
+  // sets up form state management
   const [formState, setFormState] = useState({});
 
+  // handles changes in input fields
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // updates form state with user input
     setFormState((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
 
+  // handles form submission
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
+      // sends data from client to server
       await item({ variables: { resumeId, ...formState } });
       setAddItem(false);
     } catch (err) {
@@ -32,18 +39,39 @@ function ResumeItemForm({ fields, setAddItem, resumeId }) {
     }
   };
 
-  // form elements dynamically scale based on the composition of `formFields` array. input `type` attribute conditionally set to provide client-side validation
+  // renders appropriate UI elements and attributes based on the formFields array
+  const displayInput = (field) => {
+    switch (field.type) {
+      case "textarea":
+        return (
+          <textarea
+            id={field.name}
+            name={field.name}
+            rows={4}
+            maxLength={field.max ? field.max : null}
+          ></textarea>
+        );
+      default:
+        return (
+          <input
+            type={field.type}
+            name={field.name}
+            id={field.name}
+            onChange={handleChange}
+            minLength={field.min ? field.min : null}
+            maxLength={field.max ? field.max : null}
+            required={field.req ? field.req : null}
+          />
+        );
+    }
+  };
+
   return (
     <form className="resume-form-item" onSubmit={handleFormSubmit}>
       {formFields.map((field, i) => (
-        <label key={i} htmlFor={field}>
-          {field}
-          <input
-            type={field === "url" ? "url" : "text"}
-            name={field}
-            id={field}
-            onChange={handleChange}
-          />
+        <label key={i} htmlFor={field.name}>
+          {field.name}
+          {displayInput(field)}
         </label>
       ))}
       <button type="submit">submit</button>
