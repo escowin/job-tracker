@@ -4,7 +4,6 @@ function ProfileDetails({ profile, details, setEditSelected }) {
   const copyDetail = async (data) => {
     try {
       let stat = data;
-      console.log(stat);
       await navigator.clipboard.writeText(stat);
     } catch (err) {
       console.error(err);

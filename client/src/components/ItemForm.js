@@ -3,9 +3,7 @@ import { useMutation } from "@apollo/client";
 import { subDocMutation } from "../utils/helpers";
 import { form } from "../utils/helpers";
 
-// goal: component will handle all sub document add mutations.
 // todo: consolidate `resumeId` & `jobId` prop
-
 function ItemForm({ subDoc, setAddItem, resumeId, jobId }) {
   // retrieves form fields dynamically based on the sub-document via bracket notation
   const formFields = form[subDoc]; // ie. form.links, form.education, etc
