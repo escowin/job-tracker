@@ -1,6 +1,6 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useMutation, useQuery } from "@apollo/client";
-import { DELETE_JOB } from "../utils/mutations";
+import { JOB } from "../utils/mutations";
 import { QUERY_JOB, QUERY_ME } from "../utils/queries";
 import NoteForm from "./NoteForm";
 
@@ -9,7 +9,7 @@ function JobOptions(props) {
   const { jobId, setEditSelected } = props
   // database variables
   const { id: _id } = useParams();
-  const [removeJob] = useMutation(DELETE_JOB, {
+  const [removeJob] = useMutation(JOB.DELETE_JOB, {
     update(cache, { data }) {
       // reads query_me data from cache
       const { me } = cache.readQuery({ query: QUERY_ME });

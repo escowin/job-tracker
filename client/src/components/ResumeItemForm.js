@@ -3,6 +3,7 @@ import { useMutation } from "@apollo/client";
 import { determineMutation } from "../utils/helpers";
 
 function ResumeItemForm({ fields, setAddItem, resumeId }) {
+  console.log(fields)
   // defines array from `fields` prop, excluding keys that start with '_'
   const formFields = Object.keys(fields).filter(
     (field) => !field.startsWith("_")

@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_RESUME, DELETE_RESUME } from "../utils/mutations";
+import { RESUME } from "../utils/mutations";
 import { QUERY_PROFILE } from "../utils/queries";
 
 function ResumesList({ id, setSelectedResume, profile }) {
   let deletedResumeid;
   // graphql schema used to send data to server database
-  const [resume, { error }] = useMutation(ADD_RESUME);
-  const [deleteResume] = useMutation(DELETE_RESUME, {
+  const [resume, { error }] = useMutation(RESUME.ADD_RESUME);
+  const [deleteResume] = useMutation(RESUME.DELETE_RESUME, {
     update(cache, { data }) {
       const { me } = cache.readQuery({ query: QUERY_PROFILE });
       console.log(me);

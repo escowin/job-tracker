@@ -11,6 +11,7 @@ function Resume({ resumeId }) {
   // server data retrieved from graphql query
   const { loading, data } = useQuery(QUERY_RESUME, { variables: { id: _id } });
   const resume = data?.resume || {};
+  console.log(resume)
 
   // state variables
   const [addItem, setAddItem] = useState(null);
