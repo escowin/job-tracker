@@ -40,6 +40,16 @@ const customMergeFunction = {
       },
     },
   },
+  User: {
+    fields: {
+      resumes: {
+        merge(existing = [], incoming) {
+          // Customize the merge logic here based on your requirements
+          return [...incoming];
+        },
+      },
+    },
+  },
 };
 
 // instantiated apollo client & creates api endpoint connections

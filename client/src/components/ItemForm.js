@@ -16,10 +16,11 @@ function ItemForm({ subDoc, setAddItem, resumeId, jobId }) {
 
   // handles changes in input fields
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
+    const newValue = type === "checkbox" ? checked : value
     setFormState((prevState) => ({
       ...prevState,
-      [name]: value,
+      [name]: newValue,
     }));
   };
 
@@ -52,6 +53,15 @@ function ItemForm({ subDoc, setAddItem, resumeId, jobId }) {
             maxLength={field.max ? field.max : null}
             onChange={handleChange}
           ></textarea>
+        );
+      case "checkbox":
+        return (
+          <input
+            type={field.type}
+            name={field.name}
+            id={field.name}
+            onChange={handleChange}
+          />
         );
       default:
         return (

@@ -193,6 +193,18 @@ const resolvers = {
       }
       return resume;
     },
+    deleteResume: async (parent, args, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("login required")
+      }
+      const resume = await Resume.findByIdAndDelete(args._id);
+      await User.findByIdAndUpdate(
+        { _id: context.user._id },
+        { $pull: { resumes: resume._id } },
+        { new: true }
+      )
+      return resume
+    },
     // resume subdocument mutations
     addLink: async (parent, { resumeId, link, url }, context) => {
       if (!context.user) {
