@@ -14,18 +14,16 @@ function DocForm(props) {
   const { initialValues, setEditSelected, doc, type, className } = props;
   // retrieves form fields dynamically based on the sub-document via bracket notation
   const fields = form[doc];
-  console.log(doc)
 
   // job-specific variables
   const navigate = useNavigate();
   const jobPath = window.location.pathname.includes("/job");
 
   // dynamically sets up server graphql mutation & error handling
-
   const [document, { error }] = useMutation(docMutation(doc, type),
     {
       update(cache, { data }) {
-        const mutationResult = determineMutationResult(type, data);
+        const mutationResult = determineMutationResult(doc, type, data);
         if (doc === "job") {
         const virtuals = fields.find((item) => item.name === "status").radios;
         return updateCache.me(cache, mutationResult, virtuals);        

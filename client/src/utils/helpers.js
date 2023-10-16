@@ -147,18 +147,9 @@ export const subDocMutation = (doc, type) => {
   }
 };
 
-// case by doc, set dynamic destructured object
+// computes & returns mutation result through dynamically set property name
 export const determineMutationResult = (doc, type, data) => {
-  switch (doc) {
-    case "job":
-      const { addJob } = data;
-      const { editJob } = data;
-
-      return addJob;
-    case "user":
-      const { editUser } = data;
-      return editUser;
-    default:
-      console.error("invalid type: " + type);
-  }
+  const dynamicKey = `${type}${format.title(doc)}`;
+  const { [dynamicKey]: result } = data;
+  return result;
 };
