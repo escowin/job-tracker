@@ -105,6 +105,7 @@ export const JOB = {
         status
         applied
         source
+        noteCount
       }
     }
   `,

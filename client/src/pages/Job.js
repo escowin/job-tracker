@@ -6,9 +6,8 @@ import Auth from "../utils/auth";
 import JobNotes from "../components/JobNotes";
 import JobOptions from "../components/JobOptions";
 import JobProfile from "../components/JobProfile";
-import JobForm from "../components/JobForm";
+import DocForm from "../components/DocForm";
 import "../assets/css/job.css";
-import { form } from "../utils/helpers";
 
 function Job() {
   // state variables
@@ -35,7 +34,7 @@ function Job() {
     <>
       <JobOptions jobId={job._id} setEditSelected={setEditSelected} />
         {editSelected 
-        ? <JobForm initialValues={job} setEditSelected={setEditSelected} id={"edit-job"} doc={"job"} type={"edit"} className={"section"} fields={form.job}/> 
+        ? <DocForm initialValues={job} setEditSelected={setEditSelected} doc={"job"} type={"edit"} className={"section"} /> 
         : <JobProfile job={job} />}
       <JobNotes notes={job.notes} jobId={job._id} status={job.status} />
     </>

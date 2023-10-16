@@ -5,7 +5,7 @@ import Auth from "../utils/auth";
 import Resume from "../components/Resume";
 import "../assets/css/profile.css";
 import ProfileDetails from "../components/ProfileDetails";
-import ProfileForm from "../components/ProfileForm";
+import DocForm from "../components/DocForm";
 import ResumesList from "../components/ResumesList";
 
 function Profile() {
@@ -36,11 +36,13 @@ function Profile() {
               setEditSelected={setEditSelected}
             />
           ) : (
-            <ProfileForm
+            <DocForm
               id={profile._id}
-              profile={profile}
+              initialValues={profile}
               details={details}
               setEditSelected={setEditSelected}
+              doc={"user"}
+              type={"edit"}
             />
           )}
           <ResumesList id={profile._id} profile={profile} setSelectedResume={setSelectedResume}/>

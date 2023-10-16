@@ -30,7 +30,6 @@ export const updateCache = {
               rate: me.hiredCount / (updatedJobs.length + 1),
               // iterates through virtuals array to update corresponding cache key-values
               ...virtuals.reduce((counts, virtual) => {
-                console.log(updatedJobs);
                 counts[`${virtual}Count`] = updatedJobs.filter(
                   (job) => job.status === virtual
                 ).length;
@@ -148,15 +147,9 @@ export const subDocMutation = (doc, type) => {
   }
 };
 
-export const determineMutationResult = (type, data) => {
-  switch (type) {
-    case "add":
-      const { addJob } = data;
-      return addJob;
-    case "edit":
-      const { editJob } = data;
-      return editJob;
-    default:
-      console.error("invalid type: " + type);
-  }
+// computes & returns mutation result through dynamically set property name
+export const determineMutationResult = (doc, type, data) => {
+  const dynamicKey = `${type}${format.title(doc)}`;
+  const { [dynamicKey]: result } = data;
+  return result;
 };
