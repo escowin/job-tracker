@@ -6,7 +6,8 @@ import { JOB } from "../utils/mutations";
 import Auth from "../utils/auth";
 import UserStats from "../components/UserStats";
 import JobLists from "../components/JobsList";
-import JobForm from "../components/JobForm";
+import DocForm from "../components/DocForm";
+// import ProfileForm from "../components/ProfileForm";
 import "../assets/css/home.css";
 
 function Home() {
@@ -57,7 +58,8 @@ function Home() {
       {loggedIn && user?.username ? (
         <>
           {minWidth && (
-            <JobForm initialValues={{}} className={"aside"} doc={"job"} type={"add"} />
+            // <JobForm initialValues={{}} className={"aside"} doc={"job"} type={"add"} />
+            <DocForm initialValues={{}} className={"aside"} doc={"job"} type={"add"} />
           )}
           <UserStats user={{ username: user.username, stats: userStats }} />
           <JobLists jobs={jobs} />

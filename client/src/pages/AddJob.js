@@ -1,6 +1,7 @@
-import JobForm from "../components/JobForm";
+// import JobForm from "../components/JobForm";
 import Auth from "../utils/auth";
 import "../assets/css/job-form.css";
+import DocForm from "../components/DocForm";
 
 function AddJob() {
   const loggedIn = Auth.loggedIn();
@@ -8,7 +9,7 @@ function AddJob() {
     return <section>log in to view contents</section>;
   }
 
-  return <JobForm initialValues={{}} doc={"job"} type={"add"} className={"page"}/>;
+  return <DocForm initialValues={{}} doc={"job"} type={"add"} className={"page"}/>;
 }
 
 export default AddJob;
