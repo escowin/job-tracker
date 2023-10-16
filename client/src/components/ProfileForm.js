@@ -1,34 +1,41 @@
 import { useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
-import { docMutation, format } from "../utils/helpers";
+import { docMutation, form, format } from "../utils/helpers";
 
 function ProfileForm(props) {
-  const { id, profile, details, setEditSelected } = props;
+  const { id, profile, setEditSelected, doc, type } = props;
+  // retrieves form fields dynamically based on the sub-document via bracket notation
+  const formFields = form[doc];
+
+  // dynamically sets up server graphql mutation & error handling
+  const [user, { error }] = useMutation(docMutation(doc, type));
+
+  // sets up form state management
   const [formState, setFormState] = useState({});
-  const [user, { error }] = useMutation(docMutation("user", "edit"));
 
   // populates form state with profile data when component mounts
   useEffect(() => {
     // filters 'profile' object based on the 'details' array
     const filteredProfile = {};
-    details.forEach((detail) => (filteredProfile[detail] = profile[detail]));
+    formFields.forEach((field) => (filteredProfile[field.name] = profile[field.name]));
     // sets the filtered 'profile' object as the initial 'formState'
     setFormState(filteredProfile);
-  }, [profile, details]);
+  }, [profile, formFields]);
 
+  // handles changes in input fields
   const handleChange = (e) => {
     const { name, value } = e.target;
-    // updates form state with user input
     setFormState((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
 
+  // handles form submission
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      // updates server-side user data through graphql mutation before exiting form component
+      // sends data from client to server
       await user({ variables: { id, ...formState } });
       setEditSelected(false);
     } catch (err) {
@@ -36,30 +43,21 @@ function ProfileForm(props) {
     }
   };
 
-  // UI elements & attributes
-  const determineType = (detail) => {
-    switch (detail) {
-      case "phone":
-        return "tel";
-      case "email":
-        return "email";
-      default:
-        return "text";
-    }
-  };
-
+  // renders appropriate UI elements and attributes based on the formFields array
   return (
     <section id="profile-section">
       <form onSubmit={handleFormSubmit}>
         <h2>form</h2>
-        {details.map((detail, i) => (
-          <label key={i} className="wrapper" htmlFor={detail}>
-            {format.unCamel(detail)}
+        {formFields.map((field, i) => (
+          <label key={i} htmlFor={field.name}>
+            {format.unCamel(field.name)}
             <input
-              type={determineType(detail)}
-              name={detail}
-              id={detail}
-              value={formState[detail] || ""}
+              type={field.type}
+              name={field.name}
+              id={field.name}
+              value={formState[field.name] || ""}
+              minLength={field.min ? field.min : null}
+              maxLength={field.max ? field.max : null}
               onChange={handleChange}
             />
           </label>

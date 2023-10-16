@@ -41,6 +41,8 @@ function Profile() {
               profile={profile}
               details={details}
               setEditSelected={setEditSelected}
+              doc={"user"}
+              type={"edit"}
             />
           )}
           <ResumesList id={profile._id} profile={profile} setSelectedResume={setSelectedResume}/>

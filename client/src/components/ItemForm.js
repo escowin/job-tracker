@@ -17,7 +17,7 @@ function ItemForm({ subDoc, setAddItem, resumeId, jobId }) {
   // handles changes in input fields
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    const newValue = type === "checkbox" ? checked : value
+    const newValue = type === "checkbox" ? checked : value;
     setFormState((prevState) => ({
       ...prevState,
       [name]: newValue,
@@ -27,15 +27,15 @@ function ItemForm({ subDoc, setAddItem, resumeId, jobId }) {
   // handles form submission
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(formState);
+
     try {
+      // sends data from client to server
       if (subDoc === "notes") {
         await item({ variables: { jobId, ...formState } });
       } else {
         await item({ variables: { resumeId, ...formState } });
         setAddItem(false);
       }
-      // sends data from client to server
     } catch (err) {
       console.error(err);
     }
