@@ -35,7 +35,7 @@ function Job() {
       <JobOptions jobId={job._id} setEditSelected={setEditSelected} />
         {editSelected 
         ? <DocForm initialValues={job} setEditSelected={setEditSelected} doc={"job"} type={"edit"} className={"section"} /> 
-        : <JobProfile job={job} />}
+        : <JobProfile doc={job} title={job.role} className={job.status}/>}
       <JobNotes notes={job.notes} jobId={job._id} status={job.status} />
     </>
   );
