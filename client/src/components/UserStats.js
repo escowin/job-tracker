@@ -1,6 +1,7 @@
 import { format } from "../utils/helpers";
 
 function UserStats({ user }) {
+  // console.log(user)
   const stats = user.stats;
 
   return (

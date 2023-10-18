@@ -76,13 +76,13 @@ export const QUERY_JOB = gql`
   query Job($id: ID!) {
     job(_id: $id) {
       _id
-      company
       role
+      company
       status
       source
+      interviewCount
       applied
       noteCount
-      interviewCount
       notes {
         _id
         note

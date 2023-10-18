@@ -9,6 +9,7 @@ import JobLists from "../components/JobsList";
 import DocForm from "../components/DocForm";
 // import ProfileForm from "../components/ProfileForm";
 import "../assets/css/home.css";
+import JobProfile from "../components/JobProfile";
 
 function Home() {
   // user info is dependent in being logged in
@@ -58,10 +59,10 @@ function Home() {
       {loggedIn && user?.username ? (
         <>
           {minWidth && (
-            // <JobForm initialValues={{}} className={"aside"} doc={"job"} type={"add"} />
             <DocForm initialValues={{}} className={"aside"} doc={"job"} type={"add"} />
           )}
-          <UserStats user={{ username: user.username, stats: userStats }} />
+          {/* <UserStats user={{ username: user.username, stats: userStats }} /> */}
+          <JobProfile doc={user} className={""} title={`${user.username} overview`}/>
           <JobLists jobs={jobs} />
         </>
       ) : (
