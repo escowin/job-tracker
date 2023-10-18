@@ -14,14 +14,14 @@ export const QUERY_ME = gql`
         applied
         noteCount
       }
-      hiredCount
-      rejectedCount
-      pendingCount
-      waitlistedCount
       noResponseCount
+      rejectedCount
+      waitlistedCount
+      pendingCount
       interviewingCount
-      totalSubmitted
+      hiredCount
       rate
+      totalCount
     }
   }
 `;

@@ -5,7 +5,7 @@ import { QUERY_JOB } from "../utils/queries";
 import Auth from "../utils/auth";
 import JobNotes from "../components/JobNotes";
 import JobOptions from "../components/JobOptions";
-import JobProfile from "../components/JobProfile";
+import DocProfile from "../components/DocProfile";
 import DocForm from "../components/DocForm";
 import "../assets/css/job.css";
 
@@ -29,13 +29,13 @@ function Job() {
   }
 
   // Job.js purpose:
-  // - edit button clicked in JobOptions determines whether JobForm or JobProfile renders
+  // - edit button clicked in JobOptions determines whether DocForm or DocProfile renders
   return (
     <>
       <JobOptions jobId={job._id} setEditSelected={setEditSelected} />
         {editSelected 
         ? <DocForm initialValues={job} setEditSelected={setEditSelected} doc={"job"} type={"edit"} className={"section"} /> 
-        : <JobProfile doc={job} title={job.role} className={job.status}/>}
+        : <DocProfile doc={job} title={job.role} className={job.status}/>}
       <JobNotes notes={job.notes} jobId={job._id} status={job.status} />
     </>
   );

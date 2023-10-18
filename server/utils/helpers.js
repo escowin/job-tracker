@@ -9,17 +9,4 @@ module.exports = {
     // returns boolean value
     return elapsedDays >= days;
   },
-  format: {
-    // converts kebab case to camel case
-    camel: (string) => {
-      if (!string) {
-        return "";
-      }
-      // uses regex to capitalize letters preceded by hyphens, then removes the hyphen
-      const formattedString = string
-        .replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
-        .replace(/-/g, "");
-      return formattedString;
-    },
-  },
 };

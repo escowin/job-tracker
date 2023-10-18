@@ -9,6 +9,26 @@ export const format = {
     string ? string.charAt(0).toUpperCase() + string.slice(1) : string,
   unCamel: (string) =>
     string ? string.replace(/([A-Z])/g, " $1").toLowerCase() : string,
+  kebabToCamel: (string) => {
+    if (!string) {
+      return "";
+    }
+    // uses regex to capitalize letters preceded by hyphens, then removes the hyphen
+    const formattedString = string
+      .replace(/-([a-z])/g, (_, letter) => letter.toUpperCase())
+      .replace(/-/g, "");
+    return formattedString;
+  },
+  camelToKebab: (string) => {
+    if (!string) {
+      return ""
+    }
+    // swaps spaces for hyphens before caps, then converts entire string to lowercase
+    const formattedString = string
+    .replace(/([a-z])([A-Z])/g, '$1-$2')
+    .toLowerCase();
+    return formattedString
+  }
 };
 
 export const updateCache = {
