@@ -11,13 +11,13 @@ const typeDefs = gql`
     phone: String
     location: String
     currentCompany: String
-    totalSubmitted: Int
     rejectedCount: Int
-    hiredCount: Int
-    pendingCount: Int
-    waitlistedCount: Int
     noResponseCount: Int
+    waitlistedCount: Int
+    pendingCount: Int
+    hiredCount: Int
     interviewingCount: Int
+    totalCount: Int
     rate: String
     jobs: [Job]
     resumes: [Resume]

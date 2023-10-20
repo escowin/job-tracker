@@ -4,10 +4,9 @@ import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
 import { JOB } from "../utils/mutations";
 import Auth from "../utils/auth";
-import UserStats from "../components/UserStats";
 import JobLists from "../components/JobsList";
+import DocProfile from "../components/DocProfile";
 import DocForm from "../components/DocForm";
-// import ProfileForm from "../components/ProfileForm";
 import "../assets/css/home.css";
 
 function Home() {
@@ -17,17 +16,6 @@ function Home() {
   const { loading, data } = useQuery(QUERY_ME);
   const user = data?.me || [];
   const jobs = user?.jobs || [];
-
-  const userStats = [
-    { value: user?.pendingCount, label: "pending" },
-    { value: user?.waitlistedCount, label: "waitlisted" },
-    { value: user?.rejectedCount, label: "rejected" },
-    { value: user?.interviewingCount, label: "interviewing" },
-    { value: user?.hiredCount, label: "hired" },
-    { value: user?.noResponseCount, label: "no-response" },
-    { value: user?.totalSubmitted, label: "total" },
-    { value: user?.rate, label: "rate" },
-  ];
 
   // form component renders by tracking the state of the display width
   const [minWidth, setMinWidth] = useState(window.innerWidth >= 750);
@@ -58,10 +46,18 @@ function Home() {
       {loggedIn && user?.username ? (
         <>
           {minWidth && (
-            // <JobForm initialValues={{}} className={"aside"} doc={"job"} type={"add"} />
-            <DocForm initialValues={{}} className={"aside"} doc={"job"} type={"add"} />
+            <DocForm
+              initialValues={{}}
+              className={"aside"}
+              doc={"job"}
+              type={"add"}
+            />
           )}
-          <UserStats user={{ username: user.username, stats: userStats }} />
+          <DocProfile
+            doc={user}
+            className={""}
+            title={`${user.username} overview`}
+          />
           <JobLists jobs={jobs} />
         </>
       ) : (

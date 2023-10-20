@@ -1,6 +1,5 @@
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");
-const { format } = require("../utils/helpers");
 
 const UserSchema = new Schema(
   {
@@ -81,24 +80,24 @@ const virtuals = [
   "rejected",
   "hired",
   "waitlisted",
-  "no-response",
+  "noResponse",
   "interviewing",
 ];
 virtuals.forEach((virtual) => {
-  UserSchema.virtual(`${format.camel(virtual)}Count`).get(function () {
+  UserSchema.virtual(`${virtual}Count`).get(function () {
     const result = this.jobs.filter((job) => job.status === virtual);
     return result.length;
   });
 });
 
 // gets the total numer of job submissions
-UserSchema.virtual("totalSubmitted").get(function () {
+UserSchema.virtual("totalCount").get(function () {
   return this.jobs.length;
 });
 
 UserSchema.virtual("rate").get(function () {
   const hiredCount = this.hiredCount;
-  const totalCount = this.totalSubmitted;
+  const totalCount = this.totalCount;
   const result = (hiredCount / totalCount) * 100;
   const rounded = Math.round(result * 100) / 100;
   return `${rounded}%`;
