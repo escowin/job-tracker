@@ -1,5 +1,6 @@
 import { QUERY_ME } from "./queries";
 import { USER, JOB, RESUME, JOB_ITEMS, RESUME_ITEMS } from "./mutations";
+import Auth from "./auth";
 
 export const format = {
   today: () => new Date().toISOString().split("T")[0],
@@ -21,14 +22,14 @@ export const format = {
   },
   camelToKebab: (string) => {
     if (!string) {
-      return ""
+      return "";
     }
     // swaps spaces for hyphens before caps, then converts entire string to lowercase
     const formattedString = string
-    .replace(/([a-z])([A-Z])/g, '$1-$2')
-    .toLowerCase();
-    return formattedString
-  }
+      .replace(/([a-z])([A-Z])/g, "$1-$2")
+      .toLowerCase();
+    return formattedString;
+  },
 };
 
 export const updateCache = {
@@ -172,4 +173,14 @@ export const determineMutationResult = (doc, type, data) => {
   const dynamicKey = `${type}${format.title(doc)}`;
   const { [dynamicKey]: result } = data;
   return result;
+};
+
+export const postMutation = (type, navigate, setEditSelected, data) => {
+  if (type === "login" || type === "sign-up") {
+    type === "login"
+      ? Auth.login(data.login.token)
+      : Auth.login(data.addUser.token);
+  } else {
+    type === "add" ? navigate("/") : setEditSelected(false);
+  }
 };

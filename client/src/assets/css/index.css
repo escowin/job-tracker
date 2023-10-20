@@ -4,12 +4,13 @@
   --primary: rgb(33, 42, 60);
   --text: rgb(182, 199, 215);
   --light-red: hsl(0, 40%, 67%);
+  --grey: rgb(101, 97, 101);
   --red: hsl(0, 50%, 55%);
   --yellow: rgb(231, 189, 64);
   --green: rgb(116, 220, 167);
   --blue-green: rgb(58, 189, 176);
   --blue: rgb(116, 174, 220);
-  --grey: rgb(97, 106, 121);
+  --violet: rgb(186, 200, 249);
 }
 
 * {
@@ -23,9 +24,24 @@
   text-decoration: none;
   color: inherit;
   transition: 1s;
+
+  & :hover {
+    color: var(--light-red);
+  }
 }
 
-.link:hover,
+.hired {
+  color: var(--blue);
+}
+
+.interviewing {
+  color: var(--blue-green)
+}
+
+.no-response {
+  color: var(--grey);
+}
+
 .rejected {
   color: var(--red);
 }
@@ -34,20 +50,12 @@
   color: var(--green);
 }
 
+.rate {
+  color: var(--violet);
+}
+
 .waitlisted {
   color: var(--yellow);
-}
-
-.interviewing {
- color: var(--blue-green)
-}
-
-.hired {
-  color: var(--blue);
-}
-
-.no-response {
-  color: var(--grey);
 }
 
 .message {
@@ -262,7 +270,7 @@ button:hover {
   .list-section {
     height: 100%;
   }
-  
+
   nav {
     flex-grow: 0;
     gap: 1rem;

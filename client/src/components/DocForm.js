@@ -7,33 +7,32 @@ import {
   form,
   format,
   updateCache,
+  postMutation,
 } from "../utils/helpers";
 import "../assets/css/job-form.css";
 
 function DocForm(props) {
   const { initialValues, setEditSelected, doc, type, className } = props;
   // retrieves form fields dynamically based on the sub-document via bracket notation
-  const fields = form[doc];
+  const fields =
+    type === "login" || type === "sign-up" ? form.login : form[doc];
 
   // job-specific variables
   const navigate = useNavigate();
   const jobPath = window.location.pathname.includes("/job");
 
   // dynamically sets up server graphql mutation & error handling
-  const [document, { error }] = useMutation(docMutation(doc, type),
-    {
-      update(cache, { data }) {
-        const mutationResult = determineMutationResult(doc, type, data);
-        if (doc === "job") {
+  const [document, { error }] = useMutation(docMutation(doc, type), {
+    update(cache, { data }) {
+      const mutationResult = determineMutationResult(doc, type, data);
+      if (doc === "job") {
         const virtuals = fields.find((item) => item.name === "status").radios;
-        return updateCache.me(cache, mutationResult, virtuals);        
-        } else {
-          return updateCache.me(cache, mutationResult)
-        }
-
-      },
-    }
-  );
+        return updateCache.me(cache, mutationResult, virtuals);
+      } else {
+        return updateCache.me(cache, mutationResult);
+      }
+    },
+  });
 
   // sets up form state management
   const [formState, setFormState] = useState({});
@@ -43,11 +42,14 @@ function DocForm(props) {
     // filters 'profile' object based on the 'details' array
     const docFields = {};
     fields.forEach((field) => {
+      console.log(field);
       if (field.type === "date") {
         const today = new Date().toISOString().split("T")[0];
         docFields[field.name] = initialValues[field.name] || today;
       } else if (field.name === "source") {
         docFields[field.name] = initialValues[field.name] || "company";
+      } else if (field.name === "username" || field.name === "password") {
+        docFields[field.name] = "";
       } else {
         docFields[field.name] = initialValues[field.name] || "";
       }
@@ -72,8 +74,13 @@ function DocForm(props) {
       };
 
       // sends data from client to server
-      await document({ variables: mutation });
-      `${type}-${doc}` === "add-job" ? navigate("/") : setEditSelected(false);
+      if (type === "login" || type === "sign-up") {
+        const { data } = await document({ variables: mutation });
+        postMutation(type, navigate, setEditSelected, data);
+      } else {
+        await document({ variables: mutation });
+        postMutation(type, navigate, setEditSelected);
+      }
     } catch (err) {
       console.error(err);
     }
@@ -126,7 +133,10 @@ function DocForm(props) {
 
   // renders appropriate UI elements and attributes based on the formFields array
   return (
-    <section className={`${className} form-section`} id={`${type}-${doc}-section`}>
+    <section
+      className={`${className} form-section`}
+      id={`${type}-${doc}-section`}
+    >
       <form
         className={`${doc}-form`}
         id={`${type}-${doc}`}
@@ -135,9 +145,9 @@ function DocForm(props) {
         <h2>form</h2>
         {fields.map((field, i) => displayField(field, i))}
         <button className="wrapper" type="submit">
-          save
+          {type !== "login" || type !== "sign-up" ? "save" : "submit"}
         </button>
-        {error && <span>error</span>}
+        {error && <span>{format.title(type)} failed</span>}
       </form>
     </section>
   );
