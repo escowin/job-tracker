@@ -42,7 +42,6 @@ function DocForm(props) {
     // filters 'profile' object based on the 'details' array
     const docFields = {};
     fields.forEach((field) => {
-      console.log(field);
       if (field.type === "date") {
         const today = new Date().toISOString().split("T")[0];
         docFields[field.name] = initialValues[field.name] || today;
@@ -145,7 +144,7 @@ function DocForm(props) {
         <h2>form</h2>
         {fields.map((field, i) => displayField(field, i))}
         <button className="wrapper" type="submit">
-          {type !== "login" || type !== "sign-up" ? "save" : "submit"}
+          {type !== "login" && type !== "sign-up" ? "save" : "submit"}
         </button>
         {error && <span>{format.title(type)} failed</span>}
       </form>
