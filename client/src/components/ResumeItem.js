@@ -6,8 +6,9 @@ import { QUERY_RESUME } from "../utils/queries";
 function ResumeItem({ item, resumeId, arr }) {
   let deletedItemId;
   const resumeItem = item.__typename.toLowerCase();
+  // console.log(resumeItem)
   const [deleteItem, { error }] = useMutation(
-    subDocMutation(item.__typename, "delete"),
+    subDocMutation(resumeItem, "delete"),
     {
       update(cache, { data }) {
         const { resume } = cache.readQuery({

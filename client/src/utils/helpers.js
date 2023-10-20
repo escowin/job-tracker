@@ -2,6 +2,7 @@ import { QUERY_ME } from "./queries";
 import { USER, JOB, RESUME, JOB_ITEMS, RESUME_ITEMS } from "./mutations";
 import Auth from "./auth";
 
+// Formats client side strings
 export const format = {
   today: () => new Date().toISOString().split("T")[0],
   id: (string) => (string ? string.replace(/-/g, " ") : string),
@@ -32,6 +33,7 @@ export const format = {
   },
 };
 
+// Updates client side cache object to mirror updates in server side database
 export const updateCache = {
   me: (cache, mutationData, virtuals) => {
     try {
@@ -67,9 +69,9 @@ export const updateCache = {
   },
 };
 
-//  form fields match corresonding mutation schema
+//  Client side form objects mirror server side model schema settings
 export const form = {
-  // documents
+  // Document mutation forms
   login: [
     { name: "username", type: "text", min: 1, max: 25 },
     { name: "password", type: "password", min: 5, max: 25 },
@@ -100,7 +102,7 @@ export const form = {
     { name: "location", type: "text", ma: 50 },
     { name: "currentCompany", type: "text", ma: 50 },
   ],
-  // sub documents
+  // Sub-document mutation forms
   notes: [
     { name: "note", type: "textarea", max: 180 },
     { name: "interview", type: "checkbox" },
@@ -122,7 +124,7 @@ export const form = {
   // letters: [{}],
 };
 
-// returns graphql schemas for useMutation hook on document-level forms
+// Algorithmically returns GraphQL document schema object
 export const docMutation = (doc, type) => {
   switch (doc) {
     case "job":
@@ -148,33 +150,31 @@ export const docMutation = (doc, type) => {
   }
 };
 
-// temp solution: double cases. change or use helper to format `item._typename` string to cut down on redundancy
+// Algorithmically returns GraphQL subdocument schema object
 export const subDocMutation = (doc, type) => {
   switch (doc) {
     case "education":
-    case "Education":
       return type === "add" ? RESUME_ITEMS.ADD_EDU : RESUME_ITEMS.DELETE_EDU;
     case "experience":
-    case "Experience":
       return type === "add" ? RESUME_ITEMS.ADD_EXP : RESUME_ITEMS.DELETE_EXP;
+    case "link":
     case "links":
-    case "Link":
       return type === "add" ? RESUME_ITEMS.ADD_LINK : RESUME_ITEMS.DELETE_LINK;
     case "notes":
-    case "Note":
       return type === "add" ? JOB_ITEMS.ADD_NOTE : JOB_ITEMS.DELETE_NOTE;
     default:
       return console.error("invalid mutation: " + doc);
   }
 };
 
-// computes & returns mutation result through dynamically set property name
+// Algorithmically computes & returns GraphQL mutation response
 export const determineMutationResult = (doc, type, data) => {
   const dynamicKey = `${type}${format.title(doc)}`;
   const { [dynamicKey]: result } = data;
   return result;
 };
 
+// Carries out conditional action following a succesful mutation from the client side
 export const postMutation = (type, navigate, setEditSelected, data) => {
   if (type === "login" || type === "sign-up") {
     type === "login"
