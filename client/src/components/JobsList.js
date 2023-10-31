@@ -16,7 +16,7 @@ function JobLists({ jobs }) {
         ))}
       </article>
       {jobs.map((job, i) => (
-        <article key={i} className={`${job.status} job`}>
+        <article key={i} className={`${format.camelToKebab(job.status)} job`}>
           <p className="display-md">{format.id(job.source)}</p>
           <Link to={`/job/${job._id}`} className="link">{job.company}</Link>
           <Link to={`/job/${job._id}`} className="link">{job.role}</Link>

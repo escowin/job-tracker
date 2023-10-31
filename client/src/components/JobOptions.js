@@ -30,7 +30,7 @@ function JobOptions(props) {
             ).length,
             hiredCount: updatedJobs.filter((job) => job.status === "hired")
               .length,
-            totalSubmitted: updatedJobs.length,
+            totalCount: updatedJobs.length,
             rate: me.hiredCount / (updatedJobs.length + 1),
           },
         },

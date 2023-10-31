@@ -37,7 +37,6 @@ export const format = {
 export const updateCache = {
   me: (cache, mutationData, virtuals) => {
     try {
-      console.log(mutationData);
       const queryData = cache.readQuery({ query: QUERY_ME });
       const me = queryData?.me;
 
@@ -49,7 +48,7 @@ export const updateCache = {
             me: {
               ...me,
               jobs: updatedJobs,
-              totalSubmitted: updatedJobs.length,
+              totalCount: updatedJobs.length,
               rate: me.hiredCount / (updatedJobs.length + 1),
               // iterates through virtuals array to update corresponding cache key-values
               ...virtuals.reduce((counts, virtual) => {
@@ -77,7 +76,7 @@ export const form = {
     { name: "password", type: "password", min: 5, max: 25 },
   ],
   job: [
-    { name: "role", type: "text", max: 20 },
+    { name: "role", type: "text", max: 50 },
     { name: "company", type: "text", max: 50 },
     {
       name: "status",
@@ -128,7 +127,17 @@ export const form = {
 export const docMutation = (doc, type) => {
   switch (doc) {
     case "job":
-      return type === "add" ? JOB.ADD_JOB : JOB.EDIT_JOB;
+      switch (type) {
+        case "add":
+          return JOB.ADD_JOB;
+        case "edit":
+          return JOB.EDIT_JOB;
+        case "delete":
+          return JOB.DELETE_JOB;
+        default:
+          console.error(`invalid mutation: ${doc}-${type}` )
+      }
+      break;
     case "resume":
       return type === "add"
         ? RESUME.ADD_RESUME
