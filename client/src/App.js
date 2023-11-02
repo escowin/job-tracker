@@ -16,10 +16,11 @@
 
 // Handling exceptions:
 // - Handle any possible exceptions during the process.
-
+import { useEffect, useState } from "react";
 import { ApolloProvider, ApolloClient, createHttpLink } from "@apollo/client";
 import { InMemoryCache } from "@apollo/client/cache";
 import { setContext } from "@apollo/client/link/context";
+import { useLocation } from "react-router-dom";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import Header from "./components/Header";
@@ -89,12 +90,36 @@ const routes = [
 
 // Objects of 'routes' array are mapped to maintain a concise JSX return
 function App() {
+  // to-do: automate this pattern further
+  const location = useLocation;
+  const [main, setMain] = useState("");
+  useEffect(() => {
+    switch (location.pathname) {
+      case "/job/:id":
+        setMain("job");
+        break;
+      case "/add-job":
+        setMain("add-job");
+        break;
+      case "/profile":
+        setMain("profile");
+        break;
+      case "/login":
+      case "/signup":
+        setMain("login");
+        break;
+      default:
+        setMain("home");
+        break;
+    }
+  }, [location]);
+
   return (
     <ApolloProvider client={client}>
       <Router>
         <div className="App">
           <Header />
-          <main>
+          <main className={main}>
             <Routes>
               {routes.map((route, i) => (
                 <Route key={i} path={route.path} element={route.element} />
