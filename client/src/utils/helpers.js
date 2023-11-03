@@ -103,8 +103,8 @@ export const form = {
   ],
   // Sub-document mutation forms
   notes: [
-    { name: "note", type: "textarea", max: 180 },
     { name: "interview", type: "checkbox" },
+    { name: "note", type: "textarea", max: 180 },
   ],
   education: [
     { name: "school", type: "text", max: 80, req: true },

@@ -1,10 +1,12 @@
+/* section | profile */
 #profile-section {
-    grid-row: 1 / -1;
+    /* grid-row: 1 / -1; */
     height: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(5, min-content);
     align-items: flex-start;
+    gap: .5rem 1rem;
 
     & h2,
     button {
@@ -16,8 +18,19 @@
         flex-direction: column;
         gap: .25rem;
     }
+
+    & button {
+        padding: .25rem;
+    }
 }
 
+/* section | resume list */
+#resumes-list li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+}
+/* section | resume */
 #resume-section {
     height: 100%;
     overflow-y: scroll;

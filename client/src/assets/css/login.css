@@ -1,12 +1,16 @@
 .user-form {
     display: flex;
     flex-direction: column;
-    gap: .5rem;
-}
+    gap: 1rem;
 
-.user-form .wrapper {
-    display: inherit;
-    flex-direction: inherit;
+    & .wrapper {
+        display: inherit;
+        flex-direction: inherit;
+    }
+
+    & button {
+        align-items: center;
+    }
 }
 
 @media screen and (min-width: 768px) {
@@ -25,7 +29,7 @@
         justify-self: center;
         grid-column: span 2;
     }
-    
+
     .user-form .wrapper {
         gap: .5rem;
     }
