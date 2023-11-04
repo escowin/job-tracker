@@ -61,7 +61,7 @@ function JobOptions(props) {
       <article className="job-buttons">
         <button onClick={handleGoBack}>back</button>
         <button onClick={handleEdit}>edit</button>
-        <button onClick={() => handleDelete(job._id)} className="warning">
+        <button onClick={() => handleDelete(job._id)} className="delete">
           delete
         </button>
       </article>

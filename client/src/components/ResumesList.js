@@ -66,10 +66,8 @@ function ResumesList({ id, setSelectedResume, profile }) {
 
   return (
     <section id="resumes-section">
-      <h2>
-        <button onClick={handleAddItem}>+</button>
-        <span>Resumes</span>
-      </h2>
+      <h2>Resumes</h2>
+      <button onClick={handleAddItem}>+</button>
       {addResume && (
         <form onSubmit={handleFormSubmit}>
           <h3>Add resume</h3>
@@ -100,7 +98,7 @@ function ResumesList({ id, setSelectedResume, profile }) {
             <button onClick={() => setSelectedResume(resume._id)}>
               {resume.title}
             </button>
-            <button onClick={() => handleDelete(resume._id)}>delete</button>
+            <button className="delete" onClick={() => handleDelete(resume._id)}>delete</button>
           </li>
         ))}
       </ul>

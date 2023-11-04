@@ -59,7 +59,7 @@ function JobNotes({ notes, jobId, status }) {
 
   return (
     <section className="list-section" id="notes-section">
-      <h2>Notes</h2>
+      <h2 className="list-header">Notes</h2>
       {/* {job.noteCount > 0 && ( */}
       <ul id="notes">
         {notes.map((note, i) => (
@@ -70,7 +70,7 @@ function JobNotes({ notes, jobId, status }) {
             </h3>
             <p className={status}>{note.note}</p>
             <button
-              className="warning"
+              className="delete"
               onClick={() => handleDeleteNote(note._id)}
             >
               delete

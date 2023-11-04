@@ -53,29 +53,26 @@ function ResumeItem({ item, resumeId, arr }) {
   };
 
   return (
-    <div className={resumeItem}>
+    <div className={`item ${resumeItem}`}>
       {resumeItem === "link" ? (
-        <>
-          <button onClick={() => copyDetail(item.url)}>copy</button>
+        <div>
           <p>{item.link}</p>
-        </>
+          <button onClick={() => copyDetail(item.url)}>copy</button>
+        </div>
       ) : (
         <>
           {Object.entries(item)
             .filter(([key]) => !key.startsWith("_"))
             .map(([key, value], j) => (
-              <React.Fragment key={j}>
-                <button onClick={() => copyDetail(value)}>copy</button>
+              <div key={j}>
                 <p style={{ whiteSpace: "pre-line" }}>{value}</p>
-              </React.Fragment>
+                <button className="copy-btn" onClick={() => copyDetail(value)}>copy</button>{" "}
+              </div>
             ))}
         </>
       )}
 
-      <button
-        className="delete-btn warning"
-        onClick={() => handleDelete(item._id)}
-      >
+      <button className="delete" onClick={() => handleDelete(item._id)}>
         {error ? "error" : "delete"}
       </button>
     </div>

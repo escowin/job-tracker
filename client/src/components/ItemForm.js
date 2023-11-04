@@ -87,7 +87,7 @@ function ItemForm(props) {
 
   // Dynamically renders scalable UI form
   return (
-    <form className="resume-form-item" onSubmit={handleFormSubmit}>
+    <form className="item-form" onSubmit={handleFormSubmit}>
       {fields.map((field, i) => (
         <label key={i} htmlFor={field.name}>
           {field.name}
@@ -95,7 +95,7 @@ function ItemForm(props) {
         </label>
       ))}
       <button type="submit">submit</button>
-      <button type="button" onClick={() => setAddItem(null)}>
+      <button type="button" className="delete" onClick={() => setAddItem(null)}>
         cancel
       </button>
       {error && <span>error</span>}

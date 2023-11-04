@@ -1,6 +1,6 @@
 /* section | job options */
 #job-options {
-    & .resume-form-item {
+    & .item-form {
         display: grid;
         gap: 1rem;
         grid-template-columns: 1fr 1fr;
@@ -12,12 +12,20 @@
             grid-template-columns: 3rem 1fr;
             justify-items: flex-start;
         }
+
+        & .delete {
+            border: 1px solid var(--light-red);
+        }
     }
 
     & .job-buttons {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 1rem;
+
+        & .delete {
+            border: 1px solid var(--light-red);
+        }
     }
 }
 

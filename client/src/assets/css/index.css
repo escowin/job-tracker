@@ -17,6 +17,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  /* outline: 1px dotted white; */
 }
 
 /* typography */
@@ -81,7 +82,7 @@
   flex-direction: column;
   width: 100%;
   align-items: center;
-  background-color: var(--blue);
+  background-color: var(--primary);
   color: var(--text);
   font-variant: small-caps;
   flex-grow: 1;
@@ -96,7 +97,6 @@ main {
 }
 
 footer {
-  color: var(--primary);
   justify-content: center;
 }
 
@@ -120,7 +120,7 @@ main {
   height: 100%;
   gap: 1rem;
   align-items: center;
-  padding: 1rem .5rem 0 .5rem;
+  padding: 1rem .5rem .25rem .5rem;
   overflow-y: scroll;
 }
 
@@ -131,7 +131,7 @@ nav {
 }
 
 section {
-  background-color: var(--primary);
+  outline: 1px solid var(--blue);
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -144,23 +144,26 @@ ul {
   list-style: none;
 }
 
+
 .list-section {
   gap: .5rem;
   overflow-y: scroll;
+  border: 1px solid var(--primary);
 
-  & h2 {
+  & .list-header {
     position: sticky;
     top: 0;
     background-color: var(--primary);
-    box-shadow: 0 -.5rem 0 .5rem var(--primary);
+    box-shadow: 0 -.55rem 0 .5rem var(--primary);
+    border-radius: .5rem;
   }
 
   & article:nth-child(2) {
     font-size: 1rem;
     position: sticky;
-    top: 2rem;
+    top: 2.5rem;
     background-color: var(--primary);
-    box-shadow: 0 0 0 .25rem var(--primary);
+    box-shadow: 0 0 0 .65rem var(--primary);
   }
 }
 
@@ -225,14 +228,15 @@ button:hover {
   color: var(--green);
 }
 
-.warning {
-  border-color: var(--light-red);
+.delete {
   color: var(--light-red);
+  border: none;
+  transition: color 1s, text-shadow 1s;
 }
 
-.warning:hover {
-  border-color: var(--red);
+.delete:hover {
   color: var(--red);
+  text-shadow: 0 0 .125rem var(--red);
 }
 
 @media screen and (min-width: 768px) {

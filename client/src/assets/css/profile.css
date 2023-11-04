@@ -1,78 +1,171 @@
 /* section | profile */
 #profile-section {
     /* grid-row: 1 / -1; */
-    height: 100%;
+    /* height: 100%; */
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: repeat(5, min-content);
     align-items: flex-start;
-    gap: .5rem 1rem;
+    gap: .25rem;
 
-    & h2,
-    button {
-        grid-column: 1 / -1;
+    .edit-button {
+        border: none;
+        justify-self: flex-end;
     }
 
     & .profile-detail {
-        display: flex;
-        flex-direction: column;
-        gap: .25rem;
-    }
-
-    & button {
+        display: inherit;
+        grid-template-columns: auto 1fr;
+        align-items: baseline;
+        transition: color .5s;
         padding: .25rem;
+        gap: 0 1rem;
+
+        &:hover {
+            color: var(--green);
+        }
+
+        & button {
+            grid-area: 1 / -1;
+            padding: .15rem 0rem;
+            border: none;
+        }
+
+        & p {
+            grid-column: 1 / -1;
+        }
     }
 }
 
 /* section | resume list */
-#resumes-list li {
+#resumes-section {
     display: grid;
-    grid-template-columns: 1fr auto;
-    gap: 1rem;
+    grid-template-columns: max-content 1fr;
+
+    & h2 {
+        order: 2;
+    }
+
+    & button {
+        order: 1;
+        border: none;
+    }
+
+    & #resumes-list {
+        order: 3;
+        grid-column: 1 / -1;
+
+        & li {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+            outline: 1px solid var(--blue);
+            border-radius: 4rem;
+
+            & button {
+                border: none;
+            }
+        }
+    }
 }
+
 /* section | resume */
 #resume-section {
     height: 100%;
     overflow-y: scroll;
 
     & button {
-        padding: 0 .5rem;
         height: min-content;
-    }
-
-    & h3 {
-        width: 100%;
-        & button {
-            margin-right: .5rem;
-        }
+        border: none;
     }
 
     & article {
-        display: inherit;
-        flex-wrap: wrap;
-        gap: .5rem 2rem;
+        display: grid;
+        grid-template-columns: max-content 1fr;
+        gap: .75rem 1rem;
 
-        & div {
+        & .add-btn {
+            order: 1;
+        }
+
+        & h3 {
+            order: 2;
+        }
+
+        & .item {
+            order: 3;
+            grid-column: 1 / -1;
             display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: .5rem 1rem;
+            grid-template-columns: 1fr auto;
+            gap: .25rem;
             outline: 1px solid var(--blue);
             padding: .5rem;
-            width: 100%;
             border-radius: 1rem;
-        }
+            align-items: baseline;
 
-        & .education {
-            & .delete-btn {
-                /* row s, col s, row e, col e */
-                grid-area: 1 / 3 / -1 / -1;
+            & div {
+                display: inherit;
+                grid-template-columns: auto 1fr;
+                gap: inherit;
+                align-items: inherit;
+
+                & .copy-btn {
+                    order: 1;
+                    border: none;
+                }
+
+                & p {
+                    order: 2;
+                }
             }
         }
 
-        & .experience {
-            & .delete-btn {
-                grid-area: 1 / 3 / 4 / -1;
-            }
+        /* row s, col s, row e, col e */
+        & .education .delete {
+            grid-area: 1 / 2 / -1 / -1;
         }
+
+        & .experience .delete {
+            grid-area: 1 / 2 / 4 / -1;
+        }
+    }
+}
+
+/* FORMS */
+/* user details */
+#edit-user {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .5rem;
+
+    & h2,
+    button {
+        grid-column: 1 / -1;
+    }
+
+    & label {
+        font-weight: bolder;
+    }
+
+    & input {
+        width: 100%;
+    }
+}
+
+/* resume items */
+.item-form {
+    outline: 1px solid var(--blue);
+    border-radius: 1rem;
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    order: 3;
+    gap: .25rem;
+    padding: .5rem;
+
+    & label {
+        display: flex;
+        flex-direction: column;
+        grid-column: 1 / -1;
     }
 }

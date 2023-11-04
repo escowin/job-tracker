@@ -141,7 +141,7 @@ function DocForm(props) {
       default:
         return (
           <label key={i} className="wrapper" htmlFor={field.name}>
-            {format.title(field.name)}
+            {format.title(format.unCamel(field.name))}
             <input
               type={field.type}
               id={field.name}
