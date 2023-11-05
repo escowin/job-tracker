@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { QUERY_JOB } from "../utils/queries";
@@ -9,9 +9,10 @@ import DocProfile from "../components/DocProfile";
 import DocForm from "../components/DocForm";
 import "../assets/css/job.css";
 
-function Job() {
+function Job({ setMain }) {
   // state variables
   const [editSelected, setEditSelected] = useState(false);
+  useEffect(() => setMain("job"), [setMain]);
 
   const loggedIn = Auth.loggedIn();
   const { id: _id } = useParams();
@@ -33,9 +34,17 @@ function Job() {
   return (
     <>
       <JobOptions jobId={job._id} setEditSelected={setEditSelected} />
-        {editSelected 
-        ? <DocForm initialValues={job} setEditSelected={setEditSelected} doc={"job"} type={"edit"} className={"section"} /> 
-        : <DocProfile doc={job} title={job.role} className={job.status}/>}
+      {editSelected ? (
+        <DocForm
+          initialValues={job}
+          setEditSelected={setEditSelected}
+          doc={"job"}
+          type={"edit"}
+          className={"section"}
+        />
+      ) : (
+        <DocProfile doc={job} title={job.role} className={job.status} />
+      )}
       <JobNotes notes={job.notes} jobId={job._id} status={job.status} />
     </>
   );

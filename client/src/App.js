@@ -1,3 +1,22 @@
+// SEQUENCE:
+// 1. Import necessary libraries and components.
+// 2. Create Apollo client for API endpoint connections.
+// 3. Define custom merge functions for specific types.
+// 4. Define the main function App.
+// 5. Provides the necessary routing for different pages.
+
+// FOR:
+// - Loop over routes and define corresponding components.
+
+// IF-THEN-ELSE:
+// - Check for the presence of a token before setting the authorization header.
+
+// Invoking classes or calling functions:
+// - Call the ApolloProvider with the defined client.
+
+// Handling exceptions:
+// - Handle any possible exceptions during the process.
+import React, { useState } from "react";
 import { ApolloProvider, ApolloClient, createHttpLink } from "@apollo/client";
 import { InMemoryCache } from "@apollo/client/cache";
 import { setContext } from "@apollo/client/link/context";
@@ -10,15 +29,13 @@ import Login from "./pages/Login";
 import Job from "./pages/Job";
 import Page404 from "./pages/Page404";
 import Profile from "./pages/Profile";
-
-// mobile display
 import AddJob from "./pages/AddJob";
-
 import "./assets/css/index.css";
 
-// apollo server | graphql
+// Apollo client variables
 const httpLink = createHttpLink({ uri: "/graphql" });
 
+// JWT Authentication
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem("id_token");
   return {
@@ -29,7 +46,7 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
-// addressing warning: cache data may be lost when replacing the notes field of a Job object.
+// Client side cache handling
 const customMergeFunction = {
   Job: {
     fields: {
@@ -44,7 +61,6 @@ const customMergeFunction = {
     fields: {
       resumes: {
         merge(existing = [], incoming) {
-          // Customize the merge logic here based on your requirements
           return [...incoming];
         },
       },
@@ -52,7 +68,7 @@ const customMergeFunction = {
   },
 };
 
-// instantiated apollo client & creates api endpoint connections
+// Instantiates Apollo client & creates API endpoint connections
 const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache({
@@ -60,27 +76,36 @@ const client = new ApolloClient({
   }),
 });
 
+// Routing source of truth
+const routes = [
+  { path: "/", element: <Home /> },
+  { path: "/job/:id", element: <Job /> },
+  { path: "/add-job", element: <AddJob /> },
+  { path: "/profile", element: <Profile /> },
+  { path: "/login", element: <Login doc={"user"} type={"login"} /> },
+  { path: "/signup", element: <Login doc={"user"} type={"sign-up"} /> },
+  { path: "*", element: <Page404 /> },
+];
+
+// Objects of 'routes' array are mapped to maintain a concise JSX return
 function App() {
+  // to-do: automate this pattern further
+  const [main, setMain] = useState("");
+
   return (
     <ApolloProvider client={client}>
       <Router>
         <div className="App">
           <Header />
-          <main>
+          <main id={`${main}-page`}>
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/job/:id" element={<Job />} />
-              <Route path="/add-job" element={<AddJob />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route
-                path="/login"
-                element={<Login doc={"user"} type={"login"} />}
-              />
-              <Route
-                path="/signup"
-                element={<Login doc={"user"} type={"sign-up"} />}
-              />
-              <Route path="*" element={<Page404 />} />
+              {routes.map((route, i) => (
+                <Route
+                  key={i}
+                  path={route.path}
+                  element={React.cloneElement(route.element, { setMain })}
+                />
+              ))}
             </Routes>
           </main>
           <Footer />

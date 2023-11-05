@@ -100,7 +100,8 @@ UserSchema.virtual("rate").get(function () {
   const totalCount = this.totalCount;
   const result = (hiredCount / totalCount) * 100;
   const rounded = Math.round(result * 100) / 100;
-  return `${rounded}%`;
+  // conditionally returns rounded value
+  return isNaN(rounded) ? `0%` : `${rounded}%`;
 });
 
 UserSchema.methods.isCorrectPassword = async function (password) {

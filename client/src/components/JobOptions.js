@@ -30,7 +30,7 @@ function JobOptions(props) {
             ).length,
             hiredCount: updatedJobs.filter((job) => job.status === "hired")
               .length,
-            totalSubmitted: updatedJobs.length,
+            totalCount: updatedJobs.length,
             rate: me.hiredCount / (updatedJobs.length + 1),
           },
         },
@@ -61,7 +61,7 @@ function JobOptions(props) {
       <article className="job-buttons">
         <button onClick={handleGoBack}>back</button>
         <button onClick={handleEdit}>edit</button>
-        <button onClick={() => handleDelete(job._id)} className="warning">
+        <button onClick={() => handleDelete(job._id)} className="delete">
           delete
         </button>
       </article>

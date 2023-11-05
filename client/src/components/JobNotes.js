@@ -1,10 +1,11 @@
 import { useMutation } from "@apollo/client";
 import { QUERY_JOB, QUERY_ME } from "../utils/queries";
-import { JOB_ITEMS } from "../utils/mutations";
+import { subDocMutation } from "../utils/helpers";
 
 function JobNotes({ notes, jobId, status }) {
   let deletedNoteId;
-  const [deleteNote, { error }] = useMutation(JOB_ITEMS.DELETE_NOTE, {
+  const [deleteNote, { error }] = useMutation(
+    subDocMutation("notes", "delete"), {
     update(cache, { data }) {
       const { job } = cache.readQuery({
         query: QUERY_JOB,
@@ -58,7 +59,7 @@ function JobNotes({ notes, jobId, status }) {
 
   return (
     <section className="list-section" id="notes-section">
-      <h2>Notes</h2>
+      <h2 className="list-header">Notes</h2>
       {/* {job.noteCount > 0 && ( */}
       <ul id="notes">
         {notes.map((note, i) => (
@@ -69,7 +70,7 @@ function JobNotes({ notes, jobId, status }) {
             </h3>
             <p className={status}>{note.note}</p>
             <button
-              className="warning"
+              className="delete"
               onClick={() => handleDeleteNote(note._id)}
             >
               delete

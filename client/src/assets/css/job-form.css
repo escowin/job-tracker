@@ -7,7 +7,7 @@
 }
 
 .job-form button,
-.job-form label[for='role'], 
+.job-form label[for='role'],
 .job-form label[for='company'] {
     grid-column: 1/-1;
 }
@@ -17,20 +17,19 @@
     flex-direction: column;
 }
 
-#add-job fieldset label {
-    display: flex;
-    align-items: center;
-    gap: .25rem;
-}
-
-#add-job {
+#add-job,
+#edit-job {
     grid-template-columns: 1fr 1fr;
     gap: .5rem 2rem;
-}
 
-#edit-job {
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: .5rem 1rem;
+    & fieldset {
+        justify-content: flex-start;
+
+        & label {
+            display: inherit;
+            gap: 0 .5rem;
+        }
+    }
 }
 
 @media screen and (min-width: 750px) {

@@ -1,3 +1,22 @@
+// SEQUENCE:
+// 1. Import necessary functions and libraries.
+// 2. Define the function DocForm with props.
+// 3. Extract necessary props from the 'props' object.
+// 4. Set the 'fields' variable dynamically based on the 'type' and 'doc'.
+// 5. Set up a mutation function using the 'useMutation' hook and handle cache updates.
+// 6. Initialize variables for specific cases, such as 'navigate' and 'jobPath'.
+// 7. Set up state management for form data using 'useState'.
+// 8. Populate the form state with data based on 'initialValues' and 'fields' using 'useEffect'.
+// 9. Define functions to handle changes in input fields and form submission.
+// 10. Implement a function to display the appropriate UI elements based on the 'field' type.
+// 11. Render the UI elements and the form.
+
+// IF-THEN-ELSE:
+// - Conditionally check the type to set certain variables and handle mutation differently.
+
+// FOR:
+// - Loop over the 'fields' array to display each field in the form.
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
@@ -13,16 +32,15 @@ import "../assets/css/job-form.css";
 
 function DocForm(props) {
   const { initialValues, setEditSelected, doc, type, className } = props;
-  // retrieves form fields dynamically based on the sub-document via bracket notation
+  console.log(props)
+  // Conditionally handling to account for unique mutations
   const fields =
     type === "login" || type === "sign-up" ? form.login : form[doc];
 
-  // job-specific variables
-  const navigate = useNavigate();
-  const jobPath = window.location.pathname.includes("/job");
-
-  // dynamically sets up server graphql mutation & error handling
+  // Server-related variables
+  // - Variable is a dynamically defined GraphQL schema object
   const [document, { error }] = useMutation(docMutation(doc, type), {
+    // Updates client-side cache to reflect changes to server side data
     update(cache, { data }) {
       const mutationResult = determineMutationResult(doc, type, data);
       if (doc === "job") {
@@ -33,6 +51,12 @@ function DocForm(props) {
       }
     },
   });
+
+  // Job-specific variables
+  // - Used to send mobile-users back to the main page after adding a job
+  const navigate = useNavigate();
+  // -
+  const jobPath = window.location.pathname.includes("/job");
 
   // sets up form state management
   const [formState, setFormState] = useState({});
@@ -53,26 +77,29 @@ function DocForm(props) {
         docFields[field.name] = initialValues[field.name] || "";
       }
     });
-    // sets the filtered 'profile' object as the initial 'formState'
+    // Sets the filtered 'profile' object as the initial 'formState'
     setFormState(docFields);
   }, [initialValues, fields]);
 
-  // handles changes in input fields
+  // Handles changes in input fields
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormState((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  // handles form submission
+  // Handles form submission
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+
+    // Carries out client-server communication
     try {
+      // Sets the object to mirror the GraphQL schema
       const mutation = {
         ...formState,
         ...(type === "edit" ? { id: initialValues._id } : {}),
       };
 
-      // sends data from client to server
+      // Conditionally determines mutation sequence
       if (type === "login" || type === "sign-up") {
         const { data } = await document({ variables: mutation });
         postMutation(type, navigate, setEditSelected, data);
@@ -81,10 +108,12 @@ function DocForm(props) {
         postMutation(type, navigate, setEditSelected);
       }
     } catch (err) {
+      // Error handling
       console.error(err);
     }
   };
 
+  // Conditionally determines attributes of form element
   const displayField = (field, i) => {
     switch (field.type) {
       case "radio":
@@ -113,7 +142,7 @@ function DocForm(props) {
       default:
         return (
           <label key={i} className="wrapper" htmlFor={field.name}>
-            {format.title(field.name)}
+            {format.title(format.unCamel(field.name))}
             <input
               type={field.type}
               id={field.name}
@@ -130,7 +159,7 @@ function DocForm(props) {
     }
   };
 
-  // renders appropriate UI elements and attributes based on the formFields array
+  // Dynamically renders scalable UI elements & attributes
   return (
     <section
       className={`${className} form-section`}
@@ -141,7 +170,7 @@ function DocForm(props) {
         id={`${type}-${doc}`}
         onSubmit={handleFormSubmit}
       >
-        <h2>form</h2>
+        <h2>{format.title(format.id(type))}</h2>
         {fields.map((field, i) => displayField(field, i))}
         <button className="wrapper" type="submit">
           {type !== "login" && type !== "sign-up" ? "save" : "submit"}

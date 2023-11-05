@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_PROFILE } from "../utils/queries";
 import Auth from "../utils/auth";
@@ -8,7 +8,7 @@ import ProfileDetails from "../components/ProfileDetails";
 import DocForm from "../components/DocForm";
 import ResumesList from "../components/ResumesList";
 
-function Profile() {
+function Profile({setMain}) {
   const loggedIn = Auth.loggedIn();
   const { loading, data } = useQuery(QUERY_PROFILE);
   const profile = data?.me || {};
@@ -20,6 +20,7 @@ function Profile() {
   // state variables
   const [selectedResume, setSelectedResume] = useState("");
   const [editSelected, setEditSelected] = useState(false);
+  useEffect(() => setMain("profile"), [setMain])
 
   if (loading) {
     return <section className="message">Loading...</section>;
@@ -43,6 +44,7 @@ function Profile() {
               setEditSelected={setEditSelected}
               doc={"user"}
               type={"edit"}
+              className={"aside"}
             />
           )}
           <ResumesList id={profile._id} profile={profile} setSelectedResume={setSelectedResume}/>

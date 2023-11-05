@@ -9,7 +9,7 @@ import DocProfile from "../components/DocProfile";
 import DocForm from "../components/DocForm";
 import "../assets/css/home.css";
 
-function Home() {
+function Home({ setMain }) {
   // user info is dependent in being logged in
   const loggedIn = Auth.loggedIn();
   const [updatePendingJobs, { error }] = useMutation(JOB.UPDATE_PENDING_JOBS);
@@ -20,6 +20,7 @@ function Home() {
   // form component renders by tracking the state of the display width
   const [minWidth, setMinWidth] = useState(window.innerWidth >= 750);
   useEffect(() => {
+    setMain("home");
     // Triggers update mutation when the component loads for a logged-in user with a defined username
     loggedIn ? updatePendingJobs() : console.error(error);
 
@@ -35,7 +36,7 @@ function Home() {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [loggedIn, error, updatePendingJobs]);
+  }, [loggedIn, error, updatePendingJobs, setMain]);
 
   if (loading) {
     return <section className="message">Loading...</section>;
