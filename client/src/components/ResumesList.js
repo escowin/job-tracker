@@ -69,7 +69,7 @@ function ResumesList({ id, setSelectedResume, profile }) {
       <h2>Resumes</h2>
       <button onClick={handleAddItem}>+</button>
       {addResume && (
-        <form onSubmit={handleFormSubmit}>
+        <form className="resume-form" onSubmit={handleFormSubmit}>
           <h3>Add resume</h3>
           {fields.map((field, i) => (
             <label key={i} htmlFor={field.name}>

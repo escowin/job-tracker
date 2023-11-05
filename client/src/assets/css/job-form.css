@@ -32,11 +32,6 @@
     }
 }
 
-/* #edit-job {
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: .5rem 1rem;
-} */
-
 @media screen and (min-width: 750px) {
     main {
         grid-template-areas:

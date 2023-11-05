@@ -262,12 +262,17 @@ button:hover {
   }
 
   main {
-    display: grid;
-    grid-template-columns: 15rem auto;
+    /* display: grid; */
     /* grid-template-rows: max-content; */
-    grid-template-rows: auto 1fr;
-    align-items: flex-start;
     gap: .5rem;
+  }
+
+  #home-page {
+    & .message {
+      grid-column: 1 / -1;
+      width: 95vw;
+      justify-self: center;
+    }
   }
 
   section {
@@ -282,6 +287,36 @@ button:hover {
     flex-grow: 0;
     gap: 1rem;
   }
+
+  /* SHARED PAGE STYLES */
+  /* Home.js, Job.js, Profile.js */
+  #home-page,
+  #job-page,
+  #profile-page {
+    display: grid;
+    align-items: flex-start;
+    grid-template-columns: 15rem auto;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "a b"
+      "a c";
+
+    & .aside {
+      grid-area: a;
+      height: 100%;
+      align-items: flex-start;
+    }
+
+    & .profile-section {
+      grid-area: b;
+    }
+
+    & .list-section {
+      grid-area: c;
+    }
+  }
+
+
 }
 
 @media screen and (min-width: 1024px) {

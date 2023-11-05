@@ -1,4 +1,4 @@
-.home {
+#home-page {
 
     & #user-profile,
     #jobs article {
@@ -14,7 +14,7 @@
             grid-column: 1 / -1;
         }
 
-        & article {
+        & .user-detail {
             font-size: smaller;
         }
     }
@@ -44,68 +44,43 @@
     }
 }
 
-
-
 @media screen and (min-width: 768px) {
-    .home {
-        grid-template-areas:
-            "c a"
-            "c b";
-    }
+    #home-page {
 
-    #user-profile {
-        grid-template-columns: repeat(6, 1fr);
-        grid-area: a;
+        /* section | user details */
+        & #user-profile {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: space-between;
 
-        & h2 {
-            flex: 1 1 100%
+            & h2 {
+                flex: 1 1 100%
+            }
+
+            & .user-detail {
+                text-align: center;
+            }
         }
-    }
 
-    .list-section {
-        grid-area: b;
-    }
+        /* section | jobs list */
+        & #jobs {
+            & h2 {
+                position: sticky;
+                top: 0;
+                background-color: var(--primary);
+                box-shadow: 0 0 1rem 1.75rem var(--primary);
+            }
 
-    .aside {
-        grid-area: c;
-        height: 100%;
-        align-items: flex-start;
-    }
+            & article {
+                grid-template-columns: 3.75rem 1.25fr 2.5fr 4.3rem 3rem 5rem;
+                gap: .25rem;
+            }
 
-    #jobs article {
-        grid-template-columns: 3.75rem 1fr 2fr 4.5rem 3rem 5rem;
-        gap: 1rem;
-    }
-
-    /* section | displays users stats */
-    #user-profile {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        grid-area: a;
-
-        & article {
-            display: grid;
-            text-align: center;
+            & article:nth-child(2) {
+                position: sticky;
+                background-color: var(--primary);
+            }
         }
-    }
-
-
-    /* section | form */
-    .list-section {
-        grid-area: b;
-    }
-
-    #jobs h2 {
-        position: sticky;
-        top: 0;
-        background-color: var(--primary);
-        box-shadow: 0 0 1rem 1.75rem var(--primary);
-    }
-
-    #jobs article:nth-child(2) {
-        position: sticky;
-        background-color: var(--primary);
     }
 }

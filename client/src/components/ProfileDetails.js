@@ -13,7 +13,7 @@ function ProfileDetails({ profile, details, setEditSelected }) {
   const handleEdit = () => setEditSelected(true);
 
   return (
-    <section id="profile-section">
+    <section className="aside" id="profile-section">
       <h2>{profile.username} details</h2>
       <button onClick={handleEdit} className="edit-button">edit</button>      
       {details.map((detail, i) => (

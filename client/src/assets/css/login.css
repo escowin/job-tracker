@@ -1,25 +1,36 @@
-.user-form {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+#login-page {
+    width: max-content;
 
-    & .wrapper {
-        display: inherit;
-        flex-direction: inherit;
-    }
+    & .user-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
 
-    & button {
-        align-items: center;
+        & .wrapper {
+            display: inherit;
+            flex-direction: inherit;
+        }
+
+        & h2 {
+            text-align: center;
+        }
+
+        & button {
+            align-items: center;
+        }
     }
 }
 
 @media screen and (min-width: 768px) {
-    .user-form {
-        gap: 1.25rem;
-    }
+    #login-page {
 
-    .user-form .wrapper {
-        gap: .25rem;
+        & .user-form {
+            gap: 1.25rem;
+
+            & .wrapper {
+                gap: .25rem;
+            }
+        }
     }
 }
 

@@ -97,7 +97,7 @@ function App() {
       <Router>
         <div className="App">
           <Header />
-          <main className={main}>
+          <main id={`${main}-page`}>
             <Routes>
               {routes.map((route, i) => (
                 <Route

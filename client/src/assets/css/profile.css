@@ -1,132 +1,150 @@
-/* section | profile */
-#profile-section {
-    /* grid-row: 1 / -1; */
-    /* height: 100%; */
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: repeat(5, min-content);
-    align-items: flex-start;
-    gap: .25rem;
+#profile-page {
 
-    .edit-button {
-        border: none;
-        justify-self: flex-end;
-    }
-
-    & .profile-detail {
-        display: inherit;
-        grid-template-columns: auto 1fr;
-        align-items: baseline;
-        transition: color .5s;
-        padding: .25rem;
-        gap: 0 1rem;
-
-        &:hover {
-            color: var(--green);
-        }
-
-        & button {
-            grid-area: 1 / -1;
-            padding: .15rem 0rem;
-            border: none;
-        }
-
-        & p {
-            grid-column: 1 / -1;
-        }
-    }
-}
-
-/* section | resume list */
-#resumes-section {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-
-    & h2 {
-        order: 2;
-    }
-
-    & button {
-        order: 1;
-        border: none;
-    }
-
-    & #resumes-list {
-        order: 3;
+    & .item-form,
+    .resume-form {
+        outline: 1px solid var(--blue);
+        border-radius: 1rem;
         grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        order: 3;
+        gap: .25rem;
+        padding: .5rem;
 
-        & li {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 1rem;
-            outline: 1px solid var(--blue);
-            border-radius: 4rem;
+        & label {
+            display: flex;
+            flex-direction: column;
+            grid-column: 1 / -1;
+            gap: inherit;
+        }
+    }
+
+    /* section | profile */
+    & #profile-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: repeat(6, min-content);
+        gap: .25rem;
+
+        .edit-button {
+            border: none;
+            justify-self: flex-end;
+        }
+
+        & .profile-detail {
+            display: inherit;
+            gap: 0 1rem;
+            grid-template-columns: auto 1fr;
+            padding: .25rem;
+            transition: color .5s;
+
+            &:hover {
+                color: var(--green);
+            }
 
             & button {
+                grid-area: 1 / -1;
+                padding: .15rem 0rem;
                 border: none;
+            }
+
+            & p {
+                grid-column: 1 / -1;
             }
         }
     }
-}
 
-/* section | resume */
-#resume-section {
-    height: 100%;
-    overflow-y: scroll;
-
-    & button {
-        height: min-content;
-        border: none;
-    }
-
-    & article {
+    /* section | resume list */
+    & #resumes-section {
         display: grid;
         grid-template-columns: max-content 1fr;
-        gap: .75rem 1rem;
 
-        & .add-btn {
-            order: 1;
-        }
-
-        & h3 {
+        & h2 {
             order: 2;
         }
 
-        & .item {
+        & button {
+            order: 1;
+            border: none;
+        }
+
+        & #resumes-list {
             order: 3;
             grid-column: 1 / -1;
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: .25rem;
-            outline: 1px solid var(--blue);
-            padding: .5rem;
-            border-radius: 1rem;
-            align-items: baseline;
 
-            & div {
-                display: inherit;
-                grid-template-columns: auto 1fr;
-                gap: inherit;
-                align-items: inherit;
+            & li {
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: 1rem;
+                outline: 1px solid var(--blue);
+                border-radius: 4rem;
 
-                & .copy-btn {
-                    order: 1;
+                & button {
                     border: none;
-                }
-
-                & p {
-                    order: 2;
                 }
             }
         }
+    }
 
-        /* row s, col s, row e, col e */
-        & .education .delete {
-            grid-area: 1 / 2 / -1 / -1;
+    /* section | resume */
+    & #resume-section {
+        height: 100%;
+        overflow-y: scroll;
+
+        & button {
+            height: min-content;
+            border: none;
         }
 
-        & .experience .delete {
-            grid-area: 1 / 2 / 4 / -1;
+        & article {
+            display: grid;
+            grid-template-columns: max-content 1fr;
+            gap: .75rem 1rem;
+
+            & .add-btn {
+                order: 1;
+            }
+
+            & h3 {
+                order: 2;
+            }
+
+            & .item {
+                order: 3;
+                grid-column: 1 / -1;
+                display: grid;
+                grid-template-columns: 1fr auto;
+                gap: .25rem;
+                outline: 1px solid var(--blue);
+                padding: .5rem;
+                border-radius: 1rem;
+                align-items: baseline;
+
+                & div {
+                    display: inherit;
+                    grid-template-columns: auto 1fr;
+                    gap: inherit;
+                    align-items: inherit;
+
+                    & .copy-btn {
+                        order: 1;
+                        border: none;
+                    }
+
+                    & p {
+                        order: 2;
+                    }
+                }
+            }
+
+            /* row s, col s, row e, col e */
+            & .education .delete {
+                grid-area: 1 / 2 / -1 / -1;
+            }
+
+            & .experience .delete {
+                grid-area: 1 / 2 / 4 / -1;
+            }
         }
     }
 }
@@ -152,20 +170,16 @@
     }
 }
 
-/* resume items */
-.item-form {
-    outline: 1px solid var(--blue);
-    border-radius: 1rem;
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    order: 3;
-    gap: .25rem;
-    padding: .5rem;
+@media screen and (min-width: 768px) {
+    #profile-page {
+        & .profile-detail {
+            grid-column: 1 / -1;
+            display: flex;
+        }
 
-    & label {
-        display: flex;
-        flex-direction: column;
-        grid-column: 1 / -1;
+        & #edit-user {
+            display: flex;
+            flex-direction: column;
+        }
     }
 }

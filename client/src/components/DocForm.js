@@ -32,6 +32,7 @@ import "../assets/css/job-form.css";
 
 function DocForm(props) {
   const { initialValues, setEditSelected, doc, type, className } = props;
+  console.log(props)
   // Conditionally handling to account for unique mutations
   const fields =
     type === "login" || type === "sign-up" ? form.login : form[doc];
@@ -169,7 +170,7 @@ function DocForm(props) {
         id={`${type}-${doc}`}
         onSubmit={handleFormSubmit}
       >
-        <h2>form</h2>
+        <h2>{format.title(format.id(type))}</h2>
         {fields.map((field, i) => displayField(field, i))}
         <button className="wrapper" type="submit">
           {type !== "login" && type !== "sign-up" ? "save" : "submit"}

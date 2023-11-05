@@ -20,7 +20,7 @@ function JobLists({ jobs }) {
           <p className="display-md">{format.id(job.source)}</p>
           <Link to={`/job/${job._id}`} className="link">{job.company}</Link>
           <Link to={`/job/${job._id}`} className="link">{job.role}</Link>
-          <p className="display-md">{format.id(job.status)}</p>
+          <p className="display-md">{format.unCamel(job.status)}</p>
           <p className="count">{job.noteCount}</p>
           <p className="display-md">{format.date(job.applied)}</p>
         </article>
