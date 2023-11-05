@@ -108,9 +108,6 @@ header {
 
 header {
   justify-content: space-between;
-}
-
-header {
   background-color: var(--primary);
 }
 
@@ -138,33 +135,6 @@ section {
   gap: 1rem;
   border-radius: 1rem;
   width: inherit;
-}
-
-ul {
-  list-style: none;
-}
-
-
-.list-section {
-  gap: .5rem;
-  overflow-y: scroll;
-  border: 1px solid var(--primary);
-
-  & .list-header {
-    position: sticky;
-    top: 0;
-    background-color: var(--primary);
-    box-shadow: 0 -.55rem 0 .5rem var(--primary);
-    border-radius: .5rem;
-  }
-
-  & article:nth-child(2) {
-    font-size: 1rem;
-    position: sticky;
-    top: 2.5rem;
-    background-color: var(--primary);
-    box-shadow: 0 0 0 .65rem var(--primary);
-  }
 }
 
 textarea {
@@ -239,6 +209,33 @@ button:hover {
   text-shadow: 0 0 .125rem var(--red);
 }
 
+/* SHARED | Home.js, Job.js*/
+ul {
+  list-style: none;
+}
+
+.list-section {
+  gap: .5rem;
+  overflow-y: scroll;
+  border: 1px solid var(--primary);
+
+  & .list-header {
+    position: sticky;
+    top: 0;
+    background-color: var(--primary);
+    box-shadow: 0 -.55rem 0 .5rem var(--primary);
+    border-radius: .5rem;
+  }
+
+  & article:nth-child(2) {
+    font-size: 1rem;
+    position: sticky;
+    top: 2.5rem;
+    background-color: var(--primary);
+    box-shadow: 0 0 0 .6rem var(--primary);
+  }
+}
+
 @media screen and (min-width: 768px) {
 
   .display-md {
@@ -262,15 +259,13 @@ button:hover {
   }
 
   main {
-    /* display: grid; */
-    /* grid-template-rows: max-content; */
     gap: .5rem;
   }
 
   #home-page {
     & .message {
       grid-column: 1 / -1;
-      width: 95vw;
+      width: 50vw;
       justify-self: center;
     }
   }
@@ -288,8 +283,7 @@ button:hover {
     gap: 1rem;
   }
 
-  /* SHARED PAGE STYLES */
-  /* Home.js, Job.js, Profile.js */
+  /* SHARED | Home.js, Job.js, Profile.js */
   #home-page,
   #job-page,
   #profile-page {
@@ -315,8 +309,6 @@ button:hover {
       grid-area: c;
     }
   }
-
-
 }
 
 @media screen and (min-width: 1024px) {
@@ -329,26 +321,23 @@ button:hover {
     font-size: .85rem;
   }
 
-  main {
+  #home-page,
+  #job-page,
+  #profile-page {
     grid-template-columns: 20rem auto;
-  }
 
-  .aside form {
-    width: 100%;
-  }
+    & .aside form {
+      width: 100%;
+    }
 
-
-  .form-section,
-  .details-section {
-    height: 100%;
+    & .form-section,
+    .details-section {
+      height: 100%;
+    }
   }
 
   button {
     padding: .15rem;
-  }
-
-  input {
-    border-radius: .25rem;
   }
 
   input[type=date] {
@@ -357,10 +346,6 @@ button:hover {
 
   fieldset {
     grid-column: span 1;
-  }
-
-  .message {
-    grid-column: span 2;
   }
 
 }

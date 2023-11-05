@@ -65,21 +65,9 @@
 
         /* section | jobs list */
         & #jobs {
-            & h2 {
-                position: sticky;
-                top: 0;
-                background-color: var(--primary);
-                box-shadow: 0 0 1rem 1.75rem var(--primary);
-            }
-
             & article {
                 grid-template-columns: 3.75rem 1.25fr 2.5fr 4.3rem 3rem 5rem;
                 gap: .25rem;
-            }
-
-            & article:nth-child(2) {
-                position: sticky;
-                background-color: var(--primary);
             }
         }
     }

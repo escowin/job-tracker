@@ -78,6 +78,7 @@
                 gap: 1rem;
                 outline: 1px solid var(--blue);
                 border-radius: 4rem;
+                padding: .5rem;
 
                 & button {
                     border: none;
