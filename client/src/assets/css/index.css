@@ -154,10 +154,10 @@ fieldset {
   transition: 1s border-color;
   border-radius: .5rem;
   border-color: var(--blue);
-}
 
-fieldset:hover {
-  border-color: var(--text);
+  &:hover {
+    border-color: var(--text);
+  }
 }
 
 input,
@@ -171,12 +171,11 @@ textarea {
   background-color: var(--blue);
   border: none;
   transition: 1s outline, 1s background-color;
-}
 
-input:focus,
-textarea:focus {
-  outline: none;
-  background-color: var(--text);
+  &:focus {
+    outline: none;
+    background-color: var(--text);
+  }
 }
 
 textarea {
@@ -202,11 +201,11 @@ button:hover {
   color: var(--light-red);
   border: none;
   transition: color 1s, text-shadow 1s;
-}
 
-.delete:hover {
-  color: var(--red);
-  text-shadow: 0 0 .125rem var(--red);
+  &:hover {
+    color: var(--red);
+    text-shadow: 0 0 .125rem var(--red);
+  }
 }
 
 /* SHARED | Home.js, Job.js*/

@@ -32,7 +32,6 @@ import "../assets/css/job-form.css";
 
 function DocForm(props) {
   const { initialValues, setEditSelected, doc, type, className } = props;
-  console.log(props)
   // Conditionally handling to account for unique mutations
   const fields =
     type === "login" || type === "sign-up" ? form.login : form[doc];
@@ -67,7 +66,7 @@ function DocForm(props) {
     const docFields = {};
     fields.forEach((field) => {
       if (field.type === "date") {
-        const today = new Date().toISOString().split("T")[0];
+        const today = new Date().toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).split('/').join('/');
         docFields[field.name] = initialValues[field.name] || today;
       } else if (field.name === "source") {
         docFields[field.name] = initialValues[field.name] || "company";

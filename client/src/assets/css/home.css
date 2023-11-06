@@ -66,7 +66,7 @@
         /* section | jobs list */
         & #jobs {
             & article {
-                grid-template-columns: 3.75rem 1.25fr 2.5fr 4.3rem 3rem 5rem;
+                grid-template-columns: 3.75rem 1.25fr 2.5fr 4.5rem 3rem 5rem;
                 gap: .25rem;
             }
         }
