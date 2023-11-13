@@ -3,21 +3,42 @@ const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 const { calculateTime } = require("../utils/helpers");
 
-// Sub-document helpers
+// Mutation helpers
+// Documents
+const editDocument = async (_id, args, context, Model) => {
+  if (!context.user) {
+    throw new AuthenticationError("login required");
+  }
+
+  try {
+    const result = await Model.findByIdAndUpdate(
+      _id,
+      { $set: args },
+      { new: true }
+    );
+    return result;
+  } catch (err) {
+    throw new Error(`edit failed: ${err}`);
+  }
+};
+
+// Sub-documents
 // - Adds a subdocument object into a specified document
 const addSubDocument = async (docId, args, context, Model, subDoc) => {
   if (!context.user) {
     throw new AuthenticationError("login required");
   }
-
-  const result = await Model.findOneAndUpdate(
-    { _id: docId },
-    { $push: { [subDoc]: args } },
-    { new: true, runValidators: true }
-  );
-
-  return result;
-}
+  try {
+    const result = await Model.findOneAndUpdate(
+      { _id: docId },
+      { $push: { [subDoc]: args } },
+      { new: true, runValidators: true }
+    );
+    return result;
+  } catch (err) {
+    throw new Error(`edit failed: ${err}`);
+  }
+};
 
 // - Updates specified subdocument object in a specified document
 const editSubDocument = async (docId, _id, args, context, Model, subDoc) => {
@@ -30,19 +51,19 @@ const editSubDocument = async (docId, _id, args, context, Model, subDoc) => {
     const setObject = generateSetObject(subDoc, args);
     const query = { _id: docId };
     query[`${subDoc}._id`] = _id;
-    console.log(query)
+    console.log(query);
 
     const result = await Model.findOneAndUpdate(
       query,
       { $set: setObject },
       { new: true, runValidators: true }
     );
-
-    return !result ? new Error("resume not found") : result;
+    
+    return result
   } catch (err) {
-    throw new Error(`edit failed, error: ${err}`);
+    throw new Error(`edit failed: ${err}`);
   }
-}
+};
 
 // - Dynamically constructs subdocument $set object for editSubDocument() function
 const generateSetObject = (string, data) => {
@@ -66,12 +87,13 @@ const deleteSubDocument = async (docId, _id, Model, context, subDoc) => {
       { new: true, runValidators: true }
     );
 
-    return !parentDocument ? new Error("document not found") : parentDocument;
+    return parentDocument;
   } catch (err) {
     throw new Error(`failed to delete: ${err}`);
   }
 };
 
+// Resolvers
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
@@ -174,6 +196,7 @@ const resolvers = {
         throw new AuthenticationError("login required");
       }
       const resume = await Resume.findByIdAndDelete(_id);
+
       await User.findByIdAndUpdate(
         { _id: context.user._id },
         { $pull: { resumes: resume._id } },
@@ -183,54 +206,13 @@ const resolvers = {
     },
 
     editJob: async (parent, { _id, ...args }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError("login required");
-      }
-
-      const job = await Job.findByIdAndUpdate(
-        _id,
-        { $set: args },
-        { new: true }
-      );
-
-      if (!job) {
-        throw new Error("job not found");
-      }
-
-      return job;
+      return editDocument(_id, args, context, Job);
     },
     editResume: async (parent, { _id, ...args }, context) => {
-      if (!context.user) {
-        throw AuthenticationError("login required");
-      }
-
-      const resume = await Resume.findByIdAndUpdate(
-        _id,
-        { $set: args },
-        { new: true }
-      );
-
-      if (!resume) {
-        throw new Error("resume not found");
-      }
-      return resume;
+      return editDocument(_id, args, context, Resume);
     },
     editUser: async (parent, { _id, ...args }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError("login required");
-      }
-
-      const user = await User.findByIdAndUpdate(
-        _id,
-        { $set: args },
-        { new: true }
-      );
-
-      if (!user) {
-        throw new Error("user not found");
-      }
-
-      return user;
+      return editDocument(_id, args, context, User);
     },
 
     updatePendingJobs: async (parent, args, context) => {
@@ -278,7 +260,7 @@ const resolvers = {
       return editSubDocument(resumeId, _id, args, context, Resume, "links");
     },
     editNote: async (parent, { jobId, _id, ...args }, context) => {
-      return editSubDocument(resumeId, _id, args, context, Resume, "notes");
+      return editSubDocument(jobId, _id, args, context, Resume, "notes");
     },
 
     deleteEducation: async (parent, { _id, resumeId }, context) => {
