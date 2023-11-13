@@ -251,28 +251,32 @@ const resolvers = {
       }
 
       try {
-        const { resumeId, _id, role, company, location, description } = args;
-        // const { resumeId, _id, ...data } = args;
+        // const { resumeId, _id, role, company, location, description } = args;
+        const { resumeId, _id, ...data } = args;
+        // Construct the exp $set object dynamically
+        const setObj = {};
+        Object.keys(data).forEach((key) => setObj[`experience.$.${key}`] = data[key]);
 
         // Find the template by ID and update the matching text object
         const result = await Resume.findOneAndUpdate(
           { _id: resumeId, "experience._id": _id },
           {
-            $set: {
-              // "experience.$": data
-              "experience.$.role": role,
-              "experience.$.company": company,
-              "experience.$.location": location,
-              "experience.$.description": description,
-            },
+            $set: setObj
+            // $set: {
+            //   "experience.$": data,
+              // "experience.$.role": role,
+              // "experience.$.company": company,
+              // "experience.$.location": location,
+              // "experience.$.description": description,
+            // },
           },
           { new: true, runValidators: true }
         );
-        console.log(result)
+        console.log(result);
 
         return !result ? new Error("resume not found") : result;
       } catch (err) {
-        console.error(err)
+        console.error(err);
         throw new Error("failed to edit experience");
       }
     },
