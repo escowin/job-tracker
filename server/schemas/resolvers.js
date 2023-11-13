@@ -3,13 +3,33 @@ const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 const { calculateTime } = require("../utils/helpers");
 
-// helper | dynamically constructs subdocument $set object for edit mutations
+// Sub-document helpers
+// - Dynamically constructs subdocument $set object for edit mutations
 const generateSetObject = (string, data) => {
   const object = {};
   Object.keys(data).forEach(
     (key) => (object[`${string}.$.${key}`] = data[key])
   );
   return object;
+};
+
+// Removes specified subdocument object from document
+const deleteSubDocument = async (docId, _id, Model, context, subDoc) => {
+  if (!context.user) {
+    throw new AuthenticationError("login required");
+  }
+
+  try {
+    const parentDocument = await Model.findOneAndUpdate(
+      { _id: docId },
+      { $pull: { [subDoc]: { _id: _id } } },
+      { new: true, runValidators: true }
+    );
+
+    return !parentDocument ? new Error("document not found") : parentDocument;
+  } catch (err) {
+    throw new Error(`failed to delete: ${err}`);
+  }
 };
 
 const resolvers = {
@@ -326,64 +346,16 @@ const resolvers = {
     },
 
     deleteEducation: async (parent, { _id, resumeId }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError("login required");
-      }
-      try {
-        const updatedResume = await Resume.findOneAndUpdate(
-          { _id: resumeId },
-          { $pull: { education: { _id: _id } } },
-          { new: true, runValidators: true }
-        );
-        return !updatedResume ? new Error("resume not found") : updatedResume;
-      } catch (err) {
-        throw new Error("failed to delete education");
-      }
+      deleteSubDocument(resumeId, _id, Resume, context, "education");
     },
     deleteExperience: async (parent, { _id, resumeId }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError("login required");
-      }
-      try {
-        const updatedResume = await Resume.findOneAndUpdate(
-          { _id: resumeId },
-          { $pull: { experience: { _id: _id } } },
-          { new: true, runValidators: true }
-        );
-        return !updatedResume ? new Error("resume not found") : updatedResume;
-      } catch (err) {
-        throw new Error(`failed to delete: ${err}`);
-      }
+      deleteSubDocument(resumeId, _id, Resume, context, "experience");
     },
     deleteLink: async (parent, { _id, resumeId }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError("login required");
-      }
-      try {
-        const updatedResume = await Resume.findOneAndUpdate(
-          { _id: resumeId },
-          { $pull: { links: { _id: _id } } },
-          { new: true, runValidators: true }
-        );
-        return !updatedResume ? new Error("resume not found") : updatedResume;
-      } catch (err) {
-        throw new Error(`failed to delete: ${err}`);
-      }
+      deleteSubDocument(resumeId, _id, Resume, context, "links");
     },
     deleteNote: async (parent, { _id, jobId }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError("login required");
-      }
-      try {
-        const updatedJob = await Job.findOneAndUpdate(
-          { _id: jobId },
-          { $pull: { notes: { _id: _id } } },
-          { new: true, runValidators: true }
-        );
-        return !updatedJob ? new Error("job not found") : updatedJob;
-      } catch (err) {
-        throw new Error(`failed to delete: ${err}`);
-      }
+      deleteSubDocument(jobId, _id, Job, context, "notes");
     },
   },
 };
