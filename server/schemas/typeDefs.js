@@ -132,6 +132,7 @@ const typeDefs = gql`
       location: String
       description: String
     ): Resume
+    editExperience(_id: ID!, resumeId: ID!, role: String, company: String, location: String, description: String) : Resume
     deleteExperience(_id: ID!, resumeId: ID!): Resume
   }
 

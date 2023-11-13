@@ -195,15 +195,15 @@ const resolvers = {
     },
     deleteResume: async (parent, args, context) => {
       if (!context.user) {
-        throw new AuthenticationError("login required")
+        throw new AuthenticationError("login required");
       }
       const resume = await Resume.findByIdAndDelete(args._id);
       await User.findByIdAndUpdate(
         { _id: context.user._id },
         { $pull: { resumes: resume._id } },
         { new: true }
-      )
-      return resume
+      );
+      return resume;
     },
     // resume subdocument mutations
     addLink: async (parent, { resumeId, link, url }, context) => {
@@ -244,6 +244,37 @@ const resolvers = {
       );
 
       return updatedResume;
+    },
+    editExperience: async (parent, args, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("login required");
+      }
+
+      try {
+        const { resumeId, _id, role, company, location, description } = args;
+        // const { resumeId, _id, ...data } = args;
+
+        // Find the template by ID and update the matching text object
+        const result = await Resume.findOneAndUpdate(
+          { _id: resumeId, "experience._id": _id },
+          {
+            $set: {
+              // "experience.$": data
+              "experience.$.role": role,
+              "experience.$.company": company,
+              "experience.$.location": location,
+              "experience.$.description": description,
+            },
+          },
+          { new: true, runValidators: true }
+        );
+        console.log(result)
+
+        return !result ? new Error("resume not found") : result;
+      } catch (err) {
+        console.error(err)
+        throw new Error("failed to edit experience");
+      }
     },
     deleteLink: async (parent, { _id, resumeId }, context) => {
       if (!context.user) {

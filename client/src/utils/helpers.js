@@ -76,7 +76,7 @@ export const form = {
     { name: "password", type: "password", min: 5, max: 25 },
   ],
   job: [
-    { name: "role", type: "text", max: 50 },
+    { name: "role", type: "text", max: 75 },
     { name: "company", type: "text", max: 50 },
     {
       name: "status",

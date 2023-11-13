@@ -72,13 +72,17 @@
             order: 3;
             grid-column: 1 / -1;
 
-            & li {
+            & .resume {
                 display: grid;
                 grid-template-columns: 1fr auto;
                 gap: 1rem;
                 outline: 1px solid var(--blue);
                 border-radius: 4rem;
                 padding: .5rem;
+                transition: outline 5s;
+                &:hover {
+                    outline: 2px solid var(--green);
+                }
 
                 & button {
                     border: none;

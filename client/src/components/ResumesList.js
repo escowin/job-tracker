@@ -33,12 +33,17 @@ function ResumesList({ id, setSelectedResume, profile }) {
   );
   // defines component state variables with initial values
   const [addResume, setAddResume] = useState(false);
+  const [activeResume, setActiveResume] = useState(false);
   const [formState, setFormState] = useState(initialState);
 
   // ui actions
-  // defines state as true to make resume form appear in ui
+  // clicking the add button displays the add resume form
   const handleAddItem = () => setAddResume(true);
-  // deletes specified resume from the server database via graphql object
+
+   // clicking on a resume visually highlights its selection
+  const handleClick = (index) => setActiveResume(index);
+
+ // deletes specified resume from the server database via graphql object
   // to-do: implement useEffect as a middleman to ensure only double-clicks trigger handleDelete
   const handleDelete = async (_id) => {
     try {
@@ -48,11 +53,14 @@ function ResumesList({ id, setSelectedResume, profile }) {
       console.error(err);
     }
   };
+
   // updates form state key-values with captured user input data
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormState((prevState) => ({ ...prevState, [name]: value }));
   };
+
+
   // submits current form state data to the server database through a graphql mutation
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -94,11 +102,17 @@ function ResumesList({ id, setSelectedResume, profile }) {
 
       <ul id="resumes-list">
         {profile.resumes.map((resume, i) => (
-          <li key={i}>
+          <li
+            className={`resume${activeResume === i ? " active" : ""}`}
+            key={i}
+            onClick={() => handleClick(i)}
+          >
             <button onClick={() => setSelectedResume(resume._id)}>
               {resume.title}
             </button>
-            <button className="delete" onClick={() => handleDelete(resume._id)}>delete</button>
+            <button className="delete" onClick={() => handleDelete(resume._id)}>
+              delete
+            </button>
           </li>
         ))}
       </ul>
