@@ -3,6 +3,13 @@ const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 const { calculateTime } = require("../utils/helpers");
 
+// helper | dynamically constructs subdocument $set object for edit mutations
+const generateSetObject = (string, data) => {
+  const object = {};
+  Object.keys(data).forEach((key) => object[`${string}.$.${key}`] = data[key]);
+  return object
+} 
+
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
@@ -126,6 +133,25 @@ const resolvers = {
 
       return updatedJob;
     },
+    editNote: async (parent, { jobId, _id, ...args }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("login required");
+      }
+
+      try {
+        // Updates specified exp object's key-values of a resume with user data
+        const setObject = generateSetObject("notes", args)
+        const result = await Job.findOneAndUpdate(
+          { _id: jobId, "notes._id": _id },
+          { $set: setObject },
+          { new: true, runValidators: true }
+        );
+
+        return !result ? new Error(`try error`) : result;
+      } catch (err) {
+        throw new Error(`edit failed, error: ${err}`);
+      }
+    },
     deleteNote: async (parent, { _id, jobId }, context) => {
       if (!context.user) {
         throw new AuthenticationError("login required");
@@ -206,19 +232,7 @@ const resolvers = {
       return resume;
     },
     // resume subdocument mutations
-    addLink: async (parent, { resumeId, link, url }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError("login required");
-      }
 
-      const updatedResume = await Resume.findOneAndUpdate(
-        { _id: resumeId },
-        { $push: { links: { link, url } } },
-        { new: true, runValidators: true }
-      );
-
-      return updatedResume;
-    },
     addEducation: async (parent, { resumeId, ...args }, context) => {
       if (!context.user) {
         throw new AuthenticationError("login required");
@@ -245,39 +259,74 @@ const resolvers = {
 
       return updatedResume;
     },
-    editExperience: async (parent, args, context) => {
+    addLink: async (parent, { resumeId, link, url }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("login required");
+      }
+
+      const updatedResume = await Resume.findOneAndUpdate(
+        { _id: resumeId },
+        { $push: { links: { link, url } } },
+        { new: true, runValidators: true }
+      );
+
+      return updatedResume;
+    },
+    editEducation: async (parent, { resumeId, _id, ...args }, context) => {
       if (!context.user) {
         throw new AuthenticationError("login required");
       }
 
       try {
-        // const { resumeId, _id, role, company, location, description } = args;
-        const { resumeId, _id, ...data } = args;
-        // Construct the exp $set object dynamically
-        const setObj = {};
-        Object.keys(data).forEach((key) => setObj[`experience.$.${key}`] = data[key]);
-
-        // Find the template by ID and update the matching text object
+        // Updates specified exp object's key-values of a resume with user data
+        const setObject = generateSetObject("education", args)
         const result = await Resume.findOneAndUpdate(
-          { _id: resumeId, "experience._id": _id },
-          {
-            $set: setObj
-            // $set: {
-            //   "experience.$": data,
-              // "experience.$.role": role,
-              // "experience.$.company": company,
-              // "experience.$.location": location,
-              // "experience.$.description": description,
-            // },
-          },
+          { _id: resumeId, "education._id": _id },
+          { $set: setObject },
           { new: true, runValidators: true }
         );
-        console.log(result);
 
         return !result ? new Error("resume not found") : result;
       } catch (err) {
-        console.error(err);
-        throw new Error("failed to edit experience");
+        throw new Error(`edit failed, error: ${err}`);
+      }
+    },
+    editExperience: async (parent, { resumeId, _id, ...args }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("login required");
+      }
+
+      try {
+        // Updates specified exp object's key-values of a resume with user data
+        const setObject = generateSetObject("experience", args)
+        const result = await Resume.findOneAndUpdate(
+          { _id: resumeId, "experience._id": _id },
+          { $set: setObject },
+          { new: true, runValidators: true }
+        );
+
+        return !result ? new Error("resume not found") : result;
+      } catch (err) {
+        throw new Error(`edit failed, error: ${err}`);
+      }
+    },
+    editLink: async (parent, { resumeId, _id, ...args }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("login required");
+      }
+
+      try {
+        // Updates specified exp object's key-values of a resume with user data
+        const setObject = generateSetObject("links", args)
+        const result = await Resume.findOneAndUpdate(
+          { _id: resumeId, "links._id": _id },
+          { $set: setObject },
+          { new: true, runValidators: true }
+        );
+
+        return !result ? new Error("resume not found") : result;
+      } catch (err) {
+        throw new Error(`edit failed, error: ${err}`);
       }
     },
     deleteLink: async (parent, { _id, resumeId }, context) => {
