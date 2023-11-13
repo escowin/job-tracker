@@ -113,17 +113,20 @@ const typeDefs = gql`
     deleteJob(_id: ID!): Job
 
     addNote(jobId: ID!, note: String!, interview: Boolean): Job
-    deleteNote(_id: ID!, jobId: String!): Note
+    editNote(jobId: ID!, _id: ID!, note: String, interview: Boolean): Job
+    deleteNote(jobId: ID!, _id: ID!): Job
 
     addResume(title: String!): Resume
     editResume(_id: ID!, title: String): Resume
     deleteResume(_id: ID!): Resume
 
     addLink(resumeId: ID!, link: String!, url: String!): Resume
-    deleteLink(_id: ID!, resumeId: ID!): Resume
+    editLink(resumeId: ID!, _id: ID!, link: String, url: String): Resume
+    deleteLink(resumeId: ID!, _id: ID!): Resume
 
     addEducation(resumeId: ID!, school: String!, location: String): Resume
-    deleteEducation(_id: ID!, resumeId: ID!): Resume
+    editEducation(resumeId: ID!, _id: ID!, school: String, location: String): Resume
+    deleteEducation(resumeId: ID!, _id: ID!): Resume
 
     addExperience(
       resumeId: ID!
@@ -132,7 +135,8 @@ const typeDefs = gql`
       location: String
       description: String
     ): Resume
-    deleteExperience(_id: ID!, resumeId: ID!): Resume
+    editExperience(resumeId: ID!, _id: ID!, role: String, company: String, location: String, description: String) : Resume
+    deleteExperience(resumeId: ID!, _id: ID!): Resume
   }
 
   type Auth {

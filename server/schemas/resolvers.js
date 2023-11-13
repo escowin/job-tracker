@@ -3,6 +3,97 @@ const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 const { calculateTime } = require("../utils/helpers");
 
+// Mutation helpers
+// Documents
+const editDocument = async (_id, args, context, Model) => {
+  if (!context.user) {
+    throw new AuthenticationError("login required");
+  }
+
+  try {
+    const result = await Model.findByIdAndUpdate(
+      _id,
+      { $set: args },
+      { new: true }
+    );
+    return result;
+  } catch (err) {
+    throw new Error(`edit failed: ${err}`);
+  }
+};
+
+// Sub-documents
+// - Adds a subdocument object into a specified document
+const addSubDocument = async (docId, args, context, Model, subDoc) => {
+  if (!context.user) {
+    throw new AuthenticationError("login required");
+  }
+  try {
+    const result = await Model.findOneAndUpdate(
+      { _id: docId },
+      { $push: { [subDoc]: args } },
+      { new: true, runValidators: true }
+    );
+    return result;
+  } catch (err) {
+    throw new Error(`edit failed: ${err}`);
+  }
+};
+
+// - Updates specified subdocument object in a specified document
+const editSubDocument = async (docId, _id, args, context, Model, subDoc) => {
+  if (!context.user) {
+    throw new AuthenticationError("login required");
+  }
+
+  try {
+    // Updates specified exp object's key-values of a resume with user data
+    const setObject = generateSetObject(subDoc, args);
+    const query = { _id: docId };
+    query[`${subDoc}._id`] = _id;
+    console.log(query);
+
+    const result = await Model.findOneAndUpdate(
+      query,
+      { $set: setObject },
+      { new: true, runValidators: true }
+    );
+    
+    return result
+  } catch (err) {
+    throw new Error(`edit failed: ${err}`);
+  }
+};
+
+// - Dynamically constructs subdocument $set object for editSubDocument() function
+const generateSetObject = (string, data) => {
+  const object = {};
+  Object.keys(data).forEach(
+    (key) => (object[`${string}.$.${key}`] = data[key])
+  );
+  return object;
+};
+
+// - Removes specified subdocument object from a specified document
+const deleteSubDocument = async (docId, _id, Model, context, subDoc) => {
+  if (!context.user) {
+    throw new AuthenticationError("login required");
+  }
+
+  try {
+    const parentDocument = await Model.findOneAndUpdate(
+      { _id: docId },
+      { $pull: { [subDoc]: { _id: _id } } },
+      { new: true, runValidators: true }
+    );
+
+    return parentDocument;
+  } catch (err) {
+    throw new Error(`failed to delete: ${err}`);
+  }
+};
+
+// Resolvers
 const resolvers = {
   Query: {
     me: async (parent, args, context) => {
@@ -31,27 +122,6 @@ const resolvers = {
     resume: async (parent, { _id }) => Resume.findOne({ _id }),
   },
   Mutation: {
-    addUser: async (parent, args) => {
-      const user = await User.create(args);
-      const token = signToken(user);
-
-      return { token, user };
-    },
-    editUser: async (parent, args, context) => {
-      if (!context.user) {
-        throw new AuthenticationError("login required");
-      }
-      const { _id, ...updatedFields } = args;
-      const user = await User.findByIdAndUpdate(
-        _id,
-        { $set: updatedFields },
-        { new: true }
-      );
-      if (!user) {
-        throw new Error("user not found");
-      }
-      return user;
-    },
     login: async (parent, { username, password }) => {
       const user = await User.findOne({ username });
       if (!user) {
@@ -66,6 +136,7 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+    // Document mutations
     addJob: async (parent, args, context) => {
       if (!context.user) {
         throw new AuthenticationError("login required");
@@ -83,28 +154,35 @@ const resolvers = {
       );
       return job;
     },
-    editJob: async (parent, args, context) => {
+    addResume: async (parent, args, context) => {
       if (!context.user) {
-        throw new AuthenticationError("login required");
+        throw AuthenticationError("login required");
       }
-      const { _id, ...updatedFields } = args;
 
-      const job = await Job.findByIdAndUpdate(
-        _id,
-        { $set: updatedFields },
+      const resume = await Resume.create({
+        ...args,
+        username: context.user.username,
+      });
+
+      await User.findByIdAndUpdate(
+        { _id: context.user._id },
+        { $push: { resumes: resume._id } },
         { new: true }
       );
-      if (!job) {
-        throw new Error("job not found");
-      }
-
-      return job;
+      return resume;
     },
-    deleteJob: async (parent, args, context) => {
+    addUser: async (parent, args) => {
+      const user = await User.create(args);
+      const token = signToken(user);
+
+      return { token, user };
+    },
+
+    deleteJob: async (parent, { _id }, context) => {
       if (!context.user) {
         throw new AuthenticationError("login required");
       }
-      const job = await Job.findByIdAndDelete(args._id);
+      const job = await Job.findByIdAndDelete(_id);
 
       await User.findByIdAndUpdate(
         { _id: context.user._id },
@@ -113,34 +191,30 @@ const resolvers = {
       );
       return job;
     },
-    addNote: async (parent, { jobId, note, interview }, context) => {
+    deleteResume: async (parent, { _id }, context) => {
       if (!context.user) {
         throw new AuthenticationError("login required");
       }
+      const resume = await Resume.findByIdAndDelete(_id);
 
-      const updatedJob = await Job.findOneAndUpdate(
-        { _id: jobId },
-        { $push: { notes: { note, interview } } },
-        { new: true, runValidators: true }
+      await User.findByIdAndUpdate(
+        { _id: context.user._id },
+        { $pull: { resumes: resume._id } },
+        { new: true }
       );
+      return resume;
+    },
 
-      return updatedJob;
+    editJob: async (parent, { _id, ...args }, context) => {
+      return editDocument(_id, args, context, Job);
     },
-    deleteNote: async (parent, { _id, jobId }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError("login required");
-      }
-      try {
-        const updatedJob = await Job.findOneAndUpdate(
-          { _id: jobId },
-          { $pull: { notes: { _id: _id } } },
-          { new: true, runValidators: true }
-        );
-        return !updatedJob ? new Error("job not found") : updatedJob;
-      } catch (err) {
-        throw new Error("failed to delete note");
-      }
+    editResume: async (parent, { _id, ...args }, context) => {
+      return editDocument(_id, args, context, Resume);
     },
+    editUser: async (parent, { _id, ...args }, context) => {
+      return editDocument(_id, args, context, User);
+    },
+
     updatePendingJobs: async (parent, args, context) => {
       if (!context.user) {
         throw new AuthenticationError("login required");
@@ -161,134 +235,45 @@ const resolvers = {
       }
       return updatedCount;
     },
-    addResume: async (parent, args, context) => {
-      if (!context.user) {
-        throw AuthenticationError("login required");
-      }
 
-      const resume = await Resume.create({
-        ...args,
-        username: context.user.username,
-      });
-
-      await User.findByIdAndUpdate(
-        { _id: context.user._id },
-        { $push: { resumes: resume._id } },
-        { new: true }
-      );
-      return resume;
-    },
-    editResume: async (parent, args, context) => {
-      if (!context.user) {
-        throw AuthenticationError("login required");
-      }
-      const { _id, ...updatedFields } = args;
-      const resume = await Resume.findByIdAndUpdate(
-        _id,
-        { $set: updatedFields },
-        { new: true }
-      );
-      if (!resume) {
-        throw new Error("resume not found");
-      }
-      return resume;
-    },
-    deleteResume: async (parent, args, context) => {
-      if (!context.user) {
-        throw new AuthenticationError("login required")
-      }
-      const resume = await Resume.findByIdAndDelete(args._id);
-      await User.findByIdAndUpdate(
-        { _id: context.user._id },
-        { $pull: { resumes: resume._id } },
-        { new: true }
-      )
-      return resume
-    },
-    // resume subdocument mutations
-    addLink: async (parent, { resumeId, link, url }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError("login required");
-      }
-
-      const updatedResume = await Resume.findOneAndUpdate(
-        { _id: resumeId },
-        { $push: { links: { link, url } } },
-        { new: true, runValidators: true }
-      );
-
-      return updatedResume;
-    },
+    // Subdocument mutations
     addEducation: async (parent, { resumeId, ...args }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError("login required");
-      }
-
-      const updatedResume = await Resume.findOneAndUpdate(
-        { _id: resumeId },
-        { $push: { education: args } },
-        { new: true, runValidators: true }
-      );
-
-      return updatedResume;
+      return addSubDocument(resumeId, args, context, Resume, "education");
     },
     addExperience: async (parent, { resumeId, ...args }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError("login required");
-      }
-
-      const updatedResume = await Resume.findOneAndUpdate(
-        { _id: resumeId },
-        { $push: { experience: args } },
-        { new: true, runValidators: true }
-      );
-
-      return updatedResume;
+      return addSubDocument(resumeId, args, context, Resume, "experience");
     },
-    deleteLink: async (parent, { _id, resumeId }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError("login required");
-      }
-      try {
-        const updatedResume = await Resume.findOneAndUpdate(
-          { _id: resumeId },
-          { $pull: { links: { _id: _id } } },
-          { new: true, runValidators: true }
-        );
-        return !updatedResume ? new Error("resume not found") : updatedResume;
-      } catch (err) {
-        throw new Error("failed to delete link");
-      }
+    addLink: async (parent, { resumeId, ...args }, context) => {
+      return addSubDocument(resumeId, args, context, Resume, "links");
     },
+    addNote: async (parent, { jobId, ...args }, context) => {
+      return addSubDocument(jobId, args, context, Job, "notes");
+    },
+
+    editEducation: async (parent, { resumeId, _id, ...args }, context) => {
+      return editSubDocument(resumeId, _id, args, context, Resume, "education");
+    },
+    editExperience: async (parent, { resumeId, _id, ...args }, context) => {
+      return editSubDocument(resumeId, _id, args, context, Resume, "experience");
+    },
+    editLink: async (parent, { resumeId, _id, ...args }, context) => {
+      return editSubDocument(resumeId, _id, args, context, Resume, "links");
+    },
+    editNote: async (parent, { jobId, _id, ...args }, context) => {
+      return editSubDocument(jobId, _id, args, context, Resume, "notes");
+    },
+
     deleteEducation: async (parent, { _id, resumeId }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError("login required");
-      }
-      try {
-        const updatedResume = await Resume.findOneAndUpdate(
-          { _id: resumeId },
-          { $pull: { education: { _id: _id } } },
-          { new: true, runValidators: true }
-        );
-        return !updatedResume ? new Error("resume not found") : updatedResume;
-      } catch (err) {
-        throw new Error("failed to delete education");
-      }
+      return deleteSubDocument(resumeId, _id, Resume, context, "education");
     },
     deleteExperience: async (parent, { _id, resumeId }, context) => {
-      if (!context.user) {
-        throw new AuthenticationError("login required");
-      }
-      try {
-        const updatedResume = await Resume.findOneAndUpdate(
-          { _id: resumeId },
-          { $pull: { experience: { _id: _id } } },
-          { new: true, runValidators: true }
-        );
-        return !updatedResume ? new Error("resume not found") : updatedResume;
-      } catch (err) {
-        throw new Error("failed to delete experience");
-      }
+      return deleteSubDocument(resumeId, _id, Resume, context, "experience");
+    },
+    deleteLink: async (parent, { _id, resumeId }, context) => {
+      return deleteSubDocument(resumeId, _id, Resume, context, "links");
+    },
+    deleteNote: async (parent, { _id, jobId }, context) => {
+      return deleteSubDocument(jobId, _id, Job, context, "notes");
     },
   },
 };
