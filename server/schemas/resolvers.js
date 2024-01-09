@@ -103,7 +103,7 @@ const resolvers = {
       const user = await User.findOne({ _id: context.user._id })
         .select("-__v -password")
         .populate([
-          { path: "jobs", options: { sort: { applied: -1 } } },
+          { path: "jobs", options: { sort: { applied: -1,  company: 1} } },
           { path: "resumes", options: { sort: { applied: -1 } } },
         ]);
       return user;
