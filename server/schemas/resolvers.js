@@ -1,4 +1,4 @@
-const { User, Job, Resume } = require("../models");
+const { User, Job, Resume, Letter } = require("../models");
 const { AuthenticationError } = require("apollo-server-express");
 const { signToken } = require("../utils/auth");
 const { calculateTime } = require("../utils/helpers");
@@ -58,8 +58,8 @@ const editSubDocument = async (docId, _id, args, context, Model, subDoc) => {
       { $set: setObject },
       { new: true, runValidators: true }
     );
-    
-    return result
+
+    return result;
   } catch (err) {
     throw new Error(`edit failed: ${err}`);
   }
@@ -103,7 +103,7 @@ const resolvers = {
       const user = await User.findOne({ _id: context.user._id })
         .select("-__v -password")
         .populate([
-          { path: "jobs", options: { sort: { applied: -1,  company: 1} } },
+          { path: "jobs", options: { sort: { applied: -1, company: 1 } } },
           { path: "resumes", options: { sort: { applied: -1 } } },
         ]);
       return user;
@@ -120,6 +120,8 @@ const resolvers = {
     job: async (parent, { _id }) => Job.findOne({ _id }),
     resumes: async () => Resume.find().sort({ createdAt: -1 }),
     resume: async (parent, { _id }) => Resume.findOne({ _id }),
+    letters: async () => Letter.find().sort({ type: 1, createdAt: -1 }),
+    letter: async (parent, { _id }) => Letter.findOne({ _id }),
   },
   Mutation: {
     login: async (parent, { username, password }) => {
@@ -177,6 +179,24 @@ const resolvers = {
 
       return { token, user };
     },
+    addLetter: async (parent, args, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("login required");
+      }
+
+      const letter = await Letter.create({
+        ...args,
+        username: context.user.username,
+      });
+
+      await User.findByIdAndUpdate(
+        { _id: context.user._id },
+        { $push: { letters: letter._id } },
+        { new: true }
+      );
+
+      return letter;
+    },
 
     deleteJob: async (parent, { _id }, context) => {
       if (!context.user) {
@@ -204,6 +224,19 @@ const resolvers = {
       );
       return resume;
     },
+    deleteLetter: async (parent, { _id }, context) => {
+      if (!context.user) {
+        throw new AuthenticationError("login required");
+      }
+      const letter = await Letter.findByIdAndDelete(_id);
+
+      await User.findByIdAndUpdate(
+        { _id: context.user._id },
+        { $pull: { letters: letter._id } },
+        { new: true }
+      );
+      return letter;
+    },
 
     editJob: async (parent, { _id, ...args }, context) => {
       return editDocument(_id, args, context, Job);
@@ -213,6 +246,9 @@ const resolvers = {
     },
     editUser: async (parent, { _id, ...args }, context) => {
       return editDocument(_id, args, context, User);
+    },
+    editLetter: async (parent, { _id, ...args }, context) => {
+      return editDocument(_id, args, context, Letter);
     },
 
     updatePendingJobs: async (parent, args, context) => {
@@ -254,7 +290,14 @@ const resolvers = {
       return editSubDocument(resumeId, _id, args, context, Resume, "education");
     },
     editExperience: async (parent, { resumeId, _id, ...args }, context) => {
-      return editSubDocument(resumeId, _id, args, context, Resume, "experience");
+      return editSubDocument(
+        resumeId,
+        _id,
+        args,
+        context,
+        Resume,
+        "experience"
+      );
     },
     editLink: async (parent, { resumeId, _id, ...args }, context) => {
       return editSubDocument(resumeId, _id, args, context, Resume, "links");
