@@ -8,7 +8,7 @@ const LetterSchema = new Schema(
       required: true,
       trim: true,
     },
-    body: {
+    text: {
       type: String,
       required: true,
       trim: true,

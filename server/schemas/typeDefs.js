@@ -21,6 +21,7 @@ const typeDefs = gql`
     rate: String
     jobs: [Job]
     resumes: [Resume]
+    letters: [Letter]
   }
 
   type Job {
@@ -72,6 +73,13 @@ const typeDefs = gql`
     description: String
   }
 
+  type Letter {
+    _id: ID
+    type: String
+    text: String
+    createdAt: String
+  }
+
   type Query {
     me: User
     users: [User]
@@ -80,6 +88,8 @@ const typeDefs = gql`
     job(_id: ID!): Job
     resumes: [Resume]
     resume(_id: ID!): Resume
+    letters: [Letter]
+    letter(_id: ID!): Letter
   }
 
   type Mutation {
@@ -137,6 +147,10 @@ const typeDefs = gql`
     ): Resume
     editExperience(resumeId: ID!, _id: ID!, role: String, company: String, location: String, description: String) : Resume
     deleteExperience(resumeId: ID!, _id: ID!): Resume
+
+    addLetter(type: String!, text: String!): Letter
+    editLetter(type: String, text: String): Letter
+    deleteLetter(_id: ID!): Letter
   }
 
   type Auth {
