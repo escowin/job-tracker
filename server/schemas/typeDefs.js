@@ -149,7 +149,7 @@ const typeDefs = gql`
     deleteExperience(resumeId: ID!, _id: ID!): Resume
 
     addLetter(type: String!, text: String!): Letter
-    editLetter(type: String, text: String): Letter
+    editLetter(_id: ID!, type: String, text: String): Letter
     deleteLetter(_id: ID!): Letter
   }
 

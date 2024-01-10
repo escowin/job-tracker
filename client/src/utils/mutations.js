@@ -148,6 +148,37 @@ export const JOB_ITEMS = {
   `,
 };
 
+// letter document
+export const LETTER = {
+  ADD_LETTER: gql`
+    mutation Mutation($type: String!, $text: String!) {
+      addLetter(type: $type, text: $text) {
+        _id
+        createdAt
+        text
+        type
+      }
+    }
+  `,
+  EDIT_LETTER: gql`
+    mutation EditLetter($id: ID!, $type: String, $text: String) {
+      editLetter(_id: $id, type: $type, text: $text) {
+        _id
+        createdAt
+        type
+        text
+      }
+    }
+  `,
+  DELETE_LETTER: gql`
+    mutation DeleteLetter($id: ID!) {
+      deleteLetter(_id: $id) {
+        _id
+      }
+    }
+  `,
+};
+
 // resume document
 export const RESUME = {
   ADD_RESUME: gql`
