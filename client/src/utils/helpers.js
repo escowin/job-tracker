@@ -1,5 +1,12 @@
 import { QUERY_ME } from "./queries";
-import { USER, JOB, RESUME, JOB_ITEMS, RESUME_ITEMS } from "./mutations";
+import {
+  USER,
+  JOB,
+  RESUME,
+  JOB_ITEMS,
+  RESUME_ITEMS,
+  LETTER,
+} from "./mutations";
 import Auth from "./auth";
 
 // Formats client side strings
@@ -120,7 +127,10 @@ export const form = {
     { name: "link", type: "text", max: 50, req: true },
     { name: "url", type: "url", max: 2048, req: true },
   ],
-  // letters: [{}],
+  letters: [
+    { name: "type", type: "text", req: true },
+    { name: "text", type: "textarea", req: true },
+  ],
 };
 
 // Algorithmically returns GraphQL document schema object
@@ -135,7 +145,7 @@ export const docMutation = (doc, type) => {
         case "delete":
           return JOB.DELETE_JOB;
         default:
-          console.error(`invalid mutation: ${doc}-${type}` )
+          console.error(`invalid mutation: ${doc}-${type}`);
       }
       break;
     case "resume":
@@ -154,6 +164,17 @@ export const docMutation = (doc, type) => {
           console.log("invalid user mutation");
       }
       break;
+    case "letter":
+      switch (type) {
+        case "add":
+          return LETTER.ADD_LETTER;
+        case "edit":
+          return LETTER.EDIT_LETTER;
+        case "delete":
+          return LETTER.DELETE_LETTER;
+        default:
+          console.error(`invalid mutation: ${doc}-${type}`);
+      }
     default:
       return console.error("invalid mutation");
   }
