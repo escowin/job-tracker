@@ -42,13 +42,14 @@ export const format = {
 
 // Updates client side cache object to mirror updates in server side database
 export const updateCache = {
-  me: (cache, mutationData, virtuals) => {
+  me: (cache, mutationData, virtuals, type) => {
     try {
       const queryData = cache.readQuery({ query: QUERY_ME });
       const me = queryData?.me;
 
       if (me) {
-        const updatedJobs = [mutationData, ...me.jobs];
+        const updatedJobs =
+          type === "add" ? [mutationData, ...me.jobs] : me.jobs;
         cache.writeQuery({
           query: QUERY_ME,
           data: {
@@ -175,6 +176,7 @@ export const docMutation = (doc, type) => {
         default:
           console.error(`invalid mutation: ${doc}-${type}`);
       }
+      break;
     default:
       return console.error("invalid mutation");
   }

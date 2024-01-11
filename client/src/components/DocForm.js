@@ -44,7 +44,7 @@ function DocForm(props) {
       const mutationResult = determineMutationResult(doc, type, data);
       if (doc === "job") {
         const virtuals = fields.find((item) => item.name === "status").radios;
-        return updateCache.me(cache, mutationResult, virtuals);
+        return updateCache.me(cache, mutationResult, virtuals, type);
       } else {
         return updateCache.me(cache, mutationResult);
       }

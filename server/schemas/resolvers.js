@@ -105,6 +105,7 @@ const resolvers = {
         .populate([
           { path: "jobs", options: { sort: { applied: -1, company: 1 } } },
           { path: "resumes", options: { sort: { applied: -1 } } },
+          { path: "letters", options: { sort: { type: 1, createdAt: -1 } } },
         ]);
       return user;
     },

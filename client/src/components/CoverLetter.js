@@ -5,11 +5,13 @@
 // 4. User input tr
 
 import { useState } from "react";
-import "../assets/css/cover-letter.css";
+import { useQuery } from "@apollo/client";
+import { QUERY_LETTERS } from "../utils/queries";
+// import "../assets/css/cover-letter.css";
 
-function CoverLetter() {
+function CoverLetter({company, role}) {
   const [formState, setFormState] = useState({});
-  const fields = ["company", "address", "city", "state"];
+  const fields = ["address", "city", "state"];
   console.log(formState);
 
   const handleChange = (e) => {
@@ -43,7 +45,7 @@ function CoverLetter() {
     }),
     company: {
       hrManager: "hiring manager",
-      name: formState.company,
+      name: company,
       address: formState.address,
       city: formState.city,
       state: formState.state,
@@ -59,8 +61,8 @@ function CoverLetter() {
     ],
   };
   return (
-    <>
-      <section id="form-section">
+    <section>
+      <article id="form-section">
         <form onSubmit={handleFormSubmit} id="cover-letter-form">
           <h2>Cover letter form</h2>
           {fields.map((field, i) => (
@@ -71,29 +73,29 @@ function CoverLetter() {
           ))}
           <button type="submit">submit</button>
         </form>
-      </section>
-      <section id="contact-section">
+      </article>
+      <article id="contact-section">
         <h3>{coverLetter.me.name}</h3>
         <p>{coverLetter.me.address}</p>
         <p>{coverLetter.me.cityState}</p>
         <p>{coverLetter.me.phone}</p>
         <p>{coverLetter.me.email}</p>
-      </section>
+      </article>
 
-      <section id="date">
+      <article id="date">
         <p>{coverLetter.date}</p>
-      </section>
+      </article>
 
-      <section id="company-section">
+      <article id="company-section">
         <h3>Dear {coverLetter.company.hrManager},</h3>
         <p>{coverLetter.company.name}</p>
         <p>{coverLetter.company.address},</p>
         <p>
           {coverLetter.company.city}, {coverLetter.company.state}
         </p>
-      </section>
+      </article>
 
-      <section className="letter" id="body-section">
+      {/* <section className="letter" id="body-section">
         {coverLetter.body.map((string, i) => (
           <p key={i}>{string}</p>
         ))}
@@ -114,8 +116,8 @@ function CoverLetter() {
         {recLetter.outro.map((string, i) => (
           <p key={i}>{string}</p>
         ))}
-      </section>
-    </>
+      </section> */}
+    </section>
   );
 }
 
