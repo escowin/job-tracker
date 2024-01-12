@@ -65,7 +65,7 @@ function CoverLetter({ company, role }) {
   console.log(recLetter);
 
   return (
-    <section id="letters-section">
+    <section id="letters-section" className="display-print">
       <article id="letter-form">
         <form id="cover-letter-form">
           <h2>Cover letter details</h2>
@@ -89,7 +89,7 @@ function CoverLetter({ company, role }) {
         <div className="cover-letter">
           <p>{coverLetter.text}</p>
         </div>
-        <div className="rec-letter">
+        <div className="rec-letter break">
           <p>{recLetter}</p>
         </div>
       </article>

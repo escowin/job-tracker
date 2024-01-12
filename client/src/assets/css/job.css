@@ -159,6 +159,36 @@
         }
 
     }
-
-
 }
+
+@media print {
+
+    #job-page {
+      color: black;
+      display: flex;
+      flex-direction: column;
+      white-space: pre-line;
+  
+      & * {
+        outline: none;
+      }
+  
+      & #job-options {
+        display: none;
+      }
+  
+      & #job-profile {
+        display: none;
+      }
+    }
+  
+    #job-page .list-section,
+    #letter-form {
+      display: none;
+    }
+  
+    /* page does not break */
+    .break { 
+        break-before: page;
+    }
+  }
