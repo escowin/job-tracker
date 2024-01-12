@@ -7,35 +7,36 @@
 import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_LETTERS } from "../utils/queries";
+import { format } from "../utils/helpers";
 // import "../assets/css/cover-letter.css";
 
-function CoverLetter({company, role}) {
+function CoverLetter({ company, role }) {
+  // query letters
+  // split letters array by type ('cover', 'rec')
+  // display cover letters as a list of radios (listed & organized by date)
+  // - ensures only one cover letter can be active
+  // display rec letters as a list of checkboxes
+  // - allows multiple rec letters to be added, viewable only in print media query
   const [formState, setFormState] = useState({});
-  const fields = ["address", "city", "state"];
+  const fields = ["address", "tech"];
   console.log(formState);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormState(prevState => ({
+    setFormState((prevState) => ({
       ...prevState,
-      [name]: value.trim()
+      [name]: value.trim(),
     }));
   };
 
-  const handleFormSubmit = (e) => {
-    e.preventDefault();
-    console.log("form submit");
-
-    try {
-      console.log(formState);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  // test purposes only
+  const string =
+    "808 Main St\nManhattan, New York 12098\n310.500.1234\nuser@example.co";
 
   const coverLetter = {
     me: {
-      // name, email, phone, address
+      name: "Patrick Bateman",
+      contact: string,
     },
     date: new Date().toLocaleString("en-us", {
       month: "long",
@@ -47,8 +48,6 @@ function CoverLetter({company, role}) {
       hrManager: "hiring manager",
       name: company,
       address: formState.address,
-      city: formState.city,
-      state: formState.state,
     },
     body: [
       // cover letter data queried from server
@@ -61,38 +60,28 @@ function CoverLetter({company, role}) {
     ],
   };
   return (
-    <section>
-      <article id="form-section">
-        <form onSubmit={handleFormSubmit} id="cover-letter-form">
-          <h2>Cover letter form</h2>
+    <section id="cover-letter-section">
+      <article id="letter-form">
+        <form id="cover-letter-form">
+          <h2>Cover letter details</h2>
           {fields.map((field, i) => (
             <label key={i} htmlFor={field}>
               {field}
               <input name={field} id={field} onChange={handleChange} />
             </label>
           ))}
-          <button type="submit">submit</button>
         </form>
       </article>
-      <article id="contact-section">
-        <h3>{coverLetter.me.name}</h3>
-        <p>{coverLetter.me.address}</p>
-        <p>{coverLetter.me.cityState}</p>
-        <p>{coverLetter.me.phone}</p>
-        <p>{coverLetter.me.email}</p>
-      </article>
-
-      <article id="date">
-        <p>{coverLetter.date}</p>
-      </article>
-
-      <article id="company-section">
-        <h3>Dear {coverLetter.company.hrManager},</h3>
-        <p>{coverLetter.company.name}</p>
-        <p>{coverLetter.company.address},</p>
-        <p>
-          {coverLetter.company.city}, {coverLetter.company.state}
-        </p>
+      <article id="cover-letter">
+        <div class="letter-header">
+          <h3>{coverLetter.me.name}</h3>
+          <p>{`${coverLetter.me.contact}\n\n`}</p>
+          <p>{`${coverLetter.date}\n\n`}</p>
+          <h3>Dear {coverLetter.company.hrManager},</h3>
+          <p>{coverLetter.company.name}</p>
+          <p>{format.newLine(coverLetter.company.address)}</p>
+        </div>
+        <div class="letter-body">{coverLetter.text}</div>
       </article>
 
       {/* <section className="letter" id="body-section">

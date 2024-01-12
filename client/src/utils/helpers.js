@@ -38,6 +38,23 @@ export const format = {
       .toLowerCase();
     return formattedString;
   },
+  newLine: (string) => {
+    const regex = /,/;
+
+    if (regex.test(string)) {
+      // Use replace with the regex to insert `\n` after the second comma
+      const modifiedString = string.replace(regex, (match) =>
+        match.replace(",", "\n")
+      );
+      console.log(modifiedString);
+      return modifiedString;
+    } else {
+      // If there isn't a second comma, return the original string
+      return string;
+    }
+    // insert a `\n` after the second comma `,`
+    // ie "Austin, TX, USA" becomes "Austin, TX,\n USA"
+  },
 };
 
 // Updates client side cache object to mirror updates in server side database
