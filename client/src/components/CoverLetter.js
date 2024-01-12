@@ -1,9 +1,3 @@
-// SEQUENCE
-// 1. Import libraries and dependencies
-// 2. Define the CoverLetter component function
-// 3. Set up state management variables
-// 4. User input tr
-
 import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_LETTERS } from "../utils/queries";
@@ -17,6 +11,19 @@ function CoverLetter({ company, role }) {
   // - ensures only one cover letter can be active
   // display rec letters as a list of checkboxes
   // - allows multiple rec letters to be added, viewable only in print media query
+  const { loading, data } = useQuery(QUERY_LETTERS);
+  console.log(loading);
+
+  const letters = {
+    cover: data?.letters
+      ? data.letters.filter((letter) => letter.type === "cover")
+      : [],
+    rec: data?.letters
+      ? data.letters.filter((letter) => letter.type === "rec")
+      : [],
+  };
+
+  console.log(letters);
   const [formState, setFormState] = useState({});
   const fields = ["address", "tech"];
   console.log(formState);
@@ -49,18 +56,16 @@ function CoverLetter({ company, role }) {
       name: company,
       address: formState.address,
     },
-    body: [
-      // cover letter data queried from server
-    ],
+    // hardcoded index value for testing purposes only
+    text: letters.cover[0]?.text.replace(/{job}/, role) || "",
   };
 
-  const recLetter = {
-    body: [
-      // rec letter data queried from server
-    ],
-  };
+  // hardcoded index value for testing purposes only
+  const recLetter = letters.rec[0]?.text;
+  console.log(recLetter);
+
   return (
-    <section id="cover-letter-section">
+    <section id="letters-section">
       <article id="letter-form">
         <form id="cover-letter-form">
           <h2>Cover letter details</h2>
@@ -72,8 +77,8 @@ function CoverLetter({ company, role }) {
           ))}
         </form>
       </article>
-      <article id="cover-letter">
-        <div class="letter-header">
+      <article id="letters">
+        <div className="letter-header">
           <h3>{coverLetter.me.name}</h3>
           <p>{`${coverLetter.me.contact}\n\n`}</p>
           <p>{`${coverLetter.date}\n\n`}</p>
@@ -81,31 +86,13 @@ function CoverLetter({ company, role }) {
           <p>{coverLetter.company.name}</p>
           <p>{format.newLine(coverLetter.company.address)}</p>
         </div>
-        <div class="letter-body">{coverLetter.text}</div>
+        <div className="cover-letter">
+          <p>{coverLetter.text}</p>
+        </div>
+        <div className="rec-letter">
+          <p>{recLetter}</p>
+        </div>
       </article>
-
-      {/* <section className="letter" id="body-section">
-        {coverLetter.body.map((string, i) => (
-          <p key={i}>{string}</p>
-        ))}
-        <p>Thank you,</p>
-        <p>{me.name}</p>
-      </section>
-
-      <div className="pagebreak"></div>
-
-      <section className="letter" id="cover-letter">
-        <h3>Recommendation letter</h3>
-        {recLetter.body.map((string, i) => (
-          <p key={i}>{string}</p>
-        ))}
-      </section>
-
-      <section className="letter-details">
-        {recLetter.outro.map((string, i) => (
-          <p key={i}>{string}</p>
-        ))}
-      </section> */}
     </section>
   );
 }

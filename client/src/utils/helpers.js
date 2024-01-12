@@ -38,22 +38,14 @@ export const format = {
       .toLowerCase();
     return formattedString;
   },
+  // Replaces the first comma in the string with a new line
   newLine: (string) => {
     const regex = /,/;
+    const result = regex.test(string)
+      ? string.replace(regex, (match) => match.replace(",", "\n"))
+      : string;
 
-    if (regex.test(string)) {
-      // Use replace with the regex to insert `\n` after the second comma
-      const modifiedString = string.replace(regex, (match) =>
-        match.replace(",", "\n")
-      );
-      console.log(modifiedString);
-      return modifiedString;
-    } else {
-      // If there isn't a second comma, return the original string
-      return string;
-    }
-    // insert a `\n` after the second comma `,`
-    // ie "Austin, TX, USA" becomes "Austin, TX,\n USA"
+    return result;
   },
 };
 
