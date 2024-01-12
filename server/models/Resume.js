@@ -66,8 +66,6 @@ const ResumeSchema = new Schema(
     education: [EducationSchema],
     experience: [ExperienceSchema],
     links: [LinkSchema],
-    //  tbd fields
-    //   letters: [LetterSchema],
   },
   {
     toJSON: { getters: true },

@@ -8,6 +8,7 @@ import JobOptions from "../components/JobOptions";
 import DocProfile from "../components/DocProfile";
 import DocForm from "../components/DocForm";
 import "../assets/css/job.css";
+import CoverLetter from "../components/CoverLetter";
 
 function Job({ setMain }) {
   // state variables
@@ -46,6 +47,7 @@ function Job({ setMain }) {
         <DocProfile doc={job} title={job.role} className={job.status} />
       )}
       <JobNotes notes={job.notes} jobId={job._id} status={job.status} />
+      <CoverLetter company={job.company} role={job.role} />
     </>
   );
 }

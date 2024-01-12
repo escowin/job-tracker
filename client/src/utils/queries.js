@@ -14,6 +14,12 @@ export const QUERY_ME = gql`
         applied
         noteCount
       }
+      letters {
+        _id
+        createdAt
+        text
+        type
+      }
       noResponseCount
       rejectedCount
       waitlistedCount
@@ -89,6 +95,28 @@ export const QUERY_JOB = gql`
         interview
         createdAt
       }
+    }
+  }
+`;
+
+export const QUERY_LETTER = gql`
+  query Letter($id: ID!) {
+    letter(_id: $id) {
+      _id
+      createdAt
+      text
+      type
+    }
+  }
+`;
+
+export const QUERY_LETTERS = gql`
+  query Letter {
+    letters {
+      _id
+      createdAt
+      type
+      text
     }
   }
 `;

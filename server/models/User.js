@@ -57,6 +57,12 @@ const UserSchema = new Schema(
         ref: "Resume",
       },
     ],
+    letters: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Letter"
+      }
+    ]
   },
   {
     toJSON: {

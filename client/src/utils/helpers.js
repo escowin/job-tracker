@@ -1,5 +1,12 @@
 import { QUERY_ME } from "./queries";
-import { USER, JOB, RESUME, JOB_ITEMS, RESUME_ITEMS } from "./mutations";
+import {
+  USER,
+  JOB,
+  RESUME,
+  JOB_ITEMS,
+  RESUME_ITEMS,
+  LETTER,
+} from "./mutations";
 import Auth from "./auth";
 
 // Formats client side strings
@@ -31,17 +38,27 @@ export const format = {
       .toLowerCase();
     return formattedString;
   },
+  // Replaces the first comma in the string with a new line
+  newLine: (string) => {
+    const regex = /,/;
+    const result = regex.test(string)
+      ? string.replace(regex, (match) => match.replace(",", "\n"))
+      : string;
+
+    return result;
+  },
 };
 
 // Updates client side cache object to mirror updates in server side database
 export const updateCache = {
-  me: (cache, mutationData, virtuals) => {
+  me: (cache, mutationData, virtuals, type) => {
     try {
       const queryData = cache.readQuery({ query: QUERY_ME });
       const me = queryData?.me;
 
       if (me) {
-        const updatedJobs = [mutationData, ...me.jobs];
+        const updatedJobs =
+          type === "add" ? [mutationData, ...me.jobs] : me.jobs;
         cache.writeQuery({
           query: QUERY_ME,
           data: {
@@ -120,7 +137,10 @@ export const form = {
     { name: "link", type: "text", max: 50, req: true },
     { name: "url", type: "url", max: 2048, req: true },
   ],
-  // letters: [{}],
+  letters: [
+    { name: "type", type: "text", req: true },
+    { name: "text", type: "textarea", req: true },
+  ],
 };
 
 // Algorithmically returns GraphQL document schema object
@@ -135,7 +155,7 @@ export const docMutation = (doc, type) => {
         case "delete":
           return JOB.DELETE_JOB;
         default:
-          console.error(`invalid mutation: ${doc}-${type}` )
+          console.error(`invalid mutation: ${doc}-${type}`);
       }
       break;
     case "resume":
@@ -152,6 +172,18 @@ export const docMutation = (doc, type) => {
           return USER.EDIT_USER;
         default:
           console.log("invalid user mutation");
+      }
+      break;
+    case "letter":
+      switch (type) {
+        case "add":
+          return LETTER.ADD_LETTER;
+        case "edit":
+          return LETTER.EDIT_LETTER;
+        case "delete":
+          return LETTER.DELETE_LETTER;
+        default:
+          console.error(`invalid mutation: ${doc}-${type}`);
       }
       break;
     default:

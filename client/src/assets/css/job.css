@@ -129,7 +129,66 @@
 }
 
 @media screen and (min-width: 1024px) {
-    .aside button {
-        padding: .15rem 1rem;
+    #job-page {
+        & .aside button {
+            padding: .15rem 1rem;
+        }
+
+        & #letters-section {
+            grid-column: 1 / -1;
+            max-height: 50vh;
+            flex-direction: row;
+
+            & #cover-letter-form {
+                display: flex;
+                flex-direction: column;
+                row-gap: 1rem;
+
+                & label {
+                    display: grid;
+                }
+            }
+
+            & #letters {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+                overflow-y: scroll;
+                white-space: pre-line;
+            }
+        }
+
     }
+}
+
+@media print {
+    #root * {
+        height: initial;
+        outline: none;
+        font-variant: normal;
+        overflow-y: initial;
+    }
+
+    #job-page {
+        color: black;
+        display: flex;
+        flex-direction: column;
+        white-space: pre-line;
+        line-height: 1.5;
+
+        & #job-options,
+        #job-profile {
+            display: none;
+        }
+
+        & section .break {
+            break-after: page;
+        }
+    }
+
+    #job-page .list-section,
+    #letter-form {
+        display: none;
+    }
+
 }

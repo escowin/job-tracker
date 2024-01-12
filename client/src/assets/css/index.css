@@ -47,7 +47,8 @@
   color: var(--red);
 }
 
-.pending, .active {
+.pending,
+.active {
   color: var(--green);
 }
 
@@ -351,4 +352,18 @@ ul {
     grid-column: span 1;
   }
 
+}
+
+@media print {
+
+  header,
+  footer,
+  ::-webkit-scrollbar {
+    display: none;
+  }
+
+  #root {
+    height: initial;
+    overflow-y: initial;
+  }
 }
