@@ -162,33 +162,33 @@
 }
 
 @media print {
+    #root * {
+        height: initial;
+        outline: none;
+        font-variant: normal;
+        overflow-y: initial;
+    }
 
     #job-page {
-      color: black;
-      display: flex;
-      flex-direction: column;
-      white-space: pre-line;
-  
-      & * {
-        outline: none;
-      }
-  
-      & #job-options {
-        display: none;
-      }
-  
-      & #job-profile {
-        display: none;
-      }
+        color: black;
+        display: flex;
+        flex-direction: column;
+        white-space: pre-line;
+        line-height: 1.5;
+
+        & #job-options,
+        #job-profile {
+            display: none;
+        }
+
+        & section .break {
+            break-after: page;
+        }
     }
-  
+
     #job-page .list-section,
     #letter-form {
-      display: none;
+        display: none;
     }
-  
-    /* page does not break */
-    .break { 
-        break-before: page;
-    }
-  }
+
+}

@@ -361,4 +361,9 @@ ul {
   ::-webkit-scrollbar {
     display: none;
   }
+
+  #root {
+    height: initial;
+    overflow-y: initial;
+  }
 }

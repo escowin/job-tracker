@@ -86,11 +86,12 @@ function CoverLetter({ company, role }) {
           <p>{coverLetter.company.name}</p>
           <p>{format.newLine(coverLetter.company.address)}</p>
         </div>
-        <div className="cover-letter">
-          <p>{coverLetter.text}</p>
+        <div className="letter cover-letter break">
+          <p>{`\n${coverLetter.text}`}</p>
         </div>
-        <div className="rec-letter break">
-          <p>{recLetter}</p>
+        <div className="letter rec-letter ">
+          <h4>Recommendation letter</h4>
+          <p>{`\n${recLetter}\n`}</p>
         </div>
       </article>
     </section>
