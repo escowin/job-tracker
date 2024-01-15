@@ -16,7 +16,6 @@ function Home({ setMain }) {
   const { loading, data } = useQuery(QUERY_ME);
   const user = data?.me || [];
   const jobs = user?.jobs || [];
-  console.log(user)
 
   // form component renders by tracking the state of the display width
   const [minWidth, setMinWidth] = useState(window.innerWidth >= 750);

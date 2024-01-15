@@ -30,6 +30,7 @@ import Job from "./pages/Job";
 import Page404 from "./pages/Page404";
 import Profile from "./pages/Profile";
 import AddJob from "./pages/AddJob";
+import Letters from "./pages/Letters";
 import "./assets/css/index.css";
 
 // Apollo client variables
@@ -82,6 +83,7 @@ const routes = [
   { path: "/job/:id", element: <Job /> },
   { path: "/add-job", element: <AddJob /> },
   { path: "/profile", element: <Profile /> },
+  { path: "/letters", element: <Letters />},
   { path: "/login", element: <Login doc={"user"} type={"login"} /> },
   { path: "/signup", element: <Login doc={"user"} type={"sign-up"} /> },
   { path: "*", element: <Page404 /> },
