@@ -31,11 +31,13 @@ import {
 import "../assets/css/job-form.css";
 
 function DocForm(props) {
+  console.log(props)
   const { initialValues, setEditSelected, doc, type, className } = props;
   // Conditionally handling to account for unique mutations
   const fields =
     type === "login" || type === "sign-up" ? form.login : form[doc];
 
+    console.log(fields)
   // Server-related variables
   // - Variable is a dynamically defined GraphQL schema object
   const [document, { error }] = useMutation(docMutation(doc, type), {
