@@ -140,7 +140,7 @@ export const JOB_ITEMS = {
     }
   `,
   DELETE_NOTE: gql`
-    mutation deleteNote($id: ID!, $jobId: String!) {
+    mutation deleteNote($id: ID!, $jobId: ID!) {
       deleteNote(_id: $id, jobId: $jobId) {
         _id
       }

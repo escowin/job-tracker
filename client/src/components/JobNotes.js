@@ -9,7 +9,7 @@ function JobNotes({ notes, jobId, status }) {
     update(cache, { data }) {
       const { job } = cache.readQuery({
         query: QUERY_JOB,
-        variables: { id: jobId },
+        variables: { id: jobId,  },
       });
       // array is composed of objects that don't match the deleted note's id
       const updatedNotes = job.notes.filter(
