@@ -154,7 +154,6 @@
                 flex-direction: column;
                 gap: 1rem;
                 overflow-y: scroll;
-                white-space: pre-line;
             }
         }
 

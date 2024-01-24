@@ -115,8 +115,8 @@ export const form = {
     { name: "lastName", type: "text" },
     { name: "email", type: "email" },
     { name: "phone", type: "tel", min: 5, max: 24 },
-    { name: "location", type: "text", ma: 50 },
-    { name: "currentCompany", type: "text", ma: 50 },
+    { name: "location", type: "text", max: 50 },
+    { name: "currentCompany", type: "text", max: 50 },
   ],
   letter: [
     { name: "type", type: "radio", radios: ["cover", "rec"], req: true },

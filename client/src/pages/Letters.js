@@ -4,6 +4,7 @@ import { QUERY_LETTERS } from "../utils/queries";
 import Auth from "../utils/auth";
 import { format } from "../utils/helpers";
 import DocForm from "../components/DocForm";
+import "../assets/css/letters.css"
 
 function Letters({ setMain }) {
   const loggedIn = Auth.loggedIn();

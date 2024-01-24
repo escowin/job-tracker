@@ -80,6 +80,7 @@
   height: 100vh;
   overflow-y: hidden;
   font-family: 'Assistant', sans-serif;
+  white-space: pre-line;
 }
 
 .App {
