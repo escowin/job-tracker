@@ -115,8 +115,12 @@ export const form = {
     { name: "lastName", type: "text" },
     { name: "email", type: "email" },
     { name: "phone", type: "tel", min: 5, max: 24 },
-    { name: "location", type: "text", ma: 50 },
-    { name: "currentCompany", type: "text", ma: 50 },
+    { name: "location", type: "text", max: 50 },
+    { name: "currentCompany", type: "text", max: 50 },
+  ],
+  letter: [
+    { name: "type", type: "radio", radios: ["cover", "rec"], req: true },
+    { name: "text", type: "textarea", req: true },
   ],
   // Sub-document mutation forms
   notes: [
@@ -136,10 +140,6 @@ export const form = {
   links: [
     { name: "link", type: "text", max: 50, req: true },
     { name: "url", type: "url", max: 2048, req: true },
-  ],
-  letters: [
-    { name: "type", type: "text", req: true },
-    { name: "text", type: "textarea", req: true },
   ],
 };
 

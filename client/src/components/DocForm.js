@@ -31,11 +31,13 @@ import {
 import "../assets/css/job-form.css";
 
 function DocForm(props) {
+  // console.log(props);
   const { initialValues, setEditSelected, doc, type, className } = props;
   // Conditionally handling to account for unique mutations
   const fields =
     type === "login" || type === "sign-up" ? form.login : form[doc];
 
+  // console.log(fields);
   // Server-related variables
   // - Variable is a dynamically defined GraphQL schema object
   const [document, { error }] = useMutation(docMutation(doc, type), {
@@ -66,7 +68,14 @@ function DocForm(props) {
     const docFields = {};
     fields.forEach((field) => {
       if (field.type === "date") {
-        const today = new Date().toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' }).split('/').join('/');
+        const today = new Date()
+          .toLocaleDateString("en-CA", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          })
+          .split("/")
+          .join("/");
         docFields[field.name] = initialValues[field.name] || today;
       } else if (field.name === "source") {
         docFields[field.name] = initialValues[field.name] || "company";
@@ -80,6 +89,7 @@ function DocForm(props) {
     setFormState(docFields);
   }, [initialValues, fields]);
 
+  console.log(formState)
   // Handles changes in input fields
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -137,6 +147,21 @@ function DocForm(props) {
               </label>
             ))}
           </fieldset>
+        );
+      case "textarea":
+        return (
+          <label key={i} className="wrapper" htmlFor={field.name}>
+            <textarea
+             id={field.name}
+             name={field.name}
+             minLength={field.min ? field.min : null}
+             maxLength={field.max ? field.max : null}
+             required={field.req ? field.req : null}
+             value={formState[field.name] || ""}
+             onChange={handleChange}
+             autoComplete="off"
+             ></textarea>
+          </label>
         );
       default:
         return (

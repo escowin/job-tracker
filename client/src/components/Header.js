@@ -7,6 +7,7 @@ function Header() {
   const navLinks = [
     { name: "add job", path: "add-job", class: "hide-m" },
     { name: "profile", path: "profile", class: "" },
+    { name: "letters", path: "letters", class: "" },
   ];
   const [currentLink, setCurrentLink] = useState("");
 
