@@ -57,3 +57,23 @@
         margin-right: .25rem;
     }
 }
+
+@media screen and (min-width: 1024px) {
+    #edit-job {
+        grid-template-columns: repeat(5, 1fr);
+
+        & label[for="company"],
+        button {
+            grid-column: span 1;
+        }
+
+        & .wrapper {
+            gap: 0;
+        }
+
+        & button {
+            height: max-content;
+            margin-top: 1rem;
+        }
+    }
+}

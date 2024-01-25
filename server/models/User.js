@@ -35,10 +35,20 @@ const UserSchema = new Schema(
       min: 5,
       max: 24,
     },
+    address: {
+      type: String,
+      trim: true,
+      max: 100,
+    },
     location: {
       type: String,
       trim: true,
       max: 50,
+    },
+    zip: {
+      type: Number,
+      trim: true,
+      max: 10
     },
     currentCompany: {
       type: String,

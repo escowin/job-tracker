@@ -9,7 +9,9 @@ const typeDefs = gql`
     lastName: String
     email: String
     phone: String
+    address: String
     location: String
+    zip: Int
     currentCompany: String
     rejectedCount: Int
     noResponseCount: Int
@@ -101,7 +103,9 @@ const typeDefs = gql`
       lastName: String
       email: String
       phone: String
+      address: String
       location: String
+      zip: Int
       currentCompany: String
     ): User
 

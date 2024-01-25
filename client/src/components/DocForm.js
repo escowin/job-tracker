@@ -89,7 +89,6 @@ function DocForm(props) {
     setFormState(docFields);
   }, [initialValues, fields]);
 
-  console.log(formState)
   // Handles changes in input fields
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -102,12 +101,18 @@ function DocForm(props) {
 
     // Carries out client-server communication
     try {
+      // User details form checks & parses string to num type to allow mutation w/ zip to go through
+      if (formState.zip) {
+        formState.zip = parseInt(formState.zip)
+      }
+
       // Sets the object to mirror the GraphQL schema
       const mutation = {
         ...formState,
         ...(type === "edit" ? { id: initialValues._id } : {}),
       };
 
+      console.log(formState)
       // Conditionally determines mutation sequence
       if (type === "login" || type === "sign-up") {
         const { data } = await document({ variables: mutation });

@@ -5,6 +5,13 @@ export const QUERY_ME = gql`
     me {
       _id
       username
+      firstName
+      lastName
+      email
+      phone
+      address
+      location
+      zip
       jobs {
         _id
         company
@@ -41,7 +48,9 @@ export const QUERY_PROFILE = gql`
       lastName
       email
       phone
+      address
       location
+      zip
       currentCompany
       resumes {
         _id
