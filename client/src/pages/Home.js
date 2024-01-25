@@ -9,13 +9,33 @@ import DocProfile from "../components/DocProfile";
 import DocForm from "../components/DocForm";
 import "../assets/css/home.css";
 
-function Home({ setMain }) {
+function Home({ setMain, setContactInfo }) {
   // user info is dependent in being logged in
   const loggedIn = Auth.loggedIn();
   const [updatePendingJobs, { error }] = useMutation(JOB.UPDATE_PENDING_JOBS);
   const { loading, data } = useQuery(QUERY_ME);
   const user = data?.me || [];
   const jobs = user?.jobs || [];
+
+// Updates the contact information state variable in the App component when user data is available, ensuring the cover letter header in the Job component displays accurate information.
+useEffect(() => {
+    if (data && data.me) {
+      const userInfo = data.me;
+      const contactInfo = `${userInfo.firstName} ${userInfo.lastName}\n${userInfo.address}\n${userInfo.location} ${userInfo.zip}\n${userInfo.phone}\n${userInfo.email}`;
+      setContactInfo(contactInfo);
+    }
+  }, [data, setContactInfo]);
+
+  const overview = { 
+    __typename: user.__typename,
+    username: user.username,
+    rejectedCount: user.rejectedCount,
+    waitlistedCount: user.waitlistedCount,
+    pendingCount: user.pendingCount,
+    interviewingCount: user.interviewingCount,
+    hiredCount: user.hiredCount,
+    rate: user.rate,
+  }
 
   // form component renders by tracking the state of the display width
   const [minWidth, setMinWidth] = useState(window.innerWidth >= 750);
@@ -55,11 +75,11 @@ function Home({ setMain }) {
             />
           )}
           <DocProfile
-            doc={user}
+            doc={overview}
             className={""}
             title={`${user.username} overview`}
           />
-          <JobLists jobs={jobs} />
+          <JobLists jobs={jobs}/>
         </>
       ) : (
         <section className="message">

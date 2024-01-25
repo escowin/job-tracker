@@ -10,7 +10,7 @@ import DocForm from "../components/DocForm";
 import "../assets/css/job.css";
 import CoverLetter from "../components/CoverLetter";
 
-function Job({ setMain }) {
+function Job({ setMain, contactInfo }) {
   // state variables
   const [editSelected, setEditSelected] = useState(false);
   useEffect(() => setMain("job"), [setMain]);
@@ -47,7 +47,7 @@ function Job({ setMain }) {
         <DocProfile doc={job} title={job.role} className={job.status} />
       )}
       <JobNotes notes={job.notes} jobId={job._id} status={job.status} />
-      <CoverLetter company={job.company} role={job.role} />
+      <CoverLetter company={job.company} role={job.role} contactInfo={contactInfo} />
     </>
   );
 }

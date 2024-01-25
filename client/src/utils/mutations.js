@@ -33,7 +33,9 @@ export const USER = {
       $lastName: String
       $email: String
       $phone: String
+      $address: String
       $location: String
+      $zip: Int
       $currentCompany: String
     ) {
       editUser(
@@ -42,7 +44,9 @@ export const USER = {
         lastName: $lastName
         email: $email
         phone: $phone
+        address: $address
         location: $location
+        zip: $zip
         currentCompany: $currentCompany
       ) {
         _id
@@ -50,7 +54,9 @@ export const USER = {
         lastName
         email
         phone
+        address
         location
+        zip
         currentCompany
       }
     }

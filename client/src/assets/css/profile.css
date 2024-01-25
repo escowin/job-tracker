@@ -23,7 +23,8 @@
     & #profile-section {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: repeat(6, min-content);
+        /* scalable rows w/ consistent height */
+        grid-template-rows: repeat(auto-fill, minmax(min-content, 1rem));
         gap: .25rem;
 
         .edit-button {

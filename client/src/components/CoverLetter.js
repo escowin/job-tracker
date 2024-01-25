@@ -2,12 +2,8 @@ import { useState } from "react";
 import { useQuery } from "@apollo/client";
 import { QUERY_LETTERS } from "../utils/queries";
 import { format } from "../utils/helpers";
-// import "../assets/css/cover-letter.css";
 
-// testing purposes only
-import { contactInfo } from "../utils/mockData";
-
-function CoverLetter({ company, role }) {
+function CoverLetter({ company, role, contactInfo }) {
   // query letters
   // split letters array by type ('cover', 'rec')
   // display cover letters as a list of radios (listed & organized by date)
@@ -37,7 +33,7 @@ function CoverLetter({ company, role }) {
   };
 
   const coverLetter = {
-    // hardcoded string for test purposes only
+    // contactInfo set by Home, passed down as prop from App > Job > CoverLetter 
     me: contactInfo,
     date: new Date().toLocaleString("en-us", {
       month: "long",
@@ -48,7 +44,7 @@ function CoverLetter({ company, role }) {
     company: `Hiring Manager,\n${company}\n${format.newLine(
       formState.address
     )}`,
-    // hardcoded index value for testing purposes only
+    // hardcoded bracket notation for testing purposes
     text:
       letters.cover[0]?.text
         .replace(/{job}/, role)
@@ -58,9 +54,7 @@ function CoverLetter({ company, role }) {
         ) || "",
   };
 
-  // hardcoded index value for testing purposes only
   const recLetters = letters.rec;
-  console.log(recLetters);
 
   if (loading) {
     return <section id="letters-section">loading...</section>;

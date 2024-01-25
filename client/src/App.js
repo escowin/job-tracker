@@ -83,7 +83,7 @@ const routes = [
   { path: "/job/:id", element: <Job /> },
   { path: "/add-job", element: <AddJob /> },
   { path: "/profile", element: <Profile /> },
-  { path: "/letters", element: <Letters />},
+  { path: "/letters", element: <Letters /> },
   { path: "/login", element: <Login doc={"user"} type={"login"} /> },
   { path: "/signup", element: <Login doc={"user"} type={"sign-up"} /> },
   { path: "*", element: <Page404 /> },
@@ -91,8 +91,8 @@ const routes = [
 
 // Objects of 'routes' array are mapped to maintain a concise JSX return
 function App() {
-  // to-do: automate this pattern further
   const [main, setMain] = useState("");
+  const [contactInfo, setContactInfo] = useState("");
 
   return (
     <ApolloProvider client={client}>
@@ -105,7 +105,13 @@ function App() {
                 <Route
                   key={i}
                   path={route.path}
-                  element={React.cloneElement(route.element, { setMain })}
+                  element={React.cloneElement(route.element, {
+                    setMain,
+                    // Home component sets state based on queried data
+                    ...(route.path === "/" ? { setContactInfo } : {}),
+                    // Job component renders cover letter header w/ state data
+                    ...(route.path === "/job/:id" ? { contactInfo } : {}),
+                  })}
                 />
               ))}
             </Routes>
