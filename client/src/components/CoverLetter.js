@@ -15,7 +15,6 @@ function CoverLetter({ company, role }) {
   // display rec letters as a list of checkboxes
   // - allows multiple rec letters to be added, viewable only in print media query
   const { loading, data } = useQuery(QUERY_LETTERS);
-  console.log(loading);
 
   const letters = {
     cover: data?.letters
@@ -46,7 +45,9 @@ function CoverLetter({ company, role }) {
       year: "numeric",
       timeZone: "America/Chicago",
     }),
-    company: `Hiring Manager,\n${company}\n${format.newLine(formState.address)}`,
+    company: `Hiring Manager,\n${company}\n${format.newLine(
+      formState.address
+    )}`,
     // hardcoded index value for testing purposes only
     text:
       letters.cover[0]?.text
@@ -58,8 +59,12 @@ function CoverLetter({ company, role }) {
   };
 
   // hardcoded index value for testing purposes only
-  const recLetter = letters.rec[0]?.text;
-  console.log(recLetter);
+  const recLetters = letters.rec;
+  console.log(recLetters);
+
+  if (loading) {
+    return <section id="letters-section">loading...</section>;
+  }
 
   return (
     <section id="letters-section" className="display-print">
@@ -84,10 +89,12 @@ function CoverLetter({ company, role }) {
         <div className="letter cover-letter break">
           <p>{`\n${coverLetter.text}`}</p>
         </div>
-        <div className="letter rec-letter ">
-          <h3>Recommendation letter</h3>
-          <p>{`\n${recLetter}\n`}</p>
-        </div>
+        {recLetters.map((letter, i) => (
+          <div key={i} className="letter rec-letter break">
+            <h3>Recommendation letter</h3>
+            <p>{`\n${letter.text}\n`}</p>
+          </div>
+        ))}
       </article>
     </section>
   );
