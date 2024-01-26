@@ -33,7 +33,7 @@ function CoverLetter({ company, role, contactInfo }) {
   };
 
   const coverLetter = {
-    // contactInfo set by Home, passed down as prop from App > Job > CoverLetter 
+    // contactInfo set by Home, passed down as prop from App > Job > CoverLetter
     me: contactInfo,
     date: new Date().toLocaleString("en-us", {
       month: "long",
@@ -63,6 +63,8 @@ function CoverLetter({ company, role, contactInfo }) {
   return (
     <section id="letters-section" className="display-print">
       <article id="letter-form">
+        <button className="print-btn" onClick={() => window.print()}>print</button>
+
         <form id="cover-letter-form">
           <h2>Cover letter details</h2>
           {fields.map((field, i) => (

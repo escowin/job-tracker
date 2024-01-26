@@ -1,4 +1,7 @@
 #job-page {
+    & .print-btn {
+        padding: .15rem 1rem;
+    }
 
     /* section | job options */
     & #job-options {

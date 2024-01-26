@@ -61,7 +61,6 @@ function DocForm(props) {
 
   // sets up form state management
   const [formState, setFormState] = useState({});
-  console.log(formState)
 
   // populates form state with profile data when component mounts
   useEffect(() => {
