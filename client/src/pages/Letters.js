@@ -27,14 +27,13 @@ function Letters({ setMain }) {
   const handleClick = (type) => {
     switch (type) {
       case "add":
-        setDisplayForm(true);
-        setFormType("add");
-        break;
       case "edit":
-        // Loads selected array-object data in state to pass into DocForm
-        setInitialValues(selectedLetterData);
         setDisplayForm(true);
-        setFormType("edit");
+        setFormType(type);
+        // Loads selected letter into initial values for editing
+        if (type === "edit") {
+          setInitialValues(selectedLetterData);
+        }
         break;
       case "delete":
         console.log(`logic ${type}`);
@@ -43,6 +42,12 @@ function Letters({ setMain }) {
         console.log(`invalid ${type}`);
     }
   };
+
+  // Clicking on a letter will close the form component (if displayed) then load the profile section
+  const handleSelection = (id) => {
+    setDisplayForm(false)
+    setSelectedLetter(id)
+  }
 
   if (!loggedIn) {
     return <section>log in to view contents</section>;
@@ -59,7 +64,7 @@ function Letters({ setMain }) {
         <button onClick={() => handleClick("add")}>add</button>
         <ul id="letters-list">
           {letters.map((letter, i) => (
-            <li key={i} onClick={() => setSelectedLetter(letter._id)}>
+            <li key={i} onClick={() => handleSelection(letter._id)}>
               <span>{letter.type}</span>
               <span>{format.date(letter.createdAt)}</span>
             </li>

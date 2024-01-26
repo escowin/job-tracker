@@ -1,3 +1,15 @@
+#letters-page {
+    & .profile-section div {
+        display: flex;
+        gap: 1.5rem;
+
+        & button {
+            padding: .15rem 2rem;
+        }
+    }
+}
+
+
 @media screen and (min-width: 1024px) {
     #letters-page {
         display: flex;
@@ -10,13 +22,14 @@
 
         & .list-section {
             width: 25vw;
+
             & #letters-list li {
                 display: grid;
                 grid-template-columns: 2rem 1fr;
                 gap: 1rem;
             }
         }
-        
+
         & .letter-form {
             display: grid;
             grid-template-columns: max-content 1fr;
