@@ -4,7 +4,7 @@ import { QUERY_LETTERS } from "../utils/queries";
 import Auth from "../utils/auth";
 import { format } from "../utils/helpers";
 import DocForm from "../components/DocForm";
-import "../assets/css/letters.css"
+import "../assets/css/letters.css";
 
 function Letters({ setMain }) {
   const loggedIn = Auth.loggedIn();
@@ -16,22 +16,24 @@ function Letters({ setMain }) {
   useEffect(() => setMain("letters"), [setMain]);
   const [selectedLetter, setSelectedLetter] = useState("");
   const [displayForm, setDisplayForm] = useState(false);
+  const [initialValues, setInitialValues] = useState({}); // State to hold initial values for form
+  const [formType, setFormType] = useState("add");
 
+  // Defined as the selected `letters` array-object
   const selectedLetterData = letters.find(
     (letter) => letter._id === selectedLetter
   );
 
   const handleClick = (type) => {
-    console.log(`clicked ${type}`);
-
     switch (type) {
       case "add":
-        console.log(`logic ${type}`);
-        setDisplayForm(true)
-        break;
       case "edit":
-        console.log(`logic ${type}`);
-        setDisplayForm(true)
+        setDisplayForm(true);
+        setFormType(type);
+        // Loads selected letter into initial values for editing
+        if (type === "edit") {
+          setInitialValues(selectedLetterData);
+        }
         break;
       case "delete":
         console.log(`logic ${type}`);
@@ -40,6 +42,12 @@ function Letters({ setMain }) {
         console.log(`invalid ${type}`);
     }
   };
+
+  // Clicking on a letter will close the form component (if displayed) then load the profile section
+  const handleSelection = (id) => {
+    setDisplayForm(false)
+    setSelectedLetter(id)
+  }
 
   if (!loggedIn) {
     return <section>log in to view contents</section>;
@@ -56,7 +64,7 @@ function Letters({ setMain }) {
         <button onClick={() => handleClick("add")}>add</button>
         <ul id="letters-list">
           {letters.map((letter, i) => (
-            <li key={i} onClick={() => setSelectedLetter(letter._id)}>
+            <li key={i} onClick={() => handleSelection(letter._id)}>
               <span>{letter.type}</span>
               <span>{format.date(letter.createdAt)}</span>
             </li>
@@ -81,7 +89,14 @@ function Letters({ setMain }) {
           )}
         </section>
       ) : (
-        <DocForm id={""} initialValues={""} doc={"letter"} type={"add"} className={"add"}/>
+        <DocForm
+          id={selectedLetter}
+          initialValues={initialValues}
+          doc={"letter"}
+          type={formType}
+          className={formType}
+          setEditSelected={setDisplayForm}
+        />
       )}
     </>
   );
