@@ -29,6 +29,7 @@ useEffect(() => {
   const overview = { 
     __typename: user.__typename,
     username: user.username,
+    noResponseCount: user.noResponseCount,
     rejectedCount: user.rejectedCount,
     waitlistedCount: user.waitlistedCount,
     pendingCount: user.pendingCount,

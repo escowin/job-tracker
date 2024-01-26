@@ -61,6 +61,7 @@ function DocForm(props) {
 
   // sets up form state management
   const [formState, setFormState] = useState({});
+  console.log(formState)
 
   // populates form state with profile data when component mounts
   useEffect(() => {
@@ -112,7 +113,6 @@ function DocForm(props) {
         ...(type === "edit" ? { id: initialValues._id } : {}),
       };
 
-      console.log(formState)
       // Conditionally determines mutation sequence
       if (type === "login" || type === "sign-up") {
         const { data } = await document({ variables: mutation });

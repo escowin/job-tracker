@@ -4,7 +4,7 @@ import { QUERY_LETTERS } from "../utils/queries";
 import Auth from "../utils/auth";
 import { format } from "../utils/helpers";
 import DocForm from "../components/DocForm";
-import "../assets/css/letters.css"
+import "../assets/css/letters.css";
 
 function Letters({ setMain }) {
   const loggedIn = Auth.loggedIn();
@@ -16,22 +16,25 @@ function Letters({ setMain }) {
   useEffect(() => setMain("letters"), [setMain]);
   const [selectedLetter, setSelectedLetter] = useState("");
   const [displayForm, setDisplayForm] = useState(false);
+  const [initialValues, setInitialValues] = useState({}); // State to hold initial values for form
+  const [formType, setFormType] = useState("add");
 
+  // Defined as the selected `letters` array-object
   const selectedLetterData = letters.find(
     (letter) => letter._id === selectedLetter
   );
 
   const handleClick = (type) => {
-    console.log(`clicked ${type}`);
-
     switch (type) {
       case "add":
-        console.log(`logic ${type}`);
-        setDisplayForm(true)
+        setDisplayForm(true);
+        setFormType("add");
         break;
       case "edit":
-        console.log(`logic ${type}`);
-        setDisplayForm(true)
+        // Loads selected array-object data in state to pass into DocForm
+        setInitialValues(selectedLetterData);
+        setDisplayForm(true);
+        setFormType("edit");
         break;
       case "delete":
         console.log(`logic ${type}`);
@@ -81,7 +84,14 @@ function Letters({ setMain }) {
           )}
         </section>
       ) : (
-        <DocForm id={""} initialValues={""} doc={"letter"} type={"add"} className={"add"}/>
+        <DocForm
+          id={selectedLetter}
+          initialValues={initialValues}
+          doc={"letter"}
+          type={formType}
+          className={formType}
+          setEditSelected={setDisplayForm}
+        />
       )}
     </>
   );
